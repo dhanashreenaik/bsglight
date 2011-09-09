@@ -1,0 +1,169 @@
+<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']	%>
+<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']	%>
+<%price_array=['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']%>
+<%size_array = ['fworksize','sworksize','tworksize','foworksize','fiworksize','siworksize','seworksize','eworksize','nworksize','teworksize']%>
+ 
+<style>
+.artwork_show {
+    border: 1px solid;
+    float: left;
+    height: 352px;
+    line-height: 13px;
+    position: relative;
+    width: auto;
+}
+</style>
+</div>
+<div id="container" >
+    <div id="description" style="overflow:auto">
+      <div style="padding-left:25px" id="paypal_payment">
+        <%if !@paymentdone.blank?%>
+             <%=@paymentdone%>
+        <%end%>
+      </div> 
+      <div id="content">
+      <b>Client name </b>
+      <%if !@current_object.blank?%>
+        <%=h @current_object.client.profile.full_name %><br />
+      <%end%>
+      <%if @current_object && @current_object.total_amount != 0%>
+      <b>Order details </b>
+      <table id="order_lines" cellspacing="4" cellpadding="3" style="text-align:left;">
+        <thead>
+        <tr  style="font-size:13px">
+          <th>Item</th>
+          <th>Artist</th>
+          <th>Unit price</th>
+        </tr>
+        </thead>
+        <tbody>
+          <%i=1%>
+          <%orderable_type="";orderable_id=""%>
+        <% @current_object.order_lines.each do |ol| %>
+          <%orderable_type = ol.orderable_type;orderable_id = ol.orderable_id%>
+              <%if   ol.orderable_type.to_s.include?("CompetitionsUser")%>  
+              <tr id="order<%=i%>">
+                <th><%= ol.orderable.send title_array.fetch(image_array.index(ol.imagename)) %></th>
+                <th><%= ol.orderable.user.profile.first_name + " " + ol.orderable.user.profile.last_name %></th>
+                <th><%= ol.orderable.send price_array.fetch(image_array.index(ol.imagename)) %></th>
+                <th>
+                  <%#= link_to 'Show', item_path(ol.orderable) %>
+                  <%#= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id.to_s+"_"+ol.imagename) if @current_object.new_record? %>
+      <%=link_to_remote 'Delete', :update => "",
+:url => {:controller=>"shoppingcart",:action=>"remove_from_cart",:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id.to_s,:i=>i,:imagename=>ol.imagename}%>
+                </th>
+              </tr>
+              <%else%>
+              <tr id="order<%=i%>">
+                <th><%= ol.orderable.title %></th>
+                <th><%= ol.orderable.user.profile.first_name + " " + ol.orderable.user.profile.last_name %></th>
+                <th><%= ol.orderable.price %></th>
+                <th>
+                  <%#= link_to 'Show', item_path(ol.orderable) %>
+                  <%#= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id) if @current_object.new_record? %>
+                 <%=link_to_remote 'Delete', :update => "",
+:url => {:controller=>"shoppingcart",:action=>"remove_from_cart",:orderable_type => orderable_type, :orderable_id => orderable_id,:i=>i}%>
+                </th>
+              </tr>
+              <%end%>
+              <%i=i+1%>
+     <% end %>
+              
+    </tbody>
+    </table>
+    <br />
+    <b>Total amount </b>
+    <div id="total_amount">
+       <%=h @current_object.total_amount %> AUD<br />
+    </div>
+   
+    <% if !@current_object.new_record? %>
+    <b>Completed at </b>
+    <%=h @current_object.completed_at %><br />
+    <% end %>
+<%=link_to_remote 'Pay Online', :update => "",
+:url => {:controller=>"shoppingcart",:action=>"show_payment_form",:orderable_type => orderable_type, :orderable_id => orderable_id}%>
+     <%end%>
+    <br/>
+    <%##new purchase table is shown here%>
+      <%if !@current_purchase.blank?%>  
+     <table id="order_lines">
+        <thead>
+        <tr>
+          <th>Invoice</th>
+          <th>Date</th>
+          <th>Item</th>
+          <th>Amount</th>
+        </tr>
+        </thead>
+         <tbody>
+          <%i=1%>
+          <%totalprice = 0%> 
+          <%orderable_type="";orderable_id=""%>
+       
+        <% @current_purchase.order_lines.each do |ol| %>
+          <%orderable_type = ol.orderable_type;orderable_id = ol.orderable_id%>
+              <%if   ol.orderable_type.to_s.include?("CompetitionsUser")%>  
+              <tr id="order<%=i%>">
+                
+                <th><%= @current_purchase.invoice.number %></th>
+                <th><%= @current_purchase.invoice.created_at.strftime("%d %b %y") %></th>
+                <th><%= ol.orderable.send title_array.fetch(image_array.index(ol.imagename)) %></th>
+                <th><%= ol.orderable.send price_array.fetch(image_array.index(ol.imagename)) %></th>
+                <%totalprice = totalprice + (ol.orderable.send price_array.fetch(image_array.index(ol.imagename))).to_i %> 
+                <th>
+                  <%#= link_to 'Show', item_path(ol.orderable) %>
+                  <%#= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id.to_s+"_"+ol.imagename) if @current_object.new_record? %>
+      <%#=link_to_remote 'Remove', :update => "",
+:url => {:controller=>"shoppingcart",:action=>"remove_from_cart",:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id.to_s,:i=>i,:imagename=>ol.imagename}%>
+                </th>
+              </tr>
+              <%else%>
+              <tr id="order<%=i%>">
+                <th><%= ol.orderable.title %></th>
+                <th><%= ol.orderable.price %></th>
+                <%totalprice = totalprice + ol.orderable.price%>
+                <th>
+                  <%#= link_to 'Show', item_path(ol.orderable) %>
+                  <%#= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id) if @current_object.new_record? %>
+                 <%#=link_to_remote 'Remove', :update => "",
+:url => {:controller=>"shoppingcart",:action=>"remove_from_cart",:orderable_type => orderable_type, :orderable_id => orderable_id,:i=>i}%>
+                </th>
+              </tr>
+              <%end%>
+              <%i=i+1%>
+          <% end %>
+      <%end%>        
+    </tbody>
+    </table>
+    <p>
+      Total <%=totalprice%>
+    </p>  
+    <%########################new purchase table table ends here%>  
+     <%if !@current_purchase.blank?%>   
+    <br/>
+    <h3>You  may collect your work anytime between 10am  and 6pm Tues to Friday at the gallery.
+    <br/>
+    322 Brunswick St, Fitzroy 3065
+    </h3>
+    <br/>
+    <%end%>
+<%=link_to_remote 'Order History', :update => "",:url => {:controller=>"shoppingcart",:action=>"list_of_my_order"}%>
+        
+    
+    </div>
+    </div> 
+    <div id="list" style="line-height: 7px;"> 
+        <div id="list_show">
+                  <div id="iteam_image0" style="display:none" class="artwork_show">
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork0" style="display:block">  
+                                      invoice added
+                                   </div>
+                              </div>
+                            </div>    
+                  </div>          
+         </div>         
+    </div> 
+</div>  

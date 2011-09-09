@@ -1,0 +1,12 @@
+<%# item_preview( :title => I18n.t('audio.field.audio_label'),  :object => object ) do %>
+
+  <h2><%=I18n.t('audio.field.audio_label')%></h2>
+  <div id ="progress">
+    <% if object.state=="encoded" %>
+      <%= render :partial => "audios/player.html", :object => object %>
+    <% else %>
+      <%= object.state.capitalize %>
+    <% end %>
+  </div>
+  <br /><br /><%= link_to I18n.t('general.button.download'), download_audio_path(object.id) %><br />
+<%# end %>

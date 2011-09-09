@@ -1,0 +1,46 @@
+<div id="right-container">
+	<div id="right_menu">
+		<span class="titre"><%= I18n.t('home.filter')%></span><br>
+		<ul>
+			<% 
+				[:article, :image, :cms_file, :video, :audio, :publication].each do |elem|
+					model = elem.to_s.classify.constantize
+					concat\
+						content_tag(:li, link_to(model.label.pluralize, send("#{elem.to_s.pluralize}_path")),
+							:style => "list-style-image:url(/images/#{model.icon});list-style-position:inside"),
+						binding
+				end
+			%>
+		</ul>
+	</div>
+	<div id="Add_menu">
+		<span class="titre"><%= I18n.l'general.add' %></span><br>
+		<div id="slct_ADD">
+			<form name="form1" method="post" action="" id="form1">
+				<select name="slct_filtre" id="slct_filtre" onchange="document.location.href = this.value">
+					<option selected value='#'>
+						--------
+					</option>
+					<option value="<%= new_article_path %>">
+						<%= I18n.l'general.item.article' %>
+					</option>
+					<option value="<%= new_image_path %>">
+						<%= I18n.l'general.item.image' %>
+					</option>
+					<option value="<%= new_audio_path %>">
+						<%= I18n.l'general.item.audio' %>
+					</option>
+					<option value="<%= new_video_path %>">
+						<%= I18n.l'general.item.video' %>
+					</option>
+					<option value="<%= new_cms_file_path %>">
+						<%= I18n.l'general.item.cms_file' %>
+					</option>
+					<option value="<%= new_publication_path %>">
+						<%= I18n.l'general.item.publication' %>
+					</option>
+				</select>
+			</form>
+		</div>
+	</div>
+</div>

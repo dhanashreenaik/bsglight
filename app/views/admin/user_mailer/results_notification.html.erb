@@ -1,0 +1,11 @@
+Hello <%= @first_name %>,
+
+You have been classified at the rank #<%= @place %> for that competition.
+The prizes are :
+<%= @prizes %>
+
+<%= I18n.t('mailer.common.thanks') %>
+
+<%= I18n.t('mailer.common.greetings') %>
+
+<%= I18n.t('mailer.common.signature', :who => @site) %>

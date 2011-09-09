@@ -1,0 +1,32 @@
+<div class="objectList small">
+	<div class="blockCornerLeft">&nbsp;</div><div class="blockElementHeader sixH">
+		<div id="itemsNumber"><%= @objects.length%> objects rated</div>
+	</div><div class="blockCornerRight">&nbsp;</div>
+	<div class="contentList filtered">
+		<ul id="pure_people_list">
+			<% if @objects.first -%>
+
+				<%= render :partial => 'user_ratings' %>
+
+			<% else -%>
+
+		    	<%= I18n.t('item.common_word.list_empty') %>
+
+			<% end -%>
+		</ul>
+	</div>
+</div>
+<div class="rightBlocks">
+	<div class="itemShowRightBlock">
+	    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+			Filter
+		</div><div class="blockCornerRight"></div>	
+	    <div class="blockElementBody">
+	        <%= link_to I18n.t('general.common_word.all').capitalize, '/admin/ratings/?item_type=All' %>
+		    <%= item_types_allowed_to(@current_user, 'show', current_workspace).map{ |s| link_to(I18n.t('general.item.' + s.underscore.downcase), '/admin/ratings/?item_type=' + s)} %>
+			Filter : 
+			<input id="filter"/>
+	    </div>
+	</div>
+</div>
+

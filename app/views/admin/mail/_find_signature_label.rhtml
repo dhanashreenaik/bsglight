@@ -1,0 +1,24 @@
+   <script>
+function change_sign_2()
+{
+  new Ajax.Request(document.sign2.action,
+      {asynchronous:true, evalScripts:true, parameters:Form.serialize(document.sign2)});
+      return false;
+  
+}
+</script>
+    <% form_remote_tag :url => '/find_signature',:html=>{:name=>"sign2"} do -%>
+        <div style="float:left">
+          <select name="fromemail" onchange="change_sign_2()">
+          <option value="">Select Label</option>
+          <%for frlbl in find_signature_label%>
+            <option value="<%=frlbl.id%>"><%=frlbl.signlabel%></option>
+          <%end%>  
+          </select>
+         </div> 
+        <div style="float: left; margin-left: 155px;"><%#= submit_tag 'Check a Signature' ,:style=>"width:150px;"%></div>
+        
+    <% end -%>
+    
+    <div id="show_the_signature">
+    </div>

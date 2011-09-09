@@ -1,0 +1,104 @@
+<form action="/admin/delete_show_flag_mail" name="myform" method="post">
+<table cellpadding="10" style="padding-left:20px;" border="1" ><tr>
+     <th>
+<%checkboxsentarrayname = []%>
+<%show_flag_email.each do |msg| checkboxsentarrayname <<  "delete_message_sent"+msg.id.to_s end%>
+<%messagesentarray= "["+(checkboxsentarrayname * ",")+"]" %>
+<%checkboxrecdarrayname = []%>
+<%sent_message.each do |msg| checkboxrecdarrayname <<  "delete_message_mail"+msg.id.to_s end%>
+<%messagerecdarray= "["+(checkboxrecdarrayname * ",")+"]" %>
+<%messagesentlength=show_flag_email.length%>
+<%messagerecdlength=sent_message.length%>
+
+     <%=check_box_tag "delete_all_message" ,0,false,:onClick=>"select_all_checkbox_flag(#{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray});"%>
+    </th>
+    <th>
+      Flag
+    </th>
+    <th>
+    From
+    </th>
+    <th>
+    Subject
+    </th>
+    <th>
+    Date Received
+    </th>
+
+    </tr>
+    <%for message in show_flag_email%>
+    <tr>
+    <td>
+      <%=check_box_tag "delete_message_sent"+message.id.to_s  ,message.id%>
+    </td>
+    
+             <td>
+       
+    <%if message.flag%>
+        <%=link_to_remote  image_tag("dot.png"),:url=>{:action=>"flag_email", :id=>message.id },:before =>"change_the_flag('flagn'+#{message.id.to_s})",:html=>{:class=>"mouse-onclik",:id=>"flagn"+message.id.to_s}%>
+
+    <%else%>
+        <%=link_to_remote  image_tag("dot.png"),:url=>{:action=>"flag_email", :id=>message.id },:before =>"change_the_flag('flagn'+#{message.id.to_s})",:html=>{:class=>"mouse-link",:id=>"flagn"+message.id.to_s}%>
+
+    <%end%>
+    
+    </td>
+    
+    
+    
+    
+    
+    <td>
+    <%=h message.author.login %>
+    </td>
+    <td>
+    <%= link_to_remote message.subject ,:update => "",:url => { :action => "show_message", :id => message.id }%>
+    </td>
+    <td>
+    <%=message.created_at.strftime("%Y-%m-%d")%>
+    </td>
+
+    </tr>
+    <%end%>
+   <%for message in sent_message%>
+    <tr>
+     <td>
+        <%=check_box_tag "delete_message_mail"+message.id.to_s  ,message.id%>
+      </td>
+      
+      
+               <td>
+       
+    <%if message.flag%>
+        <%=link_to_remote  image_tag("dot.png"),:url=>{:action=>"sent_flag_email", :id=>message.id },:before =>"change_the_flag('flags'+#{message.id.to_s})",:html=>{:class=>"mouse-onclik",:id=>"flags"+message.id.to_s}%>
+
+    <%else%>
+        <%=link_to_remote  image_tag("dot.png"),:url=>{:action=>"sent_flag_email", :id=>message.id },:before =>"change_the_flag_show_message('flags'+#{message.id.to_s})",:html=>{:class=>"mouse-link",:id=>"flags"+message.id.to_s}%>
+
+    <%end%>
+    
+    </td>
+      
+      
+      
+      
+      
+    <td>
+    <%=h message.author.login %>
+    </td>
+    <td>
+    <%= link_to_remote message.subject ,:update => "",:url => { :action => "show_sent_message", :id => message.id }%>
+    </td>
+    <td>
+    <%=message.created_at.strftime("%Y-%m-%d")%>
+    </td>
+   
+    </tr>
+    <%end%>
+    
+    
+    
+    
+    
+    
+    </table>

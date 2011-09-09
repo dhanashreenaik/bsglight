@@ -1,0 +1,139 @@
+<style>
+  .textareaimage{
+        width: 290px;
+        height: 70px;
+        border: 3px solid #cccccc;
+        padding: 5px;
+        font-size: 10px !important;
+        font-family: arial narrow !important; 
+        background-color: #9C9C9C;
+        background-position: bottom right;
+        background-repeat: no-repeat;
+  }
+</style> 
+ <%artexhibition = Artwork.find(:all,:conditions=>["user_id = ? and exhibition_id = ?",eu.user.id,eu.exhibition.id])%>
+ <%if !artexhibition.blank?%>
+        <a href="#" onclick="exhitoggle('<%=eu.exhibition.id%>')">Display Images</a>
+  <%else%>      
+        No Images Uploaded
+ <%end%>       
+                  <div id="exhi<%=eu.exhibition.id%>" style="display:none">   
+                     <DIV ID="slideshow">
+
+<FORM ID="sse<%=eu.exhibition.id%>_form" NAME="sse<%=eu.exhibition.id%>_form" ACTION="" METHOD="GET">
+
+<DIV ID="sse<%=eu.exhibition.id%>_controls">
+
+<A ID="sse<%=eu.exhibition.id%>_start" HREF="javascript:sse<%=eu.exhibition.id%>.next();sse<%=eu.exhibition.id%>.play()"><SPAN>start</SPAN></A>
+
+<A ID="sse<%=eu.exhibition.id%>_stop" HREF="javascript:sse<%=eu.exhibition.id%>.pause()"><SPAN>stop</SPAN></A>
+
+<A ID="sse<%=eu.exhibition.id%>_view" HREF="javascript:sse<%=eu.exhibition.id%>.hotlink()"><SPAN>view</SPAN></A>
+
+<A ID="sse<%=eu.exhibition.id%>_prev" HREF="javascript:sse<%=eu.exhibition.id%>.previous()"><SPAN>&lt;prev</SPAN></A>
+
+<A ID="sse<%=eu.exhibition.id%>_next" HREF="javascript:sse<%=eu.exhibition.id%>.next()"><SPAN>next&gt;</SPAN></A>
+
+<!--
+The following select list will be modified with the slide titles.
+-->
+<SELECT ID="sse<%=eu.exhibition.id%>_select" NAME="sse<%=eu.exhibition.id%>_select" ONCHANGE="sse<%=eu.exhibition.id%>.goto_slide(this.selectedIndex)">
+  <OPTION>Welcome to the slideshow!
+  <OPTION>
+  <OPTION>
+  <OPTION>
+  <OPTION>
+</SELECT>
+
+</DIV>
+
+<DIV ID="sse<%=eu.exhibition.id%>_img_div">
+
+<A ID="sse<%=eu.exhibition.id%>_img_link" HREF="javascript:sse<%=eu.exhibition.id%>.hotlink()"><IMG
+ID="sse<%=eu.exhibition.id%>_img" NAME="sse<%=eu.exhibition.id%>_img" SRC="pics/pic01.jpg"
+STYLE="width:300px;"
+ALT="Slideshow image"></A>
+
+</DIV>
+
+<DIV ID="sse<%=eu.exhibition.id%>_text" CLASS="textareaimage">
+
+<SCRIPT type="text/javascript">
+<!--
+
+// The contents of this DIV will be overwritten by browsers
+// that support innerHTML.
+//
+// For browsers that do not support innerHTML, we will display
+// a TEXTAREA element to hold the slide text.
+// Note however that if the slide text contains HTML, then the
+// HTML codes will be visible in the textarea.
+
+document.write('<TEXTAREA ID="sse<%=eu.exhibition.id%>_textarea" NAME="sse<%=eu.exhibition.id%>_textarea" CLASS="textareaimage" ROWS="6" COLS="40" WRAP="virtual"><\/TEXTAREA>\n');
+
+sse<%=eu.exhibition.id%>.textarea = document.sse<%=eu.exhibition.id%>_form.sse<%=eu.exhibition.id%>_textarea;
+
+//-->
+</SCRIPT>
+
+</DIV>
+
+</FORM>
+
+</DIV>
+              
+                  </div>
+    <SCRIPT TYPE="text/javascript">
+<!--
+
+// Finish defining and activating the slideshow
+
+// Set up the select list with the slide titles
+function config_sse<%=eu.exhibition.id%>_select() {
+  var selectlist = document.sse<%=eu.exhibition.id%>_form.sse<%=eu.exhibition.id%>_select;
+  selectlist.options.length = 0;
+  for (var i = 0; i < sse<%=eu.exhibition.id%>.slides.length; i++) {
+    selectlist.options[i] = new Option();
+    selectlist.options[i].text = (i + 1) + '. ' + sse<%=eu.exhibition.id%>.slides[i].title;
+  }
+  selectlist.selectedIndex = sse<%=eu.exhibition.id%>.current;
+}
+
+// If you want some code to be called before or
+// after the slide is updated, define the functions here
+
+sse<%=eu.exhibition.id%>.pre_update_hook = function() {
+  return;
+}
+
+sse<%=eu.exhibition.id%>.post_update_hook = function() {
+  // For the select list with the slide titles,
+  // set the selected item to the current slide
+  document.sse<%=eu.exhibition.id%>_form.sse<%=eu.exhibition.id%>_select.selectedIndex = this.current;
+  return;
+}
+
+if (document.images) {
+
+  // Tell the slideshow which image object to use
+  sse<%=eu.exhibition.id%>.image = document.images.sse<%=eu.exhibition.id%>_img;
+
+  // Tell the slideshow the ID of the element
+  // that will contain the text for the slide
+  sse<%=eu.exhibition.id%>.textid = "sse<%=eu.exhibition.id%>_text";
+
+  // Randomize the slideshow?
+  // ss.shuffle();
+
+  // Set up the select list with the slide titles
+  config_sse<%=eu.exhibition.id%>_select();
+
+  // Update the image and the text for the slideshow
+  sse<%=eu.exhibition.id%>.update();
+
+  // Auto-play the slideshow
+  //ss.play();
+}
+
+//-->
+</SCRIPT> 

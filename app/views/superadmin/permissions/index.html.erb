@@ -1,0 +1,46 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+	<div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+		<span id="item_count">Permissions</span>
+	</div><div class="blockCornerRight"></div>
+
+	<div class="contentList superadmin">
+		<%= link_to "New Permission", new_superadmin_permission_path %>
+		<div class="permissionsList">
+			<table cellspacing="5">
+			  	<tr>
+			    	<th>Name</th>
+			    	<th>Type</th>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+			    	<th>Actions</th>
+			  	</tr>
+				<% for permission in @permissions %>
+			  	<tr>
+			      	<td><%=h permission.name %></td>
+			      	<td><%=h permission.type_permission %></td>
+					<td></td>
+			      	<td>
+						<%= link_to 'EDIT', 
+									edit_superadmin_permission_path(permission.id) %>
+					    | 									
+						<%= link_to 'DELETE', "javascript:;",
+									:class => "deleteLink", 
+									:modal_id => "#modalDelete_#{permission.id.to_s}"
+						%>
+
+						<div style="display:none">
+							<div id="modalDelete_<%=permission.id.to_s%>" class="modalDelete">
+								<p><%= I18n.t('item.destroy.delete_conform')%></p>
+								<%= link_to I18n.t('general.common_word.yes1'), 
+											superadmin_permission_path(permission.id), :method => :delete%> | 
+								<%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+							</div>
+						</div>
+					</td>
+			  	</tr>
+			<% end %>
+			</table>
+		</div>
+	</div>
+</div>

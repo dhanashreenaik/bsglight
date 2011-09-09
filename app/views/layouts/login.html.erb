@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <link rel="shortcut icon" href="<%= @configuration['sa_favicon_url'] %>"/>
+  <%= stylesheet_link_tag "login.css" %>
+  <title>
+    <%= I18n.t 'layout.application.title' %> -
+    <%= params[:action].capitalize if params[:action] != 'index' %>
+    <%= params[:controller].capitalize %>
+  </title>
+</head>
+
+<body>
+  <div id="page">
+    <div id="container">
+      <%= yield %>
+    </div>
+  </div>
+</body>

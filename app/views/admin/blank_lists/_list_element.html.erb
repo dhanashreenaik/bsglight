@@ -1,0 +1,20 @@
+<li class="itemInList">
+	<div class="itemInListDate">
+		<%= date %>
+	</div>
+	<div class="itemInListBody">
+		<div class="itemInListTitle">
+			<%= title %>
+		</div>
+		<div class="itemInListActions">
+			<%= capture &block  %>
+		</div>
+		<div class="itemInListTags">
+                  <%#= keywords_links_list_for(object) %>
+                </div>
+	</div>
+	<!-- div class="itemInListMore">
+		<%# garder le + pour faire un tool tip avec des infos complémentaires%>
+		<%#= link_to '+', item_path(object) %>
+	</div-->
+</li>

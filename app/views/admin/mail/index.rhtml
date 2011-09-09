@@ -1,0 +1,251 @@
+
+<script>
+function change_the_flag(attrid)
+{
+  if (document.getElementById(attrid).className == "mouse-link"){
+      document.getElementById(attrid).className = "mouse-onclik";
+      }
+  else
+  {
+      document.getElementById(attrid).className = "mouse-link";
+   }   
+}
+
+function select_all_checkbox(checkboxlength,checkboxnamearray){
+
+  if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < checkboxlength; i++)
+            {
+        	    checkboxnamearray[i].checked = true ;
+       	    }
+    }
+	else
+  	{
+  	   for (i=0; i  < checkboxlength ; i++ )
+  	      {
+          	checkboxnamearray[i].checked = false ;
+         	} 
+	  }
+  }
+//  #{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray})
+function select_all_checkbox_flag(messagesentlength,messagerecdlength,messagesentarray,messagerecdarray)
+{
+   if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < messagesentlength; i++)
+            {
+        	    messagesentarray[i].checked = true ;
+       	    }
+       	    
+      for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = true ;
+       	    } 	    
+    }
+	else
+  	{
+  	   for (i=0; i  < messagesentlength ; i++ )
+  	      {
+          	messagesentarray[i].checked = false ;
+         	} 
+         	 for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = false ;
+       	    } 	 
+	  }
+}
+
+
+//  #{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray})
+function select_all_checkbox_trash(messagesentlength,messagerecdlength,messagesentarray,messagerecdarray)
+{
+   if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < messagesentlength; i++)
+            {
+        	    messagesentarray[i].checked = true ;
+       	    }
+       	    
+      for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = true ;
+       	    } 	    
+    }
+	else
+  	{
+  	   for (i=0; i  < messagesentlength ; i++ )
+  	      {
+          	messagesentarray[i].checked = false ;
+         	} 
+         	 for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = false ;
+       	    } 	 
+	  }
+}
+
+
+
+
+function submitForm(){
+if (confirm("Are You Sure"))
+  {
+
+new Ajax.Request(document.myform.action,
+      {asynchronous:true, evalScripts:true, parameters:Form.serialize(document.myform)});
+      return false;
+ }
+
+}
+
+function Moveto(){
+  document.myform.action = "/admin/moveto";
+  document.getElementById('selected_label').value = document.getElementById('selectlabel').value
+  document.myform.submit();
+}
+
+function set_the_signature(signature)
+{
+  document.getElementById("signature").value = signature
+}
+
+</script>
+  <div class="rightBlocks"> 
+     <div class="itemShowRightBlock">
+      <div class="blockCornerLeft"></div>
+        <div class="blockElementHeader twoH">
+          <%= "Action" %>
+        </div>
+        <div class="blockCornerRight"></div>
+          <div class="blockElementBody">
+            <div  id="mailbox_list">
+                  <form action="/admin/create_label" >
+                      <p><strong>
+                      <select name="select" id="selectlabel" onchange="Moveto();">
+                        <option value="select">Move To</option>
+                          <%for mlabelname in @created_label%>
+                              <option value="<%=mlabelname.labelname%>"><%=mlabelname.labelname%></option>
+                           <%end%>
+                      </select> </strong>
+                      </p>
+                      <p><strong>
+                      <a href="#" onclick="return submitForm();" >Delete</a>&nbsp;&nbsp;&nbsp;</strong></p>
+                      <p><strong>create label  &nbsp;
+                      <%=text_field_tag "createlabel",'',:style=>"width:90px;padding:0px;"%></strong></p>
+                   </form>
+          
+        </div><%#mailbox_list%>
+      </div><%#blockElementBody%>
+    </div><%#itemShowRightBlock"%>
+    <div class="itemShowRightBlock">
+      <div class="blockCornerLeft"></div>
+        <div class="blockElementHeader twoH">
+          <%= "Mailbox" %>
+        </div>
+        <div class="blockCornerRight"></div>
+          <div class="blockElementBody">
+            <div  id="mailbox_list">
+              <p>
+                  <strong><%=link_to_remote "Compose" ,:update => "",:url => { :action => "compose_new_mail"}%>
+                  </strong>
+              </p>
+              <p>
+                 <strong><%=link_to_remote "Inbox" ,:update => "",:url => { :action => "index"}%></strong>
+              </p>
+              <p>
+                <strong><%=link_to_remote "Sent" ,:update => "",:url => { :action => "sent_mail"}%></strong>
+              </p>
+              <p>
+                <strong><%=link_to_remote "Trash" ,:update => "",:url => { :action => "trash_mail"}%>
+                </strong>
+              </p>
+                <strong><%#=link_to_remote "Flagged" ,:update => "",:url => { :action => "show_flag_email"}%>
+                  <!--<img src="/images/flag-2.png"/>-->
+                </strong>
+              </p>
+              <p>
+                <strong><%=link_to_remote "Unregistered Email" ,:update => "",:url => { :action => "unknown_email"}%>
+                </strong>
+              </p>
+             <p><strong style="color: #F79646;">Label</strong>
+             </p> 
+            <%for mlabelname in @created_label%>
+            <p>
+                <%=link_to_remote mlabelname.labelname,:update => "",:url => { :action => "show_labeled_email",:id=>mlabelname.id}%>
+                  <span style="margin-left:20px;float: right;margin-left: 20px;margin-right: 70px;"><%=link_to_remote  'x',:url=>{:action=>"delete_label", :id=>mlabelname.id },:confirm=>"Are You Sure"%>
+                  </span>
+          </p>
+          <%end%>
+        </div><%#mailbox_list%>
+      </div><%#blockElementBody%>
+    </div><%#itemShowRightBlock"%>
+     
+  </div> <%#rightBlocks%>
+  
+  
+  
+  
+<div>
+<%checkboxarrayname = []%>
+<%@messages.each do |msg| checkboxarrayname <<  "delete_message"+msg.id.to_s end%>
+<%checkboxarraynamestring= "["+(checkboxarrayname * ",")+"]" %>
+
+<div id="table_structer_of_email">
+<div class="objectList small">
+<h2>Inbox</h2>
+<div class="blockCornerLeft"></div>
+
+<form action="/admin/delete_all_email" name="myform" method="post">
+	<div class="blockElementHeader sixH">
+	<input type="hidden" name="selected_label" value="" id="selected_label">
+	  <span ><ul class="mm-field" id="mail-head"  >
+    <li class="field-checkbox fc" style="border:0px;"> <%=check_box_tag "delete_all_message" ,0,false,{:onClick=>"select_all_checkbox(#{@messages.length},#{checkboxarraynamestring});",:class=>'mm-cb'}%></li>
+  
+   <li class="head-from field-from">From</li>
+    <li class="head-subject field-subject">Subject</li>
+     <li class="head-date field-date">Date</li>
+     </span>
+	</div>
+	<div class="blockCornerRight"></div>
+
+     <div class="contentList filtered sixH">  
+      <div>
+         <div id="main-middle">
+    <table class="mailbox-table">
+        	<tbody><tr>
+           	  
+                <td align="left" valign="top" nowrap="nowrap">
+     
+     <div class="bsg-right">
+    <ul> 
+   	<%for message in @messages%>
+             <ul class="mm-field">					
+                <li class="field-checkbox fc">    <%=check_box_tag "delete_message"+message.id.to_s  ,message.id ,false,:class=>"mm-cb"%></li>
+	          <li class="field-from"><%=h message.author.email %></li>
+                    <li class="field-subject"><%= link_to_remote truncate(message.subject,40) ,:update => "",:url => { :action => "show_message", :id => message.id }%></li>
+
+                      <li class="field-date"><%=message.created_at.strftime("%Y-%m-%d")%></li>
+              </ul>
+        <%end%>   
+      </ul>
+                                   </div>
+                                  </td> 
+		                           </tr>
+                            </table>
+    </div>
+    </div>
+    </div>
+ </form>  
+    
+      <%= will_paginate @messages %>
+    
+ </div>
+
+ </div>
+</div>    
+
+  <div style="width:592px;height:110%;padding-left:0px;clear:both;margin:40px;padding-top:58px;margin-top:1px;" id="show_details">
+  </div>
+
+

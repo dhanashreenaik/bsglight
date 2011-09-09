@@ -1,0 +1,10 @@
+Hello <%= @first_name %>,
+
+This email has been sent to confirm your subscription to the newsletter of our website,
+you will receive regularly news from our events and our artists.
+
+<%= I18n.t('mailer.common.thanks') %>
+
+<%= I18n.t('mailer.common.greetings') %>
+
+<%= I18n.t('mailer.common.signature', :who => @site) %>

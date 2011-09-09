@@ -1,0 +1,123 @@
+<style type="text/css">
+	body{
+    color: #333333;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+	}
+	#compose-mail{
+		width:550px;
+		height:auto;
+		border:1px solid #dedede;
+		background:#f3f3f3;
+		border-radius:5px;
+		padding:10px;
+		float:right;
+    margin-top:-110px;
+	}
+	
+#compose-mail lable{
+	display:block;
+	
+	}
+	.text-input{
+        border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    height: 22px;
+    margin-bottom: 12px;
+    padding: 5px;
+    width: 420px;
+	}
+
+.bsg-message{	
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 5px 5px;
+    width: 427px;
+}
+.mail-input{
+	margin-left:69px;
+}
+
+.email-select{
+    height: 30px;
+    padding: 4px;
+	margin-left:9px;
+	width:426px;
+	margin-top:12px;
+}
+.bsg-signature{
+    margin-left: 46px;
+    margin-top: 12px;}
+	
+	.message-area{
+    height: 120px;
+    margin-left: 20px;
+	}
+	.subject-input{
+		margin-left:57px;
+	}
+	.message-label{
+		vertical-align:top;
+	}
+	.labeloverride{
+	  text-align: left;
+	  padding-top:6px;
+	  width:55px;
+	}
+</style>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="compose-mail">
+<p style="margin-left:150px"><a href="Add An User">Add An User</a></p>
+<h2>Compose</h2>
+
+<% form_for :message, :url=>"/admin/create_sent_mail_with_unknown" do |f| %>
+  
+  <p >
+    <label class="labeloverride">To</label>  <%=text_field_with_auto_complete :user, :email,{:value=>replay_unknown_message.fromemail+","},{:tokens =>',',:frequency=>0.1 ,:style=>"width:150px;"}%>
+    
+  </p><br/>
+
+  <label class="labeloverride">Subject</label> 
+  
+<%= f.text_field :subject %></p>
+  <p>
+  <label class="labeloverride">Body </label>
+  
+ <%= replay_unknown_message.body %> 
+  </p>
+  
+  <p>
+  <label class="labeloverride">Body </label>
+  
+ <%= f.text_area :body ,:value=>""%>
+  </p>
+
+ <p><%= submit_tag "Send" %></p>
+<% end %>
+
+    <div>
+ 
+    </div>
+  </div>  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

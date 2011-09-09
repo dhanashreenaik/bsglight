@@ -1,0 +1,26 @@
+<div style="padding:20px;">
+<form action="/add_frommail" method="post">
+  Add From Email <%=text_field_tag "addfromemail","",:style=>"margin-left:50px;width:300px;"%>
+  <br/>
+  <p style="padding:5px;padding-left:150px;"><%=submit_tag "Submit",:style=>"width:150px"%></p>
+</form>
+</div>
+<div style="padding:20px;">
+<form  method="post" action="/add_signature">
+Select From Emamil
+<select name="selectfrom" style="margin-left:20px">
+  <%for frommail in @frommail%>
+  <option value="<%=frommail.id%>"><%=frommail.frommail%></option>
+  <%end%>
+</select>
+<br>
+Add Signature Label
+<%=text_field_tag "signlabel","",:style=>"margin-left:22px;width:200px;margin-top:5px;"%>
+<br/>
+Add Signature 
+<%=text_area_tag "signature","",:style=>"margin-left:58px;margin-top:5px;"%>
+<br/>
+<%=submit_tag "Submit",:style=>"width:150px;margin-left:148px;margin-top:5px;"%>
+</form>
+
+</div>

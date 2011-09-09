@@ -1,0 +1,32 @@
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Edit Link </span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		<form action="/admin/links/update/<%=@link.id%>"  method="post">
+
+                    <label>Link Text *:</label>
+					<div class="formElement">
+					    <%=text_field "link","link_name" %>
+					</div>
+
+                    <label>Link src *:</label>
+					<div class="formElement">
+					    <%=text_field "link","link_src" %>
+					</div>
+					
+				
+					<button type="submit" class="submitButton">
+						<span>Update</span>
+					</button>
+				
+				
+
+				</form>
+		</div>
+	
+	
+</div>

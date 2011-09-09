@@ -1,0 +1,45 @@
+<% @paginated_objects.each do |object| %>
+<li class="itemInList">
+	<div class="itemInListDate">
+		<%= I18n.l object.created_at, :format =>:verb %>
+	</div>
+	<div class="itemInListBody">
+		<div class="itemInListTitle">
+                        <%if object.class == Groupshow%>
+                          <%= link_to object.title, "/admin/groupshows/#{object.id}" %>
+                  
+                            <span style="float:right"> <font style="color:#cccccc;font-size:13px">groupshow</font></span>
+                        <%else%>    
+                          <%= link_to object.title, item_path(object) %>
+                        <%end%>
+                  
+		</div>
+		<div class="itemInListActions">
+                      <%if object.class == Groupshow%>
+                                <%= link_to I18n.t('general.link.edit'), "/admin/groupshows/#{object.id}/edit"%> |
+                      <%else%>
+                  	<% if object.has_permission_for?('edit', @current_user, @current_container)  -%>
+				<%= link_to I18n.t('general.link.edit'), edit_item_path(object)%> |
+			<% end -%>
+                     <%end%>           
+                      <%if object.class == Groupshow%>          
+               
+                       <%= link_to I18n.t('general.link.delete'), "/admin/groupshows/delete/#{object.id}", :method => :delete,:confirm=>"Are You Sure" %> | 
+                     <%else%>   
+                         <%# if object.has_permission_for?('destroy', @current_user, @current_container) %>
+			 
+                          <%= link_to I18n.t('general.link.delete'), item_path(object), :method => :delete,:confirm=>"Are You Sure" %> | 
+                         
+                        <%# end -%> 
+                     <%end%>     
+                        
+		</div>
+		<div class="itemInListTags"><%#= keywords_links_list_for(object) %></div>
+	</div>
+	<!-- div class="itemInListMore">
+		<%# garder le + pour faire un tool tip avec des infos complémentaires%>
+		<%#= link_to '+', item_path(object) %>
+	</div-->
+</li>
+<% end %>
+

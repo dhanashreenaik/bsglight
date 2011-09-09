@@ -1,0 +1,71 @@
+<style>
+  .formElement textarea {
+    height:50px;
+    width:320px;
+  } 
+  </style>
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+          <span id="item_count">Edit Groupshow </span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+		
+<form action="/admin/groupshows/update/<%=@groupshow.id%>" method="post">
+
+  <label>Title </label>
+  <div class="formElement">
+   <%=text_field "groupshow","title"%>
+  </div> 
+  
+  <label>Description </label>
+  <div class="formElement">
+    <%=text_field "groupshow","description"%>
+  </div>  
+  
+  <label>ARTISTS </label>
+    <div class="formElement">
+    <%selecteduser = @user_ids%>
+    <%#if @workspace%>
+      <%#selecteduser<<@workspace.creator_id%>
+      <%#=hidden_field "exhibition","workspace_ids",:value=>@workspace.id%>
+    <%#end%>
+    <%= select_tag "groupshow[user_ids]", options_from_collection_for_select(@artists, 'user_id', 'full_name', :selected =>selecteduser, :disabled => selecteduser), :multiple => true, :size => 6 %>
+       <%#=link_to "Make Required User As Artist","/admin/profiles"%> 
+    <%#= @current_object.users.map{ |e| "<input type='hidden' value='#{e.id}' name='exhibition[user_ids][]' id='exhibition_user_ids'>" }.join(' ') %>
+<!--    <input id="filter3" style="size:20px;">	 -->
+    </div>  
+<!--
+<br /><br />
+  <label>TIMING PART</label> <br />  -->  
+<%#=@current_object.timing.period_id%>
+  <% #f.fields_for :timing do |ff| %>
+    <%#= add_timing_fields(:form => ff, :places_list => @places, :period_used => true, :one_day => false,
+        :time_used => false,:period_id=>@oldtimingperiodid) %>
+  <%# end %>
+ <!-- <label>Publish</label><br />
+  <div class="formElement">
+            Yes  <%#=radio_button("exhibitions", "publish", "1")%><br/>
+            No   <%#=radio_button("exhibitions", "publish", "0")%>
+  </div>-->
+<%#= link_to 'Show', @groupshow %> |
+<%#= link_to 'Back', groupshows_path %>
+<label>Note</label>
+  <div class="formElement">
+    <%= text_area :groupshow, "note" ,:cols=>"25",:rows=>"20"%>
+  </div>  
+<label>Period</label>
+  <div class="formElement">
+  <%= select_tag :period_id, options_for_select(Period.all.map{ |e| [e.name, e.id] }, @period_id.id), :label => 'Period' %>
+  </div>  
+  <button type="submit" class="submitButton">
+	<span>Update</span>
+  </button>
+ 
+</form>
+
+		</div>
+	
+	
+</div>

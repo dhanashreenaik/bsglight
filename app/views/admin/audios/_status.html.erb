@@ -1,0 +1,11 @@
+<script type="text/javascript">
+  get_encoding_progress('<%= object.id %>','<%= object.class.to_s.underscore %>');
+</script>
+<div id="states">
+    <% if object.state == 'uploaded' %>
+        <%= object.state.capitalize%>
+        <%= image_tag "/images/loader.gif" %>
+    <% else %>
+        <%= object.state.capitalize %>
+    <% end %>
+</div>

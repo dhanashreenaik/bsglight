@@ -1,0 +1,199 @@
+<script language="javascript"> 
+function toggle() {
+	var ele = document.getElementById("bioToggle");
+	var text = document.getElementById("displayText");
+	if(ele.style.display == "block") {
+    		ele.style.display = "none";
+  	}
+	else {
+		ele.style.display = "block";
+	}
+} 
+</script>
+
+<style>
+  
+ .menuLabel a:link {
+color: #9C9C9C;
+}
+.menuLabel a:visited {
+color: #9C9C9C;
+}
+ .menuLabel a:hover {
+color: #9C9C9C;
+background-color: #333333;
+text-decoration: none;
+text-transform: none; 
+}
+ .menuLabel a:active {
+color: #9C9C9C;
+}
+
+  </style>
+
+<% blank_main_div(:title => @current_object.full_name, :hsize => 'sixH') do %>
+
+  <div class="userDetails">
+    <div id="allll">
+<!--
+      <div id="ggg" style ="margin: Opx; padding: Opx; float: left">
+        <%#= render :partial => "admin/profiles/profile_show", :locals => { :profile => @current_object } %>
+      </div>
+
+      <div id="ddd" style ="margin: Opx; padding: Opx; float: right">
+        <%#= render :partial => 'admin/profiles/specific/artist_show', :locals => { :profile => @current_object, :no_bio => true } %>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <a id="displayText" href="javascript:toggle();"><b>Biography :</b></a><br />
+
+<div id="bioToggle" style="display: none">
+
+		<font size=1pt>    <%#=h @current_object.biography %></font>
+-->
+</div>
+<br/><br/>
+    <%# if @current_object.user %>
+
+      <%= render :partial => 'admin/profiles/data' %>
+    
+    <%# else %>
+      
+    <%# end %>
+    
+  </div>
+
+<% end %>
+
+<div class="rightBlocks">
+
+<!--  
+  <div class="itemShowRightBlock">
+    <%#= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+    <%#= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+  </div>
+-->
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader threeH">User Information </div><div class="blockCornerRight"></div>
+    	<div class="blockElementBody u-info ">
+      	<!-- TODO TRANSLATE -->
+<table>
+<tr align="left">
+<td valign="top">
+  <b>Full name </b>
+</td>
+<td valign="top">
+  <%=h @current_object.full_name %>
+</td>
+</tr>
+
+
+
+<tr align="left">
+<td valign="top">
+  <b>Email </b>
+</td>
+<td valign="top">
+  <div class="menuLabel">
+  <%=link_to @current_object.email_address, "/admin/profiles/compose_user_mail/#{@current_object.id}", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+ </div>
+</td>
+<tr>
+
+<tr align="left">
+<td valign="top">
+	<b>Phone number </b> 
+</td>
+<td valign="top">
+  <%=h @current_object.phone_number %>
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+	<b> Website </b>
+</td>
+<td valign="top">
+  <%#= link_to @current_object.website, @current_object.website, :target => "_blank" %>
+  <%=link_to @current_object.website, @current_object.website, :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+  <b>Address </b>
+</td>
+<td valign="top">
+  <%=h @current_object.address %><br />
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+  <b>Suburb </b>
+</td>
+<td valign="top">
+  <%=h @current_object.suburb %><br />
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+  <b>Post code </b>
+</td>
+<td valign="top">
+  <%=h @current_object.zip_code %><br />
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+  <b>State </b>
+</td>
+<td valign="top">
+  <%=h @current_object.country_state %><br />
+</td>
+</tr>
+
+<tr align="left">
+<td valign="top">
+  <b>Country </b>
+</td>
+<td valign="top">
+  <%=h @current_object.country %><br />
+</td>
+</tr>
+
+<tr align="left">
+<td colspan=2>
+ <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+<td>
+</tr>
+
+<tr align="left">
+<td colspan=2>
+    <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+</td>
+
+</tr>
+
+<tr align="left">
+<td colspan=2>
+<%= link_to I18n.t('general.link.edit'), edit_admin_profile_path(@current_object)%>
+</td>
+</tr>
+
+</table>
+    </div>
+  </div>
+
+  <!--<div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">Categories</div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <%= (l=@current_object.categories.all(:order => "name ASC")).first ? l.map{ |e| e.name+'<br />' } : '(none)' -%>
+    </div>
+  </div>
+-->
+</div>

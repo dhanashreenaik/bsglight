@@ -1,0 +1,30 @@
+<% blank_main_div(:title => 'Contact Categories List') do %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @categories.each do |cat| %>
+  <tr>
+    <td><%=h cat.name %></td>
+    <td><%= link_to 'Edit', admin_categories_path(:id => cat.id) %></td>
+    <td><%= link_to 'Destroy', admin_category_path(cat), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to('New category', admin_categories_path)+"<br/><br/>" if params[:id] %>
+
+<b><%= @category.new_record? ? 'New category' : 'Edit category' %><b/><br/>
+<% form_for :category,
+  :url => (@category.new_record? ? admin_categories_path : admin_category_path(@category)),
+  :html => { :method => (@category.new_record? ? :post : :put) },
+  :builder => BlankFormBuilder do |f| %>
+  <%= f.text_field :name, :label => 'Name : ' %>
+  <%= blank_form_submit_button(:object => @category) %>
+<% end %>
+
+
+<% end %>

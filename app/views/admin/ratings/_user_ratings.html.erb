@@ -1,0 +1,13 @@
+<% for object in @objects %>
+<li class="itemInList">
+	<div class="itemInListDate"><%= I18n.l object.created_at, :format =>:verb %></div>
+	<div class="itemInListBody">
+		<div class="itemInListTitle">
+			<%= link_to object.rateable.title, item_path(object.rateable) %>
+		</div>
+		<div class="itemInListActions">
+			<%= I18n.t('general.common_word.by').capitalize %> : <%= link_to((object.user['firstname']+' '+object.user['lastname']), admin_user_path(object.user['id'])) %>
+		</div>		
+	</div>
+</li>
+<% end -%>

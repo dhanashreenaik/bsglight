@@ -1,0 +1,32 @@
+
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Manage Application</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		
+		<%for app_home in  @app_home%>
+			
+			<p><h3>
+                          <%=@oldlabelvalue['houres']%>
+                        </h3><%=app_home.houres %></p>
+                        
+			<p><h3><%=@oldlabelvalue['openings']%></h3><%=app_home.openings %></p>
+        
+			<p><h3><%=@oldlabelvalue['staff']%></h3><%=app_home.staff %></p>
+			<br/>
+			<%#=link_to "Edit", "/admin/app_homes/#{app_home.id}/edit"%>  
+			<%#=link_to "Delete", "/admin/app_homes/#{app_home.id}" ,:method=>"delete" ,:confirm=>"Are You Sure"%>
+			<%#=link_to "Show", "/admin/app_homes/#{app_home.id}"%>
+			
+			</p>
+			
+		<%end%>
+	</div>
+	
+	
+</div>

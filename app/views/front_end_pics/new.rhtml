@@ -1,0 +1,22 @@
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter Here Front End Picture</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	            <form action="/admin/front_end_pics" method="post"   enctype="multipart/form-data">
+                	<label>Insert Here Front End Picture Photo File </label>
+			<div class="formElement">
+                             <%= file_field  :front_end_pic,:front_end_pics %>
+                        </div>
+                        <label>Show In Front End </label>
+			<div class="formElement">
+                             <%= check_box_tag :show_in_front, value = "1", checked = false, options = {:style=>"width:20px;"}%>
+                        </div>
+                           	<button type="submit" class="submitButton">
+						<span>Create</span>
+					</button>
+				</form>
+		</div>
+	</div>

@@ -1,0 +1,130 @@
+<style type="text/css">
+	body{
+    color: #333333;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+	}
+	#compose-mail{
+		width:550px;
+		height:520px;
+		border:1px solid #dedede;
+		background:#f3f3f3;
+		border-radius:5px;
+		padding:10px;
+		float:right;
+    margin-top:-87px;
+	}
+	
+#compose-mail lable{
+	display:block;
+	
+	}
+	.text-input{
+        border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    height: 22px;
+    margin-bottom: 12px;
+    padding: 5px;
+    width: 420px;
+	}
+
+.bsg-message{	
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 5px 5px;
+    width: 427px;
+}
+.mail-input{
+	margin-left:69px;
+}
+
+.email-select{
+    height: 30px;
+    padding: 4px;
+	margin-left:9px;
+	width:426px;
+	margin-top:12px;
+}
+.bsg-signature{
+    margin-left: 46px;
+    margin-top: 12px;}
+	
+	.message-area{
+    height: 120px;
+    margin-left: 20px;
+	}
+	.subject-input{
+		margin-left:57px;
+	}
+	.message-label{
+		vertical-align:top;
+	}
+	.labeloverride{
+	  text-align: left;
+	  padding-top:6px;
+	  width:55px;
+	}
+</style>
+<script>  
+             function openwindow(){
+               window.open ("http://<%=request.host_with_port%>/signup","Register New User");
+             }
+</script>
+
+<script>
+function change_sign_1()
+{
+  new Ajax.Request(document.change_sign1.action,
+      {asynchronous:true, evalScripts:true, parameters:Form.serialize(document.change_sign1)});
+      return false;
+  
+}
+</script>
+<div id="compose-mail">
+<p style="margin-left:150px">
+  
+<a href="#" onclick="openwindow();">Add An User</a>
+</p>
+<h2>Compose</h2>
+
+<% form_for :message, :url=>"/admin/create_sent_mail" do |f| %>
+  
+  <p >
+    <label class="labeloverride">To</label>  <%=text_field_with_auto_complete :user, :email,{},{:tokens =>',',:frequency=>0.1 ,:style=>"width:150px;" }%>
+    
+  </p><br/>
+
+  <label class="labeloverride">Subject</label> 
+  
+  <%= f.text_field :subject ,:style=>"width:265px"%></p>
+  <p>
+  <label class="labeloverride">Body </label>
+  
+  <%= f.text_area :body ,:rows=>12%>
+  </p>
+  <br/>
+ <label class="labeloverride">Signature </label>
+<textarea rows="2" cols="20" name="signature" id="signature" > 
+
+</textarea>
+
+  <p><%= submit_tag "Send",:style=>"width: 160px; margin-left: 65px;" %></p>
+<% end %>
+
+    <div>
+    <div style="float:left">
+    <% form_remote_tag :url => '/find_signature_label',:html=>{:name=>"change_sign1"} do -%>
+          <select name="fromemail" onchange="change_sign_1()">
+          <option value="">Select Email For Signature</option>
+          <%for fremail in frommail%>
+            <option value="<%=fremail.id%>"><%=fremail.frommail%></option>
+          <%end%>  
+          </select>
+        <%#=submit_tag 'Select a From Mail' ,:style=>"width:150px;"%>
+        
+    <% end -%>
+    </div>
+    <div id="update_label" style="float:left"> 
+    </div>
+    </div>
+  </div>  

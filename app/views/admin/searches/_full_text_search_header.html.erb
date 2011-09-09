@@ -1,0 +1,20 @@
+<div class="display_search_result">
+  <h1><%=I18n.t('layout.search.your_search_result')%></h1>
+  <h3><%=I18n.t('layout.search.you_have_searched_for')%>&nbsp;<%= @search.full_text_field %></h3>
+  <% if @correction %>
+    <h3>Did You Mean<%=link_to "<b><u>"+@correction+"</u></b>" ,"/searches/index?search[full_text_field]="+@correction+"&search[category]="+@search.category %><br /></h3>
+  <% end %>
+  <% if !@similar_items.nil? %>
+    <h3>Similar Results</h3>
+    <% @similar_items.each do |si| %>
+      <%= image_tag si.icon %>
+      <%= link_to si.title, item_path(si) %>
+    <% end %>
+  <% end %>
+  <br><br>
+  <h3>Filter Results By</h3>
+  <%= radio_button("filter", "item", "latest",:onclick => remote_function(:url => "/searches/filter?search=#{params[:search]}&filter=created_at", :update => "results"))%>Date
+  <%= radio_button("filter", "item", "title", :onclick => remote_function(:url => "/searches/filter?search=#{params[:search]}&filter=title", :update => "results"))%>Title
+  <%= radio_button("filter", "item", "most_commented", :onclick => remote_function(:url => "/searches/filter?search=#{params[:search]}&filter=commented", :update => "results")) %>Comments
+  <%= radio_button("filter", "item", "best_rated", :onclick => remote_function(:url => "/searches/filter?search=#{params[:search]}&filter=rated", :update => "results")) %>Rating
+</div>

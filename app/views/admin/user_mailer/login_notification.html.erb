@@ -1,0 +1,17 @@
+<%= I18n.t('mailer.signup_notification.account_created') %>
+
+  <%= I18n.t('user.field.login_label') %>  :  <%= @user_email %>
+  <%="Login By Email"%>
+  <%= I18n.t('user.field.password_label') %> :  <%= @user_password %>
+
+<%= "Click Here To Login" %> :
+
+  <%= @url %>
+
+<%#= I18n.t('mailer.signup_notification.justification') %>
+
+<%= I18n.t('mailer.common.thanks') %>
+
+<%= I18n.t('mailer.common.greetings') %>
+
+<%= I18n.t('mailer.common.signature', :who => @site) %>

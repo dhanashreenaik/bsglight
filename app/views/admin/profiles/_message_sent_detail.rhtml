@@ -1,0 +1,15 @@
+
+<h2><%=message_sent_detail.subject%></h2>
+<br/>
+<h5>From:-<%=message_sent_detail.author.email%></h5>
+<%rec_array=[]
+ message_sent_detail.recipients.each {
+   |x|
+   rec_array << x.email
+ }
+%>
+
+<h5>To:-<%=rec_array *  " and "%></h5>
+
+
+<%=message_sent_detail.body%>

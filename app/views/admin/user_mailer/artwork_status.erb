@@ -1,0 +1,13 @@
+Dear  <%=@name%>,
+
+You Have Submited The Artwork To The Following Competition <%=@competionname%>
+<%if @status == "selected"%>
+Congrats It Is Selected
+<%end%>
+<%if  @status == "unselected"%>
+Sorry It Is Not Selected
+<%end%>
+<%if  @status == "maybe"%>
+It Is Pending
+<%end%>
+Thanks  For Your Support

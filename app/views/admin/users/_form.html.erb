@@ -1,0 +1,47 @@
+<% form_for ['admin',@current_object], :builder => BlankFormBuilder, :url => @current_object.new_record? ? admin_users_path : admin_user_path(@current_object), :html => { :multipart=> true } do |f| -%>
+
+  <% blank_main_div(:title => "User #{@current_object.new_record? ? 'creation' : 'edition'}") do %>
+      <%# f.field :avatar,
+        :label => I18n.t('user.field.photo_label')+" : " do %>
+        <%#= file_field 'user', 'avatar', :class => 'file' %>
+      <% #end %>
+
+      <%= f.text_field :email,
+        :label => I18n.t('user.field.email_label')+" * : ",
+        :hint => "Put the email address safely, it will be used to activate your user account" %>
+       <%= f.password_field :password,
+        :label => I18n.t('user.field.password_label')+" * : ",
+        :hint => @current_object.new_record? ? "Select your password" : I18n.t('user.field.password_hint') %>
+
+      <%= f.password_field :password_confirmation,
+        :label => I18n.t('user.field.confirm_password_label')+" * : ",
+        :hint => @current_object.new_record? ? "Select your password" : I18n.t('user.field.confirm_password_hint') %>
+
+      <%# if @current_user && @current_user.has_system_role("admin") %>
+        <%#= f.select :profilable_type, available_profiles.collect {|p| [ I18n.t('general.profile.'+p), p ] },
+          :id => 'profile_selecta', :label => I18n.t('user.field.profilable_type_label')+" : ",
+          :hint => I18n.t('user.field.profilable_type_hint') %>
+      <%# else %>
+        <%#= f.hidden_field :profilable_type, :value => @current_object.profilable_type %>
+      <%# end %>
+      <%#= render :partial => "#{@profile.class.to_s.underscore.pluralize}/form", :locals => {:f => f } %>
+
+      <% f.fields_for :profile do |p| %>
+        <%= render :partial => 'admin/profiles/profile_fields', :locals => { :f => p } %>
+      <% end %>
+
+      <% if is_allowed_free_user_creation? && @current_object.new_record? && !@current_user %>
+        <%= yacaph_block %>
+        <% if @captcha_valid == false %>
+          <div id="errors_for_captcha">
+            <div class="formError"><%= I18n.t("general.common_word.ajax_message_captcha_invalid") %></div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= blank_form_submit_button(:object => @current_object) %>
+
+<% end %>
+
+
+<% end -%>

@@ -1,0 +1,12 @@
+<h1>Editing frommail</h1>
+
+<% form_for(@frommail) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @frommail %> |
+<%= link_to 'Back', frommails_path %>

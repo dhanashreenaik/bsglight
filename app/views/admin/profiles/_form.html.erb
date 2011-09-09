@@ -1,0 +1,59 @@
+<% blank_main_div(:title => 'Contact creation', :hsize => 'sixH') do %>
+
+  <%= render :partial => 'admin/profiles/profile_fields', :locals => { :f => f } %>
+  <%= blank_form_submit_button(:object => @current_object) %>
+
+<% end %>
+
+<div class="rightBlocks">
+  <div class="itemShowRightBlock">
+    <% if @current_object.new_record? %>
+      <%= I18n.t('general.field.created_at')+' '+I18n.l(Time.now, :format => :verb) %>
+    <% else %>
+      <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+      <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+    <% end %>
+  </div>
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">Actions</div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <%= link_to("Back to the list", admin_profiles_path) if @current_user.has_system_role('admin')   %>
+      
+      <%= link_to("Password", "/admin/profiles/edit_password/#{@current_object.user.id}") if @current_user.has_system_role('admin')   %>
+      <% if !@current_object.new_record? %>
+        <%= link_to "Show", admin_profile_path(@current_object) %>
+  <%#= link_to I18n.t('general.object.comment').pluralize.capitalize, admin_comments_path %>
+  <%#= link_to I18n.t('rating.index.link').pluralize, admin_ratings_path %>
+  <%#= link_to I18n.t('general.notification.link'), admin_user_notifications_path(@current_object) %>
+        <% if @current_object.user && @current_object.user.activation_code.to_s.size > 10 %>
+          <%= link_to I18n.t('general.link.delete'), "javascript:;",
+            :class => "deleteLink",
+            :modal_id => "#modalDelete_#{@current_object.id.to_s}"
+        %>
+        
+          <div style="display:none">
+            <div id="modalDelete_<%=@current_object.id.to_s%>" class="modalDelete">
+              <p>I18n.t('general.common_word.confirmation')</p>
+              <%= link_to I18n.t('general.common_word.yes1'), admin_profile_path(@current_object.id), :method => :delete%> |
+              <%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+            </div>
+          </div>
+        <% elsif @current_object.user %>
+          <%= link_to (@current_object.user.activation_code=='locked' ? 'Unlock' : 'Lock'), locking_admin_user_path(@current_object.user_id) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+      <%= 'Categories' %> <!-- TODO HINT -->
+    </div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <%= select_tag "profile[category_ids][]", options_from_collection_for_select(Category.all, 'id', 'name', :selected => @current_object.category_ids), :multiple => true, :size => 6 %>
+    </div>
+  </div>
+
+</div>

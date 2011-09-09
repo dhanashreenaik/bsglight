@@ -1,0 +1,18 @@
+<h1>Listing emaillabels</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @emaillabels.each do |emaillabel| %>
+  <tr>
+    <td><%= link_to 'Show', emaillabel %></td>
+    <td><%= link_to 'Edit', edit_emaillabel_path(emaillabel) %></td>
+    <td><%= link_to 'Destroy', emaillabel, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New emaillabel', new_emaillabel_path %>

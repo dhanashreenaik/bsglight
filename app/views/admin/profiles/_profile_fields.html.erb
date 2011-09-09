@@ -1,0 +1,46 @@
+<%#*<label><%= I18n.t('people.field.salutation_label') %>
+<%#*</label>%>
+<%#*<div class="formElement">%>
+  <%# %w(Mr Ms Miss).each do |s|  %>
+    <%#= s %>
+    <%#= radio_button_tag "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}[salutation]", s, (f.object.salutation == s), :class => "checkboxes" %>
+  <%# end %>
+<%#*</div>%>
+
+<%= f.text_field :first_name, :label => I18n.t('user.field.first_name_label')+" * : ", :hint => "Put your first name" %>
+
+<%#= f.text_field :first_name, :label => I18n.t('user.field.middle_name_label')+" * : ", :hint => "Put your middle name" %>
+
+<%= f.text_field :last_name, :label => I18n.t('user.field.last_name_label')+" * : ", :hint => "Put your last name" %>
+
+<!--<label><%#= I18n.t('people.field.gender_label') %> : </label>
+<div class="formElement">
+  <%# %w(M F).each do |s|  %>
+    <%#= s %>
+    <%#= radio_button_tag "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}[gender]", s, (f.object.gender == s), :class => "checkboxes" %>
+  <%# end %>
+</div>
+-->
+<%#= f.date_select :birth_date, { :start_year => 1900, :end_year => 2000, :include_blank => true }, :label => I18n.t('user.field.birth_date_label')+" * : ", :hint => "TODO hint" %>
+
+<%#*<label><%= 'Categories' %>
+<%#*</label>%>
+<%#*<div class="formElement">%>
+  <%# Category.all.each do |c| %>
+    <%#= check_box_tag "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}[category_ids][]", c.id, (f.object.categories.include?(c)), :class => "checkboxes" %>
+    <%#= c.name %>
+  <%# end %>
+<%#*</div>%>
+
+
+<!--<div class="formElement">
+  <%#= f.text_field :nationality %>
+</div>-->
+
+<%#= check_box_tag "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}[category_ids][]", c.id, (f.object.categories.include?(c)), :class => "checkboxes" %>
+<%#= f.check_box :getting_newsletter, { :class => "checkboxes" } %>
+
+
+<%# f.fields_for :specific_info do |si| %>
+  <%= render :partial => 'admin/profiles/specific/artist_fields', :locals => { :f => f } %>
+<%# end %>

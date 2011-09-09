@@ -1,0 +1,35 @@
+<% form_for @person,
+			:builder => BlankFormBuilder,
+    		:url => (@person.new_record? ? (current_workspace ? admin_workspace_people_path(current_workspace.id) : admin_people_path) : (current_workspace ? admin_workspace_person_path(current_workspace.id, @person.id) : admin_person_path(@person.id))),
+    		:html => {:method => (@person.new_record? ? :post : :put), :multipart=> true} do |f| -%>
+
+<div class="itemShowLeft">
+	<div class="itemShowLeftBody">
+		<h2><%= I18n.t('people.new.title') %></h2>
+		
+		<%= f.text_field :email, :label => I18n.t('people.field.email_label') +" * : " %>
+		<%= f.text_field :first_name, :label => I18n.t('people.field.first_name_label') +" : " %>
+	    <%= f.text_field :last_name, :label => I18n.t('people.field.last_name_label') +" : " %>
+		<%= f.text_field :primary_phone, :label => I18n.t('people.field.primary_phone_label') +" : " %>
+		<%= f.text_area :notes, :size => "40x6", :label => I18n.t('people.field.notes_label') +" : "%>
+		<%= f.hidden_field :origin,:value=>"Creation"  %>
+		<% button_text = @person.new_record? ? I18n.t('general.button.create') : I18n.t('general.button.update') %>
+	    <button type="submit" class="submitButton continueUpdate"><span><%= button_text%></span></button>
+		<button type="submit" class="submitButton continue" name="continue"><span>Create and continue</span></button>
+	</div>
+</div>
+
+<div class="rightBlocks">
+	<div class="itemShowDate">
+		<%= I18n.l Time.now, :format =>:verb %>
+	</div>
+	<div class="itemShowRightBlock">
+		<div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+			<%= I18n.t("item.show.associated_workspace") %><!-- TODO HINT -->
+		</div><div class="blockCornerRight"></div>
+		<div class="blockElementBody">
+			<%= associated_workspaces_checkboxes(f, @current_object, 'workspace_edit') %>
+		</div>
+    </div>
+</div>
+<% end %>

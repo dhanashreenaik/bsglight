@@ -1,0 +1,47 @@
+
+
+
+
+
+
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter Here Promoting Stuff Title And Description</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		
+				<form action="/admin/promoting_stuffs" method="post">
+
+					<label>Title :</label>
+					<div class="formElement">
+					<%=text_field "promotingstuff","title"%>
+					 </div>
+					 
+					  <label>Link :</label>
+					<div class="formElement">
+					*http:// is required before link*
+					<br/>
+					<%=text_field "promotingstuff","link",:value=>"http://" %>
+					 </div>
+					 
+					 
+					 <label>Description :</label>
+					<div class="formElement">
+					<%=text_area "promotingstuff","description",:cols=>30,:rows=>1,:style=>"width:432px;"%>
+					 </div>
+
+					<button type="submit" class="submitButton">
+						<span>Create</span>
+					</button>
+				
+				
+
+				</form>
+		</div>
+	
+	
+</div>

@@ -1,0 +1,83 @@
+<style>
+  .formElement{
+    padding-left:50px;
+  }
+  
+</style>
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter Here Application Details</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	<form action="/admin/app_homes" method="post">
+             <label style="padding-top:10px"><%=text_field_tag "headerhoures" ,"houres",:style=>"width:170px;"%></label>
+         		<div class="formElement">
+				    <%=text_field "app_home","houres" %>
+			</div>
+	     <label style="padding-top:10px"><%=text_field_tag "headeropenings" ,"openings",:style=>"width:170px;"%></label>
+                	<div class="formElement">
+				    <%=text_area "app_home","openings" ,:cols=>25,:rows=>1%>
+			</div>
+	     <label style="padding-top:10px"><%=text_field_tag "headerstaff" ,"staff",:style=>"width:170px;"%></label>
+			<div class="formElement">
+				    <%=text_area "app_home","staff" ,:cols=>25,:rows=>1%>
+			</div>
+             <label style="padding-top:10px"><%=text_field_tag "headercosts" ,"costs",:style=>"width:170px;"%></label>
+             		<div class="formElement">
+				    <%=text_area "app_home","costs" ,:cols=>25,:rows=>1%>
+			</div>
+	     <label style="padding-top:10px"><%=text_field_tag "headergallery_planlink" ,"gallery_planlink",:style=>"width:170px;"%></label>
+             		<div class="formElement">
+				    <%=text_field "app_home","gallery_planlink",:value=>"http://" %>
+			</div>
+             <label style="padding-top:10px"><%=text_field_tag "headerbookings" ,"bookings",:style=>"width:170px;"%></label>
+                	<div class="formElement">
+				    <%=text_area "app_home","bookings" ,:cols=>25,:rows=>1%>
+			</div>
+             <label style="padding-top:10px"><%=text_field_tag "headerbsgproposallink" ,"bsgproposallink",:style=>"width:170px;"%></label>
+             		<div class="formElement">
+				    <%=text_field "app_home","bsgproposallink",:value=>"http://" %>
+			</div>
+	      <label style="padding-top:10px"><%=text_field_tag "headeropening_night","opening_night",:style=>"width:170px;"%></label>
+			<div class="formElement">
+                        	    <%=text_area "app_home","opening_night" ,:cols=>25,:rows=>1%>
+			</div>
+              <label style="padding-top:10px"><%=text_field_tag "headerstaffed","staffed",:style=>"width:170px;"%></label>
+              		<div class="formElement">
+				    <%=text_field "app_home","staffed"%>
+			</div>
+	      <label style="padding-top:10px"><%=text_field_tag "headermailing_list_number","mailing_list_number",:style=>"width:170px;"%></label>
+              		<div class="formElement">
+				    <%=text_field "app_home","mailing_list_number" %>
+			</div>
+	      <label style="padding-top:10px"><%=text_field_tag "headermailing_list_desc","mailing_list_desc",:style=>"width:170px;"%></label>
+			<div class="formElement">
+                                    <%=text_field "app_home","mailing_list_desc" %>
+			</div>
+               <label style="padding-top:10px"><%=text_field_tag "headerinvitation","invitation",:style=>"width:170px;"%></label>
+			<div class="formElement">
+				    <%=text_field "app_home","invitation"%>
+			</div>
+	       <label style="padding-top:10px"><%=text_field_tag "headeradvertising","advertising",:style=>"width:170px;"%></label>
+			<div class="formElement">
+				    <%=text_area "app_home","advertising" ,:cols=>25,:rows=>1%>
+			</div>
+	       <label style="padding-top:10px"><%=text_field_tag "headersales","sales",:style=>"width:170px;"%></label>
+			<div class="formElement">
+				    <%=text_area "app_home","sales" ,:cols=>25,:rows=>1%>
+			</div>
+               <label style="padding-top:10px"><%=text_field_tag "headeryour_obligations","your_obligations",:style=>"width:170px;"%></label>
+               		<div class="formElement">
+				    <%=text_area "app_home","your_obligations" ,:cols=>25,:rows=>1%>
+			</div>
+					<button type="submit" class="submitButton">
+						<span>Create</span>
+				</button>
+	</form>
+		</div>
+	
+	
+</div>

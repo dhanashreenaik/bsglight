@@ -1,0 +1,69 @@
+<%#= render :partial => "latest" %>
+ <% blank_main_div(:title => 'Home Page', :hsize => 'sixH') do %>
+    <script>
+      $(document).ready(function() {
+        $("#tabass").tabs();
+      });
+    </script>
+    <div id="tabass">
+        <ul>
+            <li><a href="#fragment-3"><span>My competitions</span></a></li>
+            
+            <li><a href="#fragment-2"><span>My exhibitions</span></a></li>
+            
+            <li><a href="#fragment-4"><span>My invoices</span></a></li>
+        </ul>
+
+             <div id="fragment-3">
+             
+                    <% if !(competitions_users=@current_user.competitions_users.all(:include => [:competition], :order => 'created_at DESC')).empty? %>
+                          <% competitions_users.each do |eu| %>
+                                <%= link_to eu.competition.title, admin_competition_path(eu.competition_id) %> (State : <%= eu.state %>)
+                                <% if eu.state != 'validated' %>
+                                    <%= link_to_remote 'Payment Procedure', :url => invoicing_admin_invoices_url(:purchasable_type => eu.class.to_s, :purchasable_id => eu.id), :update => 'modal_space', :method => :get %>
+                                 <%end%>
+                                <%#= link_to 'submit artworks', artworks_wizard_admin_competitions_user_path(eu) %>
+                                <br />
+                          <% end %>
+                   <% else %>
+                          No competitions.
+                    <% end %>
+               </div>
+                           <div id="fragment-2">
+              <% if @current_user.has_system_role('artist') || @current_user.has_system_role('admin') %>
+                  
+                        <% if !(exhibitions_users=@current_user.exhibitions_users.all(:include => [:exhibition], :order => 'created_at DESC')).empty? %>
+                              <% exhibitions_users.each do |eu| %>
+                                    <%= link_to eu.exhibition.title, admin_exhibition_path(eu.exhibition_id) %> (State : <%= eu.state %>)
+                                    <% if eu.state=='invited' %>
+                                         <%= link_to_remote 'Accept', :url => invoicing_admin_invoices_url(:purchasable_type => eu.class.to_s, :purchasable_id => eu.id), :update => 'modal_space', :method => :get %> |
+                                         <%= link_to 'Refuse', update_state_admin_exhibitions_user_path(eu.id, :state => 'refused') %>
+                                    <% end %>
+                                  <%if ( eu.state == 'published'  || eu.state == 'validated')%>  
+                                    <%=link_to  "Add Artwork" ,"/admin/artworks/new?exhibition_id=#{eu.exhibition.id}"%> 
+                                   <%end%> 
+                                    <br />
+                              <% end %>
+                        <% else %>
+                              No exhibitions.
+                        <% end %>
+               <% else %>
+                          You have to be an artist user to be able to participate at exhibition events. Send a request to the administrator to upgrade your account.
+               <% end %>
+              </div>
+                <div id="fragment-4">
+                        <% if !(invoices=@current_user.invoices.all(:order => 'deadline DESC')).empty? %>
+                                  <% invoices.each do |i| %>
+                                    <%= link_to i.title, admin_invoice_path(i.id) %> (State : <%= i.state %>, Deadline : <%= I18n.l(i.deadline, :format => :short) %>)
+                                        <% if i.state != 'validated' %>
+                                              <%= link_to_remote 'Pay online', :url => new_admin_payment_url(:iid => i.id), :update => 'modal_space', :method => :get %>
+                                        <% end %>
+                                        <br />
+                                  <% end %>
+                        <% else %>
+                                  No invoices.
+                        <% end %>
+                </div>
+        <% end %>
+
+

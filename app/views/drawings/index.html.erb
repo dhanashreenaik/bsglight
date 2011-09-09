@@ -1,0 +1,27 @@
+
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Manage Drawing</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		
+		<%for drawing in  @drawing%>
+			
+			<p >Drawings Details   <%=drawing.drawingdetails%> 
+			
+			
+			<%=link_to "Edit", "/admin/drawings/#{drawing.id}/edit"%>  
+			<%=link_to "Delete", "/admin/drawings/#{drawing.id}" ,:method=>"delete" ,:confirm=>"Are You Sure"%>
+			<%=link_to "Show", "/admin/drawings/#{drawing.id}"%>
+			
+			</p>
+			
+		<%end%>
+	</div>
+	
+	
+</div>

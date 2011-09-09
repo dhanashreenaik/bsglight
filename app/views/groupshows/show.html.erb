@@ -1,0 +1,40 @@
+
+<title>Group Show: <%=@groupshow.title%></title><div class="objectList small">
+				<div class="blockCornerLeft"></div>
+				<div class="blockElementHeader sixH">
+					
+					<span id="item_count">Group Show: <%=@groupshow.title%></span>
+				</div>
+				<div class="blockCornerRight"></div>
+				<div class="contentList filtered sixH">
+<div class="description_comp_show"><b>Description  &nbsp;  &nbsp;  </b><%=@groupshow.description%></div>
+<b>Note  </b>
+  <%=@groupshow.note%>
+<br/><br/>
+  <br/>
+<b>Group Show Runs </b></br>
+  From <%=@groupshow.starting_date%><br/>
+  To <%=@groupshow.ending_date%>
+<br/>
+</div></div>
+      <div class="rightBlocks">
+        <div class="itemShowRightBlock">
+           <div class="blockCornerLeft"></div>
+           <div class="blockElementHeader twoH">What can I do?</div>
+           <div class="blockCornerRight"></div>
+           <div class="blockElementBody">
+                <!-- TODO TRANSLATE -->
+              <a href="/admin/profiles/2">Go Back</a>
+              <a href="/admin/workspaces/3/exhibitions/new">Add</a>
+              <a href="/admin/workspaces/3/exhibitions/70/edit">Edit</a>
+              <a modal_id="#modalDelete_70" class="deleteLink" href="javascript:;">Delete</a>
+                      <div style="display:none">
+                        <div class="modalDelete" id="modalDelete_70">
+                      <p>Are you sure you want to delete this item?</p>
+                      <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit();return false;" href="/admin/workspaces/3/exhibitions/70">yes</a> |
+                      <a class="deleteClose" href="javascript:;">no</a>
+                      </div>
+              </div>
+          </div>
+        </div>
+      </div>

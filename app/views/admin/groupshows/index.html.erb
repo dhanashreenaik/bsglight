@@ -1,0 +1,18 @@
+<h1>Listing groupshows</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @groupshows.each do |groupshow| %>
+  <tr>
+    <td><%= link_to 'Show', groupshow %></td>
+    <td><%= link_to 'Edit', edit_groupshow_path(groupshow) %></td>
+    <td><%= link_to 'Destroy', groupshow, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New groupshow', new_groupshow_path %>

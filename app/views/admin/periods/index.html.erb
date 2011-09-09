@@ -1,0 +1,34 @@
+<% blank_main_div(:title => 'Periods List') do %>
+
+<table>
+  <tr>
+    <th>Starting date</th>
+    <th>Ending date</th>
+  </tr>
+
+<% @periods.each do |period| %>
+  <tr>
+    <td><%=h period.starting_date %></td>
+    <td><%=h period.ending_date %></td>
+    <td><%= link_to 'Edit', admin_periods_path(:id => period.id) %></td>
+    <td><%= link_to 'Destroy', admin_period_path(period), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to('New period', admin_periods_path)+"<br/><br/>" if params[:id] %>
+
+<h1><%= @period.new_record? ? 'New period' : 'Period edition' %></h1>
+
+<% form_for @period,
+  :url => (@period.new_record? ? admin_periods_path : admin_period_path(@period.id)),
+  :html => { :method => (@period.new_record? ? :post : :put) },
+  :builder => BlankFormBuilder do |f| %>
+  <%#= f.error_messages %>
+    <%= f.text_field :starting_date, :label => 'Starting date', :id => 'datepicker_start', :ajax => false %>
+    <%= f.text_field :ending_date, :label => 'Ending date', :id => 'datepicker_end', :ajax => false %>
+    <%= blank_form_submit_button(:object => @period) %>
+<% end %>
+
+<% end %>

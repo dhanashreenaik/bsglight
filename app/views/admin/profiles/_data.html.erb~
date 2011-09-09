@@ -1,0 +1,123 @@
+<div id="tabass">
+    <ul>
+        <li><a href="#fragment-1"><span>Artworks</span></a></li>
+        <li><a href="#fragment-2"><span>Exhibitions</span></a></li>
+        <li><a href="#fragment-3"><span>Competitions</span></a></li>
+        <li><a href="#fragment-4"><span>Invoices</span></a></li>
+        <li><a href="#fragment-5"><span>Mail</span></a></li>
+    </ul>
+  <div style="font-size:10px;">
+    <div id="fragment-1">
+      <% profile_workspace = @current_object.profile_workspace || @current_object.user.private_workspace %>
+      <div style="float:right;">
+      <%if current_user.login=="admin" || current_user.login=="superadmin"%>
+      <%= link_to "add an artwork for that contact", new_admin_workspace_artwork_path(profile_workspace.id) %>
+      <%end%>
+      </div><br />
+        <% if !(artworks=profile_workspace.artworks).empty? %>
+          <% artworks.each do |a| %>
+            <%#= link_to(image_tag(a.image.url(:thumb).split("?")[0], :class => "image_peview"), a.image.url.split("?")[0])%>
+            <% blank_list_element(:date => a.created_at, :title => link_to(a.title, admin_workspace_artwork_path(profile_workspace.id, a.id))) do %>
+              <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+            <% end %>
+          <% end %>
+        <% else %>
+       No artworks for that user.
+    <% end %>
+    </div>
+    <div id="fragment-2">
+      <div style="float:right;">
+      <%if current_user.login=="admin" || current_user.login=="superadmin"%>
+      <%= link_to "add an exhibition", new_admin_workspace_exhibition_path(profile_workspace.id) %>
+      <%end%>
+      </div><br />
+      
+      <% if !(exhibitions_users=@current_object.user.exhibitions_users.all(:include => [:exhibition], :order => 'created_at DESC')).empty? %>
+        <% exhibitions_users.each do |eu| %>
+          
+          <%# blank_list_element(:date => eu.created_at, :title => link_to(eu.exhibition.title, admin_exhibition_path(eu.exhibition_id))+" with state '#{eu.state}'") do %>
+            <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+          <%# end %>
+          <% blank_list_element(:date => eu.exhibition.timing.starting_date, :title => link_to(eu.exhibition.title, admin_exhibition_path(eu.exhibition_id))) do %>
+   
+        <% if    !eu.user.invoices.blank?  and(  (eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated") or (eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated")) %>
+            <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get)  %>
+            <%=link_to_remote "Pay Online", :url=>"/admin/profiles/exhibition_payment/#{eu.id}",:update => 'modal_space', :method => :get%>
+          <%end%>  
+          <% end %>
+          <br />
+        <% end %>
+          <br /><br />
+      <% else %>
+          No exhibitions for that user.
+      <% end %>
+    </div>
+    <div id="fragment-3">
+      	<div style="float:right;">
+     	 		<%if current_user.login=="admin" || current_user.login=="superadmin"%>
+      				<%= link_to "add an competition", new_admin_workspace_competition_path(profile_workspace.id) %>
+      		<%end%>
+      	</div><br />
+      		<% if !(competitions_users=@current_object.user.competitions_users.all(:include => [:competition, :competitions_subscription])).empty? %>
+        				<% competitions_users.each do |cu| %>
+           					<%if  cu.state.blank?%>
+                        	<% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))) do %>
+                     			   <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                        			<a href='/admin/competitions/create_subscribe_competition/?competion_id=<%=cu.competition_id%>'> Confirm Competition</a>
+                  			<% end %>
+           					<%elsif   cu.state == "accepted"%>
+                      		<% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))) do %>
+                        	<%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                         	<a href='/admin/competitions/create_subscribe_competition/?competion_id=<%=cu.competition_id%>'> Confirm Competition</a>
+                  			<% end %>
+            				<%else%>     
+                  			<% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))+" with state '#{cu.state}'") do %>
+                        		<%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                  			<% end %>
+          					<%end%>       
+        				<% end %>
+          				<br /><br />
+      	  <% else %>
+          			No subscriptions to competitions for that user.
+      		<% end %>
+    </div>
+  	<div id="fragment-4">
+   	 <div style="float:right;">
+    			<%if current_user.login=="admin" || current_user.login=="superadmin"%>
+    					<%= link_to "add an invoice for that contact", new_admin_invoice_path + "/#{@current_object.id}" %>
+    			<%end%>
+    	  </div><br />
+    	  <% if !(invoices=@current_object.user.invoices).empty? %>
+      			<% invoices.each do |i| %>
+        				<% blank_list_element(:date => i.created_at, :title => link_to(i.title, admin_invoice_path(i.id))+" with state '#{i.state}'") do %>
+          					<%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                        <%=i.id%>          					
+          					<%= link_to 'Validate the payment', update_state_admin_invoice_path(@current_object.id, :state => 'validated') if (i.state != 'validated') && @current_user.has_system_role('admin') %>
+        				<% end %>
+      			<% end %>
+    	 <% else %>
+      			No invoices linked to that user.
+    	 <% end %>
+    </div>
+  <div id="fragment-5">
+    <div style="float:right;">
+    	<%#= link_to_remote 'Inbox', :url => list_all_messages_admin_emails_path(:profile_id => @current_object.id), :update => 'emails_list', :method => :get %>
+    	<%= link_to 'Inbox',        inbox_admin_emails_path(:profile_id => @current_object.id) %>
+    	<%= link_to 'Compose Mail', compose_mail_admin_emails_path %>
+    	<%= link_to  'Sent',        sent_mail_admin_emails_path(:profile_id => @current_object.id) %>
+    </div><br />
+    <div id="emails_list">
+    </div>
+  </div><%#fragment 5%>
+  
+</div>
+
+</div>
+
+<%#*<script>%>
+  <%#*$(document).ready(function() {%>
+    <%#*$("#emails").;%>
+  <%#*});%>
+<%#*</script>%>
+
+

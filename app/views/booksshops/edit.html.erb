@@ -1,0 +1,28 @@
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Edit Here Book Shop Details</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		<form action="/admin/booksshops/update/<%=@bookshop.id%>"  method="post">
+
+					<label>Book Shop Details *:</label>
+					<div class="formElement">
+
+					<%=text_area "bookshop","bookshopdetails" ,:cols=>30,:rows=>1%>
+					 </div>
+					 
+
+					<button type="submit" class="submitButton">
+						<span>Update</span>
+					</button>
+				
+				
+
+				</form>
+		</div>
+	
+	
+</div>

@@ -1,0 +1,13 @@
+<% form_for_item @current_object, title do |f| -%>
+	<%= f.text_field 	:from_email, 
+						:label => I18n.t('newsletter.field.from_email_label')+ '  ', 
+						:hint => I18n.t('newsletter.field.from_email_hint') %>
+
+	<%= f.text_field 	:subject, 
+						:label => I18n.t('newsletter.field.subject_label')+ ' ', 
+						:hint => I18n.t('newsletter.field.subject_hint') %>
+						
+    <%= f.advanced_editor(	:body, 
+							:label => I18n.t('newsletter.field.body_label')+ ' ', 
+							:hint => I18n.t('newsletter.field.body_hint')) %>
+<% end -%>

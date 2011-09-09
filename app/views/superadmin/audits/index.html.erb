@@ -1,0 +1,57 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+	<div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+		<span id="item_count">Audits</span>
+	</div><div class="blockCornerRight"></div>
+
+	<div class="contentList superadmin">
+
+		<table id="sortable">
+		  	<thead>
+		    	<tr>
+		      		<th width="80"><a href="javascript:;">Date</a></th>
+		      		<th width="80"><a href="javascript:;">Item</a></th>
+		      		<th width="160"><a href="javascript:;">Action</a></th>
+		      		<th width="220"><a href="javascript:;">Value</a></th>
+		      		<th width="100"><a href="javascript:;">User</a></th>
+		    	</tr>
+		  	</thead>
+		  	<tbody style="font-size:80%">
+		    <% @audits.each do |a| %>
+		    	<tr>
+		      		<td><%= I18n.l a.created_at, :format =>:verb %></td>
+		      		<td>
+						<%= link_to "#{a.auditable_type} : #{a.auditable_id}",
+		 							"/admin/#{a.auditable_type.underscore.pluralize}/#{a.auditable_id}" %>
+					</td>
+					<td>
+		      			<% if a.action == 'update' && a.attributes["changes"].length == 1 %>
+		       				<%= "#{a.action} #{a.attributes["changes"].keys.first}" %>
+		      			<% else %>
+		      				<%= a.action %>
+		      			<% end %>
+					</td>
+					<td>
+		      			<% if a.action == 'update' && a.attributes["changes"].length == 1 %>
+						<span class="auditsChanges">
+							<a  href="javascript:;" 
+								class="audit_changes_tip" 
+								original-title="<%= h(a.attributes['changes'].values.first.last.to_s)%>">
+								<%= h(truncate(a.attributes['changes'].values.first.last.to_s, :width => 40)) %>
+							</a>
+						</span>
+		      			<% end %>
+					</td>
+		      		<td>
+						<% if a.user_id %>
+							<% usr = User.find(a.user_id)%>
+							<%= link_to usr.full_name, admin_user_path(usr) %>
+						<% end-%>
+					</td>
+		    	</tr>
+		   	<% end %>
+		  	</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Manage Book Shop</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		
+		<%for bookshop in  @bookshop%>
+			
+			<p >Book Shop Details :- *:- <%=bookshop.bookshopdetails%> 
+			
+			
+			<%=link_to "Edit", "/admin/booksshops/#{bookshop.id}/edit"%>  
+			<%=link_to "Delete", "/admin/booksshops/#{bookshop.id}" ,:method=>"delete" ,:confirm=>"Are You Sure"%>
+			<%=link_to "Show", "/admin/booksshops/#{bookshop.id}"%>
+			
+			</p>
+			
+		<%end%>
+	</div>
+	
+	
+</div>

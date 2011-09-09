@@ -1,0 +1,18 @@
+<div class="area_LEFT">
+  <h1><%=I18n.t('home.index.latest_user')%></h1>
+  <%@latest_users.each do |u|%>
+    <p>
+      <%=	link_to_user(u) %>
+      <%= I18n.t('general.common_word.on1') %> <%= I18n.l u.created_at, :format => :verb %>
+    </p>
+  <%end%>
+</div>
+<div class="area_LEFT">
+  <h1><%=I18n.t('home.index.latest_workspace')%></h1>
+  <% @latest_ws.each do |ws|%>
+    <p>
+      <%= link_to_workspace(ws) %>
+      <%= I18n.t('general.common_word.on1') %> <%= I18n.l ws.created_at, :format => :verb %>
+    </p>
+  <%end%>
+</div>

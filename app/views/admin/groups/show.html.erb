@@ -1,0 +1,16 @@
+<% item_show( :title => I18n.t('group.field.group_label'),  :object => @current_object ) do %>
+
+  	<div id="group_members">
+    	<h2><%= I18n.t('group.index.members')  %> </h2>
+        	<ul>
+          	<% for member in @current_object.contacts_workspaces.map{ |e| e.to_group_member(@current_user.id) }.sort!{ |a,b| a['email'] <=> b['email'] } %>
+							
+            	<li> <%= member['email'] %> (<%= member['first_name'].to_s+' '+member['last_name'].to_s %>) </li>
+          	<% end %>
+          </ul>
+  	</div>
+
+  	<form action="<%= export_to_csv_admin_workspace_group_path(@current_object.workspaces.first.id, @current_object.id) %>" class="formWithOverflow">
+          <%= blank_small_button(I18n.t('group.show.export_to_csv'), 'no_id') %>
+  	</form>
+<% end %>

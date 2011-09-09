@@ -1,0 +1,36 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+	<div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+		<span id="item_count">Tasks manager</span>
+	</div><div class="blockCornerRight"></div>
+
+	<div class="contentList superadmin">
+
+		<button class="smallSubmit alone" 
+				onclick="jQuery.ajax({dataType:'script', type:'get', url:'<%=run_task_superadmin_tasks_path(:job => 'xapian')%>'});">
+			<span>Update Xapian Indexes</span>
+		</button>
+		
+		<button class="smallSubmit alone" 
+				onclick="jQuery.ajax({dataType:'script', type:'get', url:'<%=run_task_superadmin_tasks_path(:job => 'feeds')%>'});">
+			<span>Update Feed Sources</span>
+		</button>
+		
+		<button class="smallSubmit alone" 
+				onclick="jQuery.ajax({dataType:'script', type:'get', url:'<%=run_task_superadmin_tasks_path(:job => 'newsletter')%>'});">
+			<span>Send Pending Newsletters</span>
+		</button>
+
+		<button class="smallSubmit alone" 
+				onclick="jQuery.ajax({dataType:'script', type:'get', url:'<%=run_task_superadmin_tasks_path(:job => 'translations')%>'});">
+			<span>Retrieve translation files</span>
+		</button>
+		
+		
+		<button class="smallSubmit alone" 
+				onclick="jQuery.ajax({dataType:'script', type:'get', url:'<%=run_task_superadmin_tasks_path(:job => 'restart_server')%>'});">
+			<span>Restart passenger</span>
+		</button>
+	</div>
+</div>

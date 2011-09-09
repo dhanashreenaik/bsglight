@@ -1,0 +1,82 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+        <span id="item_count">Roles</span>
+    </div><div class="blockCornerRight"></div>
+
+    <div class="contentList superadmin">
+        <%= link_to "New System Role", new_superadmin_role_path+'?type_role=system' %>
+		|
+        <%= link_to "New Workspace Role", new_superadmin_role_path+'?type_role=workspace' %>
+		|
+		<%= link_to "Permissions list", superadmin_permissions_path %>
+		<div class="permissionsList">
+			<h1>System Roles List</h1>
+			<table cellspacing="10">
+	  			<tr>
+	    			<th>Name</th>
+	    			<th>Description</th>
+					<th>Actions</th>
+	  			</tr>
+
+	  			<% for role in @system_roles -%>
+	    		<tr>
+	      			<td><%=h role.name %></td>
+	      			<td><%=h role.description %></td>
+	      			<td style="font-size:80%">
+						<%= link_to 'EDIT', edit_superadmin_role_path(role.id) %>
+						|
+						<%= link_to 'DELETE', "javascript:;",
+									:class => "deleteLink", 
+									:modal_id => "#modalDelete_#{role.id.to_s}"
+						%>
+
+						<div style="display:none">
+							<div id="modalDelete_<%=role.id.to_s%>" class="modalDelete">
+								<p><%= I18n.t('item.destroy.delete_conform')%></p>
+								<%= link_to I18n.t('general.common_word.yes1'), 
+											superadmin_role_path(role.id), :method => :delete%> | 
+								<%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+							</div>
+						</div>
+					</td>
+	    		</tr>
+	  			<% end -%>
+			</table>	
+		</div>
+		<div class="permissionsList">
+			<h1>Workspace Roles List :</h1>
+            <table cellspacing="10">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+	  			<% for role in @workspace_roles -%>
+	    		<tr>
+	      			<td><%=h role.name %></td>
+	      			<td><%=h role.description %></td>
+	      			<td style="font-size:80%">
+						<%= link_to 'EDIT', edit_superadmin_role_path(role.id) %>
+						|
+						<%= link_to 'DELETE', "javascript:;",
+									:class => "deleteLink", 
+									:modal_id => "#modalDelete_#{role.id.to_s}"
+						%>
+
+						<div style="display:none">
+							<div id="modalDelete_<%=role.id.to_s%>" class="modalDelete">
+								<p><%= I18n.t('item.destroy.delete_conform')%></p>
+								<%= link_to I18n.t('general.common_word.yes1'), 
+											superadmin_role_path(role.id), :method => :delete%> | 
+								<%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+							</div>
+						</div>
+					</td>
+	    		</tr>
+	  			<% end -%>
+			</table>
+		</div>
+	</div>
+</div>

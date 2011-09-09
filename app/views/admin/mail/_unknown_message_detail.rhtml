@@ -1,0 +1,27 @@
+<div style="padding-bottom:110px;">
+<h2><%=unknown_message_detail.subject%></h2>
+<br/>
+<h5>From:-<%=unknown_message_detail.fromemail%></h5>
+<%#rec_array=[]
+ #message_detail.recipients.each {
+ #  |x|
+ #  rec_array << x.login
+ #}
+%>
+
+<h5>To:-<%="contact@test.com "%></h5>
+
+
+<%=unknown_message_detail.body%>
+
+<p>
+
+<span style="padding-right:10px;">  <%=link_to_remote "Reply" ,:update => "",:url => { :action => "replay_message_to_unknown", :id => unknown_message_detail.id }%></span>
+<span style="padding-right:10px;">  <%#=link_to_remote "Reply To All" ,:update => "",:url => { :action => "replay_to_all", :id => message_detail.id }%></span>
+<span style="padding-right:10px;">  <%#=link_to "Delete" , :action => "delete_email", :id => message_detail.id %></span>
+<span style="padding-right:10px;">  <%#=link_to_remote "Forward" ,:update => "",:url => { :action => "forward_email", :id => message_detail.id }%></span>
+  
+</p>
+</div>
+<div id="replay_to_all" style="padding:5px;margin:5px;">
+</div>

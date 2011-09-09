@@ -1,0 +1,185 @@
+<style>
+  .formElement{
+    padding-left:50px;
+  }
+  
+</style>
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Edit Here Application</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	
+		<form action="/admin/app_homes/update/<%=@app_home.id%>"  method="post">
+
+		<label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerhoures" ,@oldlabelvalue["houres"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerhoures" ,"houres",:style=>"width:170px;"%>                                     
+                    <%end%>
+                </label>
+              		<div class="formElement">
+				    <%=text_field "app_home","houres" %>
+			</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headeropenings" ,@oldlabelvalue["openings"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headeropenings" ,"openings",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>
+ 					<div class="formElement">
+					    <%=text_area "app_home","openings" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerstaff" ,@oldlabelvalue["staff"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerstaff" ,"staff",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>  
+					<div class="formElement">
+					    <%=text_area "app_home","staff" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                 <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headercosts" ,@oldlabelvalue["costs"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headercosts" ,"costs",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>   
+					<div class="formElement">
+					    <%=text_area "app_home","costs" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headergallery_planlink" ,@oldlabelvalue["gallery_planlink"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headergallery_planlink" ,"gallery_planlink",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>   
+					
+					<div class="formElement">
+					    <%=text_field "app_home","gallery_planlink" %>
+					</div>
+                 <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerbookings" ,@oldlabelvalue["bookings"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerbookings" ,"bookings",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					<div class="formElement">
+					    <%=text_area "app_home","bookings" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerbsgproposallink" ,@oldlabelvalue["bsgproposallink"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerbsgproposallink" ,"bsgproposallink",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					<div class="formElement">
+					    <%=text_field "app_home","bsgproposallink" %>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headeropening_night" ,@oldlabelvalue["opening_night"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headeropening_night" ,"opening_night",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+                  
+					<div class="formElement">
+					    <%=text_area "app_home","opening_night" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerstaffed" ,@oldlabelvalue["staffed"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerstaffed" ,"staffed",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					
+					<div class="formElement">
+					    <%=text_field "app_home","staffed"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headermailing_list_number" ,@oldlabelvalue["mailing_list_number"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headermailing_list_number" ,"mailing_list_number",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+				
+					<div class="formElement">
+					    <%=text_field "app_home","mailing_list_number" %>
+					</div>
+                 <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headermailing_list_desc" ,@oldlabelvalue["mailing_list_desc"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headermailing_list_desc" ,"mailing_list_desc",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+                			<div class="formElement">
+					    <%=text_field "app_home","mailing_list_desc" %>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headerinvitation" ,@oldlabelvalue["invitation"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headerinvitation" ,"invitation",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+                			<div class="formElement">
+					    <%=text_field "app_home","invitation" %>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headeradvertising" ,@oldlabelvalue["advertising"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headeradvertising" ,"advertising",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					
+					<div class="formElement">
+					    <%=text_area "app_home","advertising" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headersales" ,@oldlabelvalue["sales"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headersales" ,"sales",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					
+					<div class="formElement">
+					    <%=text_area "app_home","sales" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+                  <label style="padding-top:10px">
+                    <%if !@oldlabelvalue.blank?%>
+                        <%=text_field_tag "headeryour_obligations" ,@oldlabelvalue["your_obligations"],:style=>"width:170px;"%>                                     
+                    <%else%> 
+                        <%=text_field_tag "headeryour_obligations" ,"your_obligations",:style=>"width:170px;"%>                                     
+                    <%end%>
+                  </label>    
+					
+					<div class="formElement">
+					    <%=text_area "app_home","your_obligations" ,:cols=>25,:rows=>1,:style=>"width:431px;"%>
+					</div>
+
+					<button type="submit" class="submitButton">
+						<span>Update</span>
+					</button>
+				
+				
+
+				</form>
+		</div>
+	
+	
+</div>

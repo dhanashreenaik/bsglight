@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="<%= @configuration['sa_favicon_url'] %>"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=7" />
+        <%= stylesheet_link_tag "blank_JQ"  %>
+
+        <%= stylesheet_link_tag "jquery.rating" %>
+        <%= stylesheet_link_tag "jquery.datepicker" %>
+
+		<!--[if lt IE 7]>
+	       	<link rel="stylesheet" type="text/css" href="/stylesheets/ie6.css" />
+		<![endif]-->
+			
+		<!--[if IE 7]>
+			<link rel="stylesheet" type="text/css" href="/stylesheets/ie.css" />
+		<![endif]-->
+        <title>
+            <%= I18n.t 'layout.application.title' %> -
+            <% if @content_for_title %>
+                <%= h yield(:title) %>
+            <% else %>
+                <%= params[:action].capitalize if params[:action] != 'index' %>
+                <%= params[:controller].capitalize %>
+            <% end %>
+        </title>
+                <script type="text/javascript" src="/javascripts/jquery.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.tipsy.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.rating.js"></script>
+                <script type="text/javascript" src="/javascripts/jrails.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.colorbox.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.quicksearch.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.tablesorter.min.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.datepicker.min.js"></script>
+                <script type="text/javascript" src="/javascripts/blank.js"></script>
+                <!--script type="text/javascript" src="/ckeditor/ckeditor.js"></script-->
+                <!-- script type="text/javascript" src="/javascripts/firebug-lite.js"></script-->
+
+        <% if params[:action] != 'new' and params[:action] != 'edit' %>
+            <script type="text/javascript">
+                $(function(){
+                    $("#ajax_spinner").hide();
+                    $("#ajax_spinner").ajaxStart(function(){
+                        $(this).show();
+                    });
+                    $("#ajax_spinner").ajaxStop(function(){
+                        $(this).hide();
+                    });
+                });
+            </script>
+        <% end %>
+
+    </head>
+
+    <body>
+		<div id="ajax_spinner">
+            <img src="/images/ajax-spinner.gif" alt="loading" />
+        </div>
+        
+			<%= content_tag(:div, flash[:notice], :class => 'notice', :id => 'notice', :style => "#{'display:none' unless flash[:notice]}") %>
+			<% if flash[:error] %><div id="error" class="error">
+			<% else %><div id="error" class="error" style="display:none"><%end%>
+				 <%= flash[:error]%>
+			<a href="#" id="error_closing">Close</a>
+			</div>
+            <%= content_tag(:div, flash[:warning], :class => 'warning', :id => 'warning', :style => "#{'display:none' unless flash[:warning]}") %>
+	
+        <div id="page_container">
+            <div id="header">
+                <%= render :partial => "layouts/header"%>
+            </div>
+            <div id="container">
+
+                <%= yield %>
+
+            </div>
+        </div>
+		<div id="footer">
+            <%= render :partial => "layouts/footer"%>
+        </div>
+    </body>
+</html>

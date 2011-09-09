@@ -1,0 +1,18 @@
+<h1>Listing frommails</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @frommails.each do |frommail| %>
+  <tr>
+    <td><%= link_to 'Show', frommail %></td>
+    <td><%= link_to 'Edit', edit_frommail_path(frommail) %></td>
+    <td><%= link_to 'Destroy', frommail, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New frommail', new_frommail_path %>

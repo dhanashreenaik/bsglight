@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<link rel="shortcut icon" href="<%= @configuration['sa_favicon_url'] %>"/>
+		
+		<%= stylesheet_link_tag "blank.css" %>
+		<title>
+			<%= I18n.t('layout.popup.page_title', :what => 'FCKeditor') %>
+		</title>
+		
+		<script language="JavaScript1.2">
+			function SelectFile( fileUrl ){
+				window.opener.SetUrl( fileUrl ) ;
+				window.close() ;
+			}
+		</script>
+	</head>
+	<body>
+		<div id="page">
+			<%= yield %>
+		</div>
+	</body>
+</html>

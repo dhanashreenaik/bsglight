@@ -1,0 +1,60 @@
+
+        
+                          <a href="#" onclick="comptoggle('<%=cu.competition_id%>')">Display Images</a>
+                  <div id="comp<%=cu.competition_id%>" style="display:none">   
+                    <DIV ID="slideshow">
+                          <FORM ID="ss<%=cu.competition_id%>_form" NAME="ss<%=cu.competition_id%>_form" ACTION="" METHOD="GET">
+                          <DIV ID="ss<%=cu.competition_id%>_controls">
+                          <A ID="ss<%=cu.competition_id%>_start" HREF="javascript:ss<%=cu.competition_id%>.next();ss<%=cu.competition_id%>.play()"><SPAN>start</SPAN></A>
+                          <A ID="ss<%=cu.competition_id%>_stop" HREF="javascript:ss<%=cu.competition_id%>.pause()"><SPAN>stop</SPAN></A>
+                          <A ID="ss<%=cu.competition_id%>_view" HREF="javascript:ss<%=cu.competition_id%>.hotlink()"><SPAN>view</SPAN></A>
+                          <A ID="ss<%=cu.competition_id%>_prev" HREF="javascript:ss<%=cu.competition_id%>.previous()"><SPAN>&lt;prev</SPAN></A>
+                          <A ID="ss<%=cu.competition_id%>_next" HREF="javascript:ss<%=cu.competition_id%>.next()"><SPAN>next&gt;</SPAN></A>
+                          <SELECT ID="ss<%=cu.competition_id%>_select" NAME="ss<%=cu.competition_id%>_select" ONCHANGE="ss<%=cu.competition_id%>.goto_slide(this.selectedIndex)">
+                            <OPTION>Welcome to the slideshow!
+                            <OPTION>
+                            <OPTION>
+                            <OPTION>
+                            <OPTION>
+                          </SELECT>
+                          </DIV>
+                          <DIV ID="ss<%=cu.competition_id%>_img_div">
+                          <A ID="ss<%=cu.competition_id%>_img_link" HREF="javascript:ss<%=cu.competition_id%>.hotlink()"><IMG
+                          ID="ss<%=cu.competition_id%>_img" NAME="ss<%=cu.competition_id%>_img" SRC="pics/pic01.jpg"
+                          STYLE="width:200px;height:200px;"
+                          ALT="Slideshow image"></A>
+                          </DIV>
+                          <DIV ID="ss<%=cu.competition_id%>_text">
+                          <SCRIPT type="text/javascript">
+                          document.write('<TEXTAREA ID="ss<%=cu.competition_id%>_textarea" NAME="ss<%=cu.competition_id%>_textarea" CLASS="textareaimage"  WRAP="virtual"><\/TEXTAREA>\n');
+                          ss<%=cu.competition_id%>.textarea = document.ss<%=cu.competition_id%>_form.ss<%=cu.competition_id%>_textarea;
+                          </SCRIPT>
+                          </DIV>
+                          </FORM>
+                    </DIV>
+                        <SCRIPT TYPE="text/javascript">
+                        function config_ss<%=cu.competition_id%>_select() {
+                          var selectlist = document.ss<%=cu.competition_id%>_form.ss<%=cu.competition_id%>_select;
+                          selectlist.options.length = 0;
+                          for (var i = 0; i < ss<%=cu.competition_id%>.slides.length; i++) {
+                            selectlist.options[i] = new Option();
+                            selectlist.options[i].text = (i + 1) + '. ' + ss<%=cu.competition_id%>.slides[i].title;
+                          }
+                          selectlist.selectedIndex = ss<%=cu.competition_id%>.current;
+                        }
+                        ss<%=cu.competition_id%>.pre_update_hook = function() {
+                          return;
+                        }
+                        ss<%=cu.competition_id%>.post_update_hook = function() {
+                          document.ss<%=cu.competition_id%>_form.ss<%=cu.competition_id%>_select.selectedIndex = this.current;
+                          return;
+                        }
+                        if (document.images) {
+                          ss<%=cu.competition_id%>.image = document.images.ss<%=cu.competition_id%>_img;
+                          ss<%=cu.competition_id%>.textid = "ss_text";
+                          config_ss<%=cu.competition_id%>_select();
+                          ss<%=cu.competition_id%>.update();
+                        }
+                        </SCRIPT>
+                  </div>
+     

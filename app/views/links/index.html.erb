@@ -1,0 +1,38 @@
+
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Manage Link</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+		<%for link in  @link%>
+		     <div id="linkdetails">
+		        <ul>
+      			  <li><h3>Link Name:- </h3><%=link.link_name %></li>
+	    		  <li><h3>Link Src:- </h3><%=link.link_src %></li>
+	    		  </ul>
+	          </div>		
+			
+    	<%if current_user.login == "admin" ||  current_user.login == "superadmin"%>
+	    		<%=link_to "Edit", "/admin/links/#{link.id}/edit"%>  
+	    		<%=link_to "Delete", "/admin/links/#{link.id}" ,:method=>"delete" ,:confirm=>"Are You Sure"%>
+	    		<%=link_to "Show", "/admin/links/#{link.id}"%>
+	    		<%if link.approve == nil%>
+    	    		<%=link_to "Approve", "/admin/links/approve/#{link.id}"%>
+    	    	<%else%>
+
+    	    	Approved
+    	    	<%end%>	
+		<%else%>
+		             <%if link.approve == true%>
+            	    	Approved
+        	    	<%end%>	
+		
+		<%end%>
+	<%end%>	
+	</div>
+	
+	
+</div>

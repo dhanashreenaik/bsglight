@@ -1,0 +1,12 @@
+<h1>Editing emaillabel</h1>
+
+<% form_for(@emaillabel) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @emaillabel %> |
+<%= link_to 'Back', emaillabels_path %>

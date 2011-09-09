@@ -1,0 +1,24 @@
+<h2>Compose</h2>
+
+<% form_for :message, :url=>"/admin/create_sent_mail" do |f| %>
+
+  <p>
+    To:<br />
+    <%= checklist "message[to][]", User.find(:all), :id, :login, @message.to %>
+  </p>
+
+  <p>Subject: <%= f.text_field :subject %></p>
+  <p>Body:<br /> <%= f.text_area :body %></p>
+  <p>Body:<br /> <%= f.text_area :body %></p>
+   <p>
+  <strong>
+    Select A Signature
+  </strong>
+  </p>
+  <p>
+  </p>
+  <p><%= submit_tag "Send" %></p>
+<% end %>
+
+
+

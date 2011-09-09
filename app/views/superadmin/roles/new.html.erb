@@ -1,0 +1,19 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+	<div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+		<span id="item_count">New Roles</span>
+	</div><div class="blockCornerRight"></div>
+	
+	<div class="contentList superadmin">
+		<% form_for @role, 
+					:url => superadmin_roles_path, 
+					:builder => BlankFormBuilder , 
+					:method => :post do |f| %>
+
+ 			<%= render :partial => 'form', :locals => {:f => f} %>
+  
+			<button type="submit" class="submitButton"><span>Create</span></button>
+		<% end %>	
+	</div>
+</div>

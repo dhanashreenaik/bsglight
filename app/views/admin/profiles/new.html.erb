@@ -1,0 +1,6 @@
+<% form_for @current_object, :url => admin_profiles_path, :builder => BlankFormBuilder do |f| %>
+
+  <%= render :partial => 'form', :locals => { :f => f} %>
+
+<% end %>
+

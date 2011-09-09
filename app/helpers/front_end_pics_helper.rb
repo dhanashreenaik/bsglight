@@ -1,0 +1,2 @@
+module FrontEndPicsHelper
+end

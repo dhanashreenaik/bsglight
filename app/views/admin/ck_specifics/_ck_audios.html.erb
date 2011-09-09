@@ -1,0 +1,28 @@
+	<div id="insert_audios">
+		<div id="audios_tabs" class="fckLinkContent">
+			<h1>Audio</h1>
+			<ul>
+				<li><a href="#insert_audio">Insert</a></li>		
+				<li><a href="#upload_audio">Upload</a></li>
+			</ul>
+			<div id="insert_audio" class="modalTabContent">
+				
+				<% current_objects.each do |audio| %>
+					<p>
+					  <%= link_to audio.title, "javascript:;", :itmUrl => audio.path_to_encoded_file%>
+				  </p>
+				<% end %>
+			</div>
+			<div id="upload_audio" class="modalTabContent">
+				<p>Select a file to upload to the server. This file will be inserted as an Audio item in the applicaton</p>
+				<form 	target="audio_fck_upload" 
+						action="/admin/ck_uploads/audio"  
+						method="post" 
+						enctype="multipart/form-data">
+					<%= file_field_tag "upload", :id => "audio_file" %>
+			        <button type="submit" class="submitButton"><span>upload</span></button>
+				</form>
+				<iframe id="audio_fck_upload" name="audio_fck_upload" style="display:none"></iframe>
+			</div>
+		</div>
+	</div>

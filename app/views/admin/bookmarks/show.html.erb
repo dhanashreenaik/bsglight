@@ -1,0 +1,7 @@
+<% item_show(:title => I18n.t('bookmark.show.title'),  :object => @current_object ) do %>
+
+		<p><%= link_to @current_object.link, @current_object.link %>, <%= @current_object.copyright %></p>
+
+		<p><%= @current_object.categories %><p>
+<% end %>
+

@@ -1,0 +1,2 @@
+module CompetitionsArtworksHelper
+end

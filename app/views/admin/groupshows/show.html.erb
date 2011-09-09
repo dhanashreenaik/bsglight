@@ -1,0 +1,173 @@
+
+<SCRIPT TYPE="text/javascript">
+ss = new slideshow("ss");
+<%for gart in @groupshow.groupshowartworks%>
+    s = new slide();
+    s.src =  '<%="/uploaded_files/groupshow/artwork/#{gart.id}/medium/#{gart.artworkurl_file_name}"%>';
+    s.link = '<%="/uploaded_files/groupshow/artwork/#{gart.id}/original/#{gart.artworkurl_file_name}"%>';
+    s.title = "<%=gart.title%>";
+    <%size = ""%>
+    <%size = gart.size1.to_s + " x " + gart.size2.to_s%>
+    <%size = size + " x " + gart.size3.to_s  if  gart.size3%>  
+    <%sold = "not sold"%>  
+    <%sold = "sold" if gart.sold == true%>    
+    s.text = "<%=gart.user.profile.first_name%> <%=gart.user.profile.last_name%> <br/>"+
+              "size  <%=size%> <br/>"+
+              "Price <%=gart.price%><br/>"+
+               "<%=sold%>";
+    ss.add_slide(s);
+<%end%>
+for (var i=0; i < ss.slides.length; i++) {
+  s = ss.slides[i];
+  s.target = "ss_popup";
+  s.attr = "width=320,height=420,resizable=yes,scrollbars=yes";
+}
+
+</SCRIPT>
+  
+
+
+
+
+<title>Group Show  <%=@groupshow.title%></title><div class="objectList small">
+				<div class="blockCornerLeft"></div>
+				<div class="blockElementHeader sixH">
+					<span id="item_count">Group Show 
+                                          
+              <%=truncate(@groupshow.title,80)%>
+                                        
+                                        </span>
+				</div>
+				<div class="blockCornerRight"></div>
+				<div class="contentList filtered sixH">
+<div class="description_comp_show" style="padding:0px;"></div>
+
+
+<%#this all upto end for slideshow%>
+<%if @groupshow%>
+<%if !@groupshow.groupshowartworks.blank?%>
+<DIV ID="slideshow" style="background-color:#E5E5E5;">
+<FORM ID="ss_form" NAME="ss_form" ACTION="" METHOD="GET">
+<DIV ID="ss_controls">
+<!--<A ID="ss_start" HREF="javascript:ss.next();ss.play()"><SPAN>start</SPAN></A>
+<A ID="ss_stop" HREF="javascript:ss.pause()"><SPAN>stop</SPAN></A>
+<A ID="ss_view" HREF="javascript:ss.hotlink()"><SPAN>view</SPAN></A>-->
+<A ID="ss_prev" HREF="javascript:ss.previous()" style="margin-left:15px;"><SPAN>&lt;prev</SPAN></A>
+<A ID="ss_next" HREF="javascript:ss.next()" style="float:right;margin-right:15px;" ><SPAN>next&gt;</SPAN></A>
+<SELECT ID="ss_select" NAME="ss_select" ONCHANGE="ss.goto_slide(this.selectedIndex)" style="margin-left:35%;margin-bottom: 2px;display:none">
+  <OPTION>Welcome to the slideshow!
+  <OPTION>
+  <OPTION>
+  <OPTION>
+  <OPTION>
+</SELECT>
+</DIV>
+<DIV ID="ss_img_div" style="text-align: center;">
+<A ID="ss_img_link" HREF="javascript:ss.hotlink()"><IMG
+ID="ss_img" NAME="ss_img" src="/images/blank-img.png"
+STYLE=""
+ALT="Slideshow image"></A>
+</DIV>
+<DIV ID="ss_text" style="text-align:center">
+<SCRIPT type="text/javascript">
+document.write('<TEXTAREA ID="ss_textarea" NAME="ss_textarea" ROWS="6" COLS="40" WRAP="virtual"><\/TEXTAREA>\n');
+ss.textarea = document.ss_form.ss_textarea;
+</SCRIPT>
+</DIV>
+</FORM>
+</DIV>
+<%end%>
+<%end%>
+
+<table>
+  <tr>
+    <td>
+       <b>Description  </b>
+    </td>
+    <td>
+       <b><%=@groupshow.description%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <b>Note  </b>
+    </td>
+    <td>
+       <b><%=@groupshow.note%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <b>start date  </b>
+    </td>
+    <td>
+       <b><%=@groupshow.starting_date%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <b>end date  </b>
+    </td>
+    <td>
+       <b><%=@groupshow.ending_date%></b>
+    </td>
+  </tr>
+  
+    
+</table> 
+
+
+<SCRIPT TYPE="text/javascript">
+function config_ss_select() {
+  var selectlist = document.ss_form.ss_select;
+  selectlist.options.length = 0;
+  for (var i = 0; i < ss.slides.length; i++) {
+    selectlist.options[i] = new Option();
+    selectlist.options[i].text = (i + 1) + '. ' + ss.slides[i].title;
+  }
+  selectlist.selectedIndex = ss.current;
+}
+ss.pre_update_hook = function() {
+  return;
+}
+ss.post_update_hook = function() {
+  document.ss_form.ss_select.selectedIndex = this.current;
+  return;
+}
+if (document.images) {
+  ss.image = document.images.ss_img;
+  ss.textid = "ss_text";
+  config_ss_select();
+  ss.update();
+}
+</SCRIPT>
+
+<%#all for slide show ends here%>
+
+
+</div></div>
+      <div class="rightBlocks">
+        <div class="itemShowRightBlock">
+           <div class="blockCornerLeft"></div>
+           <div class="blockElementHeader twoH">What can I do?</div>
+           <div class="blockCornerRight"></div>
+           <div class="blockElementBody">
+                <!-- TODO TRANSLATE -->
+              <a href="/admin/profiles/<%=current_user.id%>">Go Back</a>
+              <br/>
+              <a href="/admin/exhibitions/new">Add</a>
+              <br/>
+              <a href="/admin/groupshows/<%=@groupshow.id%>/edit">Edit</a>
+              <br/>
+              <a modal_id="#modalDelete_70" class="deleteLink" href="javascript:;">Delete</a>
+              <br/>
+                      <div style="display:none">
+                      <div class="modalDelete" id="modalDelete_70">
+                      <p>Are you sure you want to delete this item?</p>
+                      <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'delete'); f.appendChild(m);f.submit();return false;" href="/admin/groupshows/<%=@groupshow.id%>">yes</a> |
+                      <a class="deleteClose" href="javascript:;">no</a>
+                      </div>
+              </div>
+          </div>
+        </div>
+      </div>

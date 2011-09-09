@@ -1,0 +1,236 @@
+<script>  
+             function openwindow(email){
+               window.open ("http://<%=request.host_with_port%>/signup?email="+email,"Register New User");
+             }
+</script>
+<style>
+/* MAIL INDEX */
+
+#mail-box{
+	width:970px;
+	margin:0px auto;
+	padding:0px;
+	background:#fff;
+	font-size:13px;
+	color:#333;
+	}
+	
+#main-top{
+	margin:0px auto;
+	padding-top:10px;
+	background: none repeat scroll 0 0 #d6d6d6;
+	border-bottom:1px solid #a2a2a2;
+}
+
+
+
+#mail-box ul li{
+	list-style-type:none;
+	display:block;
+}
+.top-menu{
+	height:30px;
+	margin:7px 155px;
+	padding:0px;
+}
+
+.top-menu li{
+	float:left;
+	height:30px;
+	margin-right:30px;
+	}
+	
+.move-select{
+    border: 1px solid #a2a2a2;
+    height: 24px;
+    margin-left: 5px;
+    width: 131px;
+	padding:1px;
+}
+
+.delete{
+	padding-top:3px;
+	background:url("delete.png") no-repeat scroll 2px 4px transparent;
+	width:63px;
+	text-align:right;
+}
+
+.cnl{
+	border:1px solid #a2a2a2;
+	padding:3px;
+}
+#main-middle{
+	/*margin:0px auto;*/
+	margin: 0 auto 0 0px;
+	padding:0px;
+	height:auto;
+}
+
+.bsg-left{
+	/*width:161px;
+	float:right;*/
+
+
+}
+
+.bsg-right{
+	margin:0 auto;
+}
+.mm-field{
+	padding:0px;
+}
+#mail-head li{
+ font-weight: bold;
+ padding-left: 0px;
+}
+
+#mail-head .field-date{
+	width:79px;
+}
+#mail-head .field-flag{
+	background-color:#FFC580 !important;
+	}
+	
+.mm-field li{
+    border-bottom: 1px solid #ccc;
+		list-style-type:none;
+    float: left;
+    height: 23px;
+
+/*	background:#ffe7ca;  */
+
+}
+.mail-parent{
+    margin: 0px 10px 10px 0px;
+    padding: 0;
+}
+
+.mail-parent li{
+    border-bottom: 1px dashed #ccc;
+    color: #666666;
+    font-weight: bold;
+    height: 20px;
+    padding: 7px;
+		list-style-type:none;
+	}
+	
+.field-checkbox{
+	width:25px;
+/*	border-left: 3px solid #ffc580;  */
+}
+.fc{
+	padding-left:9px;
+}
+.field-flag{
+	min-width:25px;
+	background: url("flag-2.png") no-repeat scroll 0px 11px transparent !important;
+	background-color:#ffe3c3 !important;
+		
+}
+
+.field-from{
+	min-width:230px;
+	}
+	
+.field-subject{
+	min-width:275px;
+}
+
+.head-subject{
+	min-width:315px;
+}
+
+.field-lable{
+	min-width:25px;	
+}
+
+.field-date{
+	text-align:right;
+	width:113px;
+	padding-right:5px;
+}
+.field-reg{
+  width:30px;
+}
+.head-checkbox, .head-flag, .head-from, .head-subject, .head-lable, .head-date, .head-checkbox{
+	border:none !important;
+}
+
+.mailbox-table{
+margin-left:-12px;
+margin-right:-14px;
+}
+
+.mm-field .mm-cb{
+	width:13px;
+}
+
+</style>
+
+        
+        
+        
+        
+                <div class="objectList small">
+        <h2>Not Registered Users</h2>
+<div class="blockCornerLeft"></div>
+
+<form action="/admin/delete_temprary_email" name="myform" method="post">
+	<div class="blockElementHeader sixH">
+	<input type="hidden" name="selected_label" value="" id="selected_label">
+	  <span ><ul class="mm-field" id="mail-head">
+    <li class="field-checkbox fc" style="border:0px;">     
+         <%checkboxarrayname = []%>
+<%temprary_messages.each do |msg| checkboxarrayname <<  "delete_message"+msg.id.to_s end%>
+<%checkboxarraynamestring= "["+(checkboxarrayname * ",")+"]" %>
+    <%=check_box_tag "delete_all_message" ,0,false,:onClick=>"select_all_checkbox(#{temprary_messages.length},#{checkboxarraynamestring});",:class=>'mm-cb'%>
+    </li>
+  
+   <li class="head-from field-from">From</li>
+    <li class="head-subject field-subject">Subject</li>
+     <li class="head-date field-date">Date</li>
+     </span>
+	</div>
+	<div class="blockCornerRight"></div>
+
+     <div class="contentList filtered sixH">  
+      <div>
+         <div id="main-middle">
+    <table class="mailbox-table">
+        	<tbody><tr>
+           	  
+                <td align="left" valign="top" nowrap="nowrap">
+     
+     <div class="bsg-right">
+    <ul> 
+    <%for message in temprary_messages%>
+                                        	<ul class="mm-field">					
+                                              <li class="field-checkbox fc">   <%=check_box_tag "delete_message"+message.id.to_s  ,message.id,false,:class=>'mm-cb'%></li>
+	                                      	    <li class="field-from">      <%=h message.fromemail %></li>
+                                        	    <li class="field-subject"> <%= link_to_remote truncate(message.subject,40) ,:update => "",:url => { :action => "show_unknown_message", :id => message.id }%></li>
+                                                    <li class="field-reg"> <a href="#" onclick="openwindow('<%=message.fromemail%>');"><img src="/images/reg.jpeg"/></a> </li> 
+                                        	    <li class="field-date"><%=message.created_at.strftime("%Y-%m-%d")%></li>
+                                            </ul>
+                        								<%end%>   
+      </ul>
+                                   </div>
+                                  </td> 
+		                           </tr>
+                            </table>
+           
+    </div>
+    </div>
+    </div>
+ </form> 
+      <%= will_paginate temprary_messages %>  
+ </div>
+
+ </div>
+    <script>
+        Event.addBehavior.reassignAfterAjax = true;
+                     Event.addBehavior({
+                      'div.pagination a' : Remote.Link
+                    })
+    </script>    
+        
+        

@@ -1,0 +1,438 @@
+<style>
+  .textareaimage{
+    width: 300px;
+    height: 80px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-size: 10px !important;
+    font-family: arial narrow !important; 
+    background-color: #9C9C9C;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+  }
+  
+</style>
+<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']%>
+<%size_array = ['fworksize','sworksize','tworksize','foworksize','fiworksize','siworksize','seworksize','eworksize','nworksize','teworksize']%>
+<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']%>
+<%medium_array = ['fworkmedium','sworkmedium','tworkmedium','foworkmedium','fiworkmedium','siworkmedium','seworkmedium','eworkmedium','nworkmedium','teworkmedium']%>
+<%price_array = ['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']%>
+<%imgname=[]%>       
+<%sizename=[]%>
+<%titlename=[]%>
+<%mediumname=[]%>
+<%pricename=[]%> 
+<SCRIPT TYPE="text/javascript">
+<% if !(exhibitions_users=@current_object.user.exhibitions_users.all(:include => [:exhibition], :order => 'created_at DESC')).empty? %>
+  <% exhibitions_users.each do |eu| %>
+      eval("var sse"+<%=eu.exhibition.id%>);
+      sse<%=eu.exhibition.id%> = new slideshow("sse"+<%=eu.exhibition.id%>);
+    <%@artworkexhibition = Artwork.find(:all,:conditions=>["user_id = ? and exhibition_id = ?",eu.user.id,eu.exhibition.id])%>
+    <%if !@artworkexhibition.blank?%> 
+      <%for artwork in @artworkexhibition%>
+          s1 = new slide();
+          s1.src =  '<%="/uploaded_files/production/artwork/#{artwork.id}/original/#{artwork.image_file_name}"%>';
+          s1.link = '<%="/uploaded_files/production/artwork/#{artwork.id}/original/#{artwork.image_file_name}"%>';
+          s1.slideshowid = '<%=eu.exhibition.id%>';
+          s1.title = "<%=artwork.title%>";
+        <%size = ""%>
+        <%size = artwork.height.to_s + " x " + artwork.width.to_s%>
+        <%size = size + " x "+artwork.depth.to_s if !artwork.depth.blank?%>  
+          s1.text = "<%=artwork.user.profile.first_name%>  <%=artwork.user.profile.last_name%>      <br/>"+
+            "Size <%=size%> <br/>" + 
+            "<%=artwork.medium%> <br/>" + 
+            "price  <%=artwork.price%><br/>";
+          sse<%=eu.exhibition.id%>.add_slide(s1);
+      <%end%>  
+    <%end%>  
+      for (var i=0; i < sse<%=eu.exhibition.id%>.slides.length; i++) {
+        s = sse<%=eu.exhibition.id%>.slides[i];
+        s.target = "sse<%=eu.exhibition.id%>_popup";
+        s.attr = "width=320,height=420,resizable=yes,scrollbars=yes";
+      }  
+  <%end%>
+<%end%>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% if !(competitions_users=@current_object.user.competitions_users.all(:include => [:competition, :competitions_subscription])).empty? %>
+  <% competitions_users.each do |cu| %> 
+      eval("var ss"+<%=cu.competition_id%>);
+      ss<%=cu.competition_id%> = new slideshow("ss"+<%=cu.competition_id%>);
+    <%cu.artworks_competitions.all(:conditions=>["competitions_users_id != 'null'"]).each do |a|%>
+      <%if  (a.competitions_user.send a.image_name) != nil %>  
+        <%if  (a.competitions_user.send a.image_name).blank? == false%>
+          <%imgname <<  "/system/gallery/#{a.competitions_user.send a.image_name}"%>
+          <%sizename <<  a.competitions_user.send(size_array[image_array.index(a.image_name)]) %>  
+          <%titlename << a.competitions_user.send(title_array[image_array.index(a.image_name)]) %>  
+          <%mediumname << a.competitions_user.send(medium_array[image_array.index(a.image_name)])%>  
+            s = new slide();
+            s.src =  '<%="/system/gallery/#{a.competitions_user.send a.image_name}"%>';
+            s.link = '<%="/system/gallery/#{a.competitions_user.send a.image_name}"%>';
+            s.slideshowid = '<%=a.id%>';
+            s.title = "<%=a.competitions_user.send(title_array[image_array.index(a.image_name)])%>";
+            s.text = "<%=a.competitions_user.user.profile.first_name%>  <%=a.competitions_user.user.profile.last_name%>      \n"+
+              "Size <%=a.competitions_user.send(size_array[image_array.index(a.image_name)])%>    \n" + 
+              "<%=a.competitions_user.send(medium_array[image_array.index(a.image_name)])%>  \n" + 
+              "price  <%=a.competitions_user.send(price_array[image_array.index(a.image_name)]);%>";
+            ss<%=cu.competition_id%>.add_slide(s);
+        <%end%>       
+      <%end%> 		
+    <%end%>
+      for (var i=0; i < ss<%=cu.competition_id%>.slides.length; i++) {
+        s = ss<%=cu.competition_id%>.slides[i];
+        s.target = "ss<%=cu.competition_id%>_popup";
+        s.attr = "width=320,height=420,resizable=yes,scrollbars=yes";
+      }
+  <%end%>    
+<%end%>     
+
+
+     
+         
+</SCRIPT>
+
+
+
+
+
+<script language="javascript"> 
+  
+  function showhidesentinbox(divid){
+    if (divid == "inbox")
+    {
+      document.getElementById("sent").style.display = "none";
+      document.getElementById("inbox").style.display = "block";
+    }
+    if (divid == "sent")
+    {
+      document.getElementById("inbox").style.display = "none";
+      document.getElementById("sent").style.display = "block";
+    }  
+  }
+  
+  
+  function ntoggle() {
+    var ele = document.getElementById("noticeToggle");
+    var text = document.getElementById("displayText");
+    if(ele.style.display == "block") {
+      ele.style.display = "none";
+    }
+    else {
+      ele.style.display = "block";
+    }
+  }
+  function comptoggle(comid) {
+    var ele = document.getElementById("comp"+comid);
+	
+    if(ele.style.display == "block") {
+      ele.style.display = "none";
+    }
+    else {
+      ele.style.display = "block";
+    }
+  }
+  
+  function exhitoggle(exhiid){
+    var ele = document.getElementById("exhi"+exhiid);
+    if(ele.style.display == "block") {
+      ele.style.display = "none";
+    }
+    else {
+      ele.style.display = "block";
+    }
+  }
+  
+</script>
+
+
+<div id="tabass">
+  <ul>
+    <!--  <li><a href="#fragment-1"><span>Artworks</span></a></li>  -->
+    <li><a href="#fragment-2"><span>Exhibitions</span></a></li>
+    <li><a href="#fragment-3"><span>Competitions</span></a></li>
+    <li><a href="#fragment-4"><span>Invoices</span></a></li>
+    <li><a href="#fragment-5"><span>Mail</span></a></li>
+    <li><a href="#fragment-6"><span>Biography</span></a></li>
+    <li><a href="#fragment-7"><span>Notice</span></a></li>
+  </ul>
+  <div style="font-size:10px;">
+
+
+    <!--   <div id="fragment-1">
+    <% profile_workspace = @current_object.profile_workspace || @current_object.user.private_workspace %>
+              </div> 
+    
+    -->
+
+    <div id="fragment-2">
+      <div style="float:right;">
+        <%if current_user.login=="admin" || current_user.login=="superadmin"%>
+          <%= link_to "add an exhibition", new_admin_workspace_exhibition_path(profile_workspace.id) %><br/>
+          <%= link_to "add to group show", "/add_user_to_groupshow/#{@current_object.user.id}" %>
+        <%end%>
+      </div><br/>
+      <% if !(exhibitions_users=@current_object.user.exhibitions_users.all(:include => [:exhibition], :order => 'created_at DESC')).empty? %>
+        <% exhibitions_users.each do |eu| %>
+
+    <%# blank_list_element(:date => eu.created_at, :title => link_to(eu.exhibition.title, admin_exhibition_path(eu.exhibition_id))+" with state '#{eu.state}'") do %>
+    <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+    <%# end %>
+          <% blank_list_element(:date => eu.exhibition.timing.starting_date, :title => link_to(eu.exhibition.title, admin_exhibition_path(eu.exhibition_id))) do %>
+      <%#=render :partial=>"exhbslideshow",:locals=>{:exh_id=>eu.exhibition.id,:user_id=>@current_object.user.id,:eu=>eu}%>
+            <% if    !eu.user.invoices.blank?  and(  (eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated") or (eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated")) %>
+        <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get)  %>
+              <%=link_to_remote "Pay Online", :url=>"/admin/profiles/exhibition_payment/#{eu.id}",:update => 'modal_space', :method => :get%>
+
+
+            <%end%>  
+            <%=render :partial=>"exhbslideshow",:locals=>{:exh_id=>eu.exhibition.id,:user_id=>@current_object.user.id,:eu=>eu}%>
+          <% end %>
+          <br />
+        <% end %>
+        <br /><br />
+      <% else %>
+        No exhibitions for that user.
+      <% end %>
+    </div>
+    <div id="fragment-3">
+      <div style="float:right;">
+        <%if current_user.login=="admin" || current_user.login=="superadmin"%>
+          <%= link_to "add an competition", new_admin_workspace_competition_path(profile_workspace.id) %>
+        <%end%>
+      </div><br />
+      <% if !(competitions_users=@current_object.user.competitions_users.all(:include => [:competition, :competitions_subscription])).empty? %>
+        <% competitions_users.each do |cu| %>
+          <%if  cu.state.blank?%>
+            <% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))+" with state unpaid") do %>
+        <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                                                <!--<a href='/admin/competitions/create_subscribe_competition/?competion_id=<%=cu.competition_id%>'> Confirm Competition</a>-->
+              <%=render :partial=>"compslideshow",:locals=>{:cu=>cu}%>
+            <% end %>
+          <%elsif   cu.state == "accepted"%>
+            <% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))+" with state unpaid") do %>
+        <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+                                               <!-- <a href='/admin/competitions/create_subscribe_competition/?competion_id=<%=cu.competition_id%>'> Confirm Competition</a>-->
+              <%=render :partial=>"compslideshow",:locals=>{:cu=>cu}%>  
+            <% end %>
+          <%else%>     
+            <% blank_list_element(:date => cu.created_at, :title => link_to(cu.competition.title, admin_competition_path(cu.competition_id))+" with state paid") do %>
+        <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+              <%=render :partial=>"compslideshow",:locals=>{:cu=>cu}%>
+            <% end %>
+          <%end%>       
+        <% end %>
+        <br /><br />
+      <% else %>
+        No subscriptions to competitions for that user.
+      <% end %>
+      <br/>   
+
+    </div>
+    <div id="fragment-4">
+      <div style="float:right;">
+        <%if current_user.login=="admin" || current_user.login=="superadmin"%>
+        Filter the list with text 
+        <br/>
+          <input id="filter5"/><br />
+          <%= link_to "add an invoice for this contact", new_admin_invoice_path + "/#{@current_object.id}" %>
+
+        <%end%>
+
+      </div><br />
+      
+      <% if !(invoices=@current_object.user.invoices.find(:all,:order=>"created_at DESC")).empty? %>
+        <table  id="invoicess"  >
+         
+          <tbody style="color:#666666;">
+
+            <% invoices.each do |i| %>
+              <%invoicestate = "unpaid" %>
+              <%invoicestate = "paid" if i.state == "validated"%>
+              <tr> 
+                <td style="width:60px">
+                  <%=i.created_at%>
+                </td>
+                <td>
+                  <%=link_to(i.title, admin_invoice_path(i.id))+" with state #{invoicestate}"%>
+              </td>
+            </tr>
+
+  <%# blank_list_element(:date => i.created_at, :title => link_to(i.title, admin_invoice_path(i.id))+" with state '#{invoicestate}'") do %>
+
+  <%#= link_to_remote('Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get) if i.state != 'validated' %>
+
+  <%#= link_to 'Validate the payment', update_state_admin_invoice_path(@current_object.id, :state => 'validated') if (i.state != 'validated') && @current_user.has_system_role('admin') %>
+  <%# end %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr style="display:none;">
+            <td colspan="5">
+	            No rows match the filter...
+            </td>
+          </tr>
+        </tfoot>
+
+      </table>
+    <% else %>
+      No invoices linked to that user.
+    <% end %>
+    </div>
+    <div id="fragment-5">
+      <div>
+<%#= link_to_remote 'Inbox', :url => list_all_messages_admin_emails_path(:profile_id => @current_object.id), :update => 'emails_list', :method => :get %>
+<%#= link_to 'Inbox',        inbox_admin_emails_path(:profile_id => @current_object.id) %>
+<%#= link_to 'Compose Mail', compose_mail_admin_emails_path %>
+<%#= link_to  'Sent',        sent_mail_admin_emails_path(:profile_id => @current_object.id) %>
+
+        <div class="contentList filtered sixH" style="width:620px;">  
+          <span  onclick="showhidesentinbox('inbox')" style="float:right;margin-left:10px">Inbox</span>
+          <span onclick="showhidesentinbox('sent')" style="float:right">Sent</span>
+          <br/>
+          <div id="inbox" style="display:none">
+            <div id="main-middle">
+              <table class="mailbox-table">
+                <tbody><tr>
+
+                    <td align="left" valign="top" nowrap="nowrap">
+                      <div class="bsg-right">
+                        <ul>
+                        <%for message in @messages%>
+                          <ul class="mm-field-email">					
+                            <!--<li class="field-checkbox fc">    <%#=check_box_tag "delete_message"+message.id.to_s  ,message.id ,false,:class=>"mm-cb"%></li>-->
+                            <li class="field-from-email"><%=h message.author.email %></li>
+                            <li class="field-subject-email">
+                              <%= link_to_remote truncate(message.subject,40) ,:update => "",:url => { :action => "show_message_sent", :id => message.id }%>
+<%#action is show messsage%>         
+                            </li>
+
+                            <li class="field-date"><%=message.created_at.strftime("%Y-%m-%d")%></li>
+                          </ul>
+                        <%end%> 
+                        </ul>
+                      </div>
+                    </td> 
+                  </tr>
+              </table>
+            </div>
+          </div>
+          <div id="sent" style="display:none">
+            <div id="main-middle">
+              <table class="mailbox-table">
+                <tbody><tr>
+
+                    <td align="left" valign="top" nowrap="nowrap">
+                      <div class="bsg-right">
+                        <ul>
+                        <%for message in @message_recd%>
+                          <ul class="mm-field-email">					
+                           <!-- <li class="field-checkbox fc">    <%#=check_box_tag "delete_message"+message.id.to_s  ,message.id ,false,:class=>"mm-cb"%></li>-->
+                            <li class="field-from-email"><%=h message.author.email %></li>
+                            <li class="field-subject-email">
+                              <%= link_to_remote truncate(message.subject,40) ,:update => "",:url => { :action => "show_message_recd", :id => message.id }%>
+<%#action is show messsage%>         
+                            </li>
+
+                            <li class="field-date"><%=message.created_at.strftime("%Y-%m-%d")%></li>
+                          </ul>
+                        <%end%> 
+                        </ul>
+                      </div>
+                    </td> 
+                  </tr>
+              </table>
+            </div>
+          </div>   
+
+          <div id = "show_message_details" >
+
+          </div>  
+
+
+
+
+
+
+        </div>  
+
+      </div>
+      <br />
+      <div id="emails_list">
+      </div>
+    </div><%#fragment 5%>
+
+
+
+    <div id="fragment-6">
+
+      <font size=2pt>    <%=h @current_object.user.profile.biography %></font>
+    </div>
+
+    <div id="fragment-7">
+
+    <%if !@current_object.notices.blank? %>	<br/>	
+      <a id="displayText" href="javascript:ntoggle();">
+        <b>Update Notice</b></a>
+
+
+      <br />				
+      <font size=2pt>    <%=h @current_object.notices %></font>
+    <%else%>
+      No Notices for <%=h @current_object.first_name %>.<br/>
+      <a id="displayText" href="javascript:ntoggle();"><b>Change Notice</b></a><br />				
+    <%end%>
+      <div id="notice_add">
+
+      </div>	
+
+
+      <div id="noticeToggle" style="display: none">
+
+        <font size=1pt>    <%#=h @current_object.biography %></font>
+      <% form_tag(update_notices_admin_profile_path, :method => "put") do %>
+        <%= label_tag(:q, "Notice:") %> 
+        <%= text_area_tag(:notice,@current_object.notices,:cols=>40) %> <br/>
+        <%= submit_tag("Submit",:style=>"width:150px;margin-left:140px;") %> 
+      <% end %>
+
+      </div>		
+
+    </div>
+
+
+
+  </div>
+
+</div>
+
+<%#*<script>%>
+<%#*$(document).ready(function() {%>
+<%#*$("#emails").;%>
+<%#*});%>
+<%#*</script>%>
+
+
+<script>
+  $(document).ready(function()
+    {
+      $("#invoicess").tablesorter();
+    }
+);
+</script>

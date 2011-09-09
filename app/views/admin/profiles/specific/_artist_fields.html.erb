@@ -1,0 +1,39 @@
+<%= f.text_field :email_address, :label => 'Email'+" : ", :hint => "Put your email address here" unless @current_object.class.to_s == 'User' %>
+
+<%= f.text_field :address, :label => 'Address'+" : ", :hint => "Put your address here" %>
+
+<%= f.text_field :suburb, :label => 'Suburb'+" : ", :hint => "Put the suburb you are living in" %>
+
+<%= f.text_field :zip_code, :label => 'Post code'+" : ", :hint => "Put the ZIP code of your city" %>
+
+<%= f.text_field :city, :label => 'City'+" : ", :hint => "Put the city you are living in" %>
+
+<%= f.text_field :country_state, :label => 'State'+" : ", :hint => "Put the state you are living in" %>
+
+<label><%= 'Country : ' %> : </label>
+<div class="formElement">
+<%if  @current_object.instance_of? Profile%>
+  <%= country_select "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}", :country,country_options_for_select(selected=@current_object.country)%>
+<%else%>
+  <%= country_select "#{(@current_object ? 'user['+f.object.class.to_s.downcase+'_attributes]' : f.object.class.to_s.downcase)}", :country,country_options_for_select(selected=@current_object.profile.country)%>
+<%end%>
+</div>
+<%if  @current_object.instance_of? Profile%>
+<label><%= 'Role : ' %> : </label>
+<%end%>
+<div class="formElement">
+<%if  @current_object.instance_of? Profile%>
+    <%if current_user.login == "admin" or current_user.login == "superadmin"%>
+    <%=select_tag "system_role_id",options_from_collection_for_select(@role,'id','name',@current_object.user.system_role_id) ,:disabled=>false%>
+    <%else%>
+    <%=select_tag "system_role_id",options_from_collection_for_select(@role,'id','name',@current_object.user.system_role_id) ,:disabled=>true%>
+    <%end%>
+<%else%>
+ <%#=select_tag "system_role_id",options_from_collection_for_select(@role,'id','name',@current_object.system_role_id) %>
+<%end%>
+</div>
+<%= f.text_field :phone_number, :label => 'Phone number'+" : ", :hint => "Put your phone number, mobile is better" %>
+
+<%= f.text_field :website, :label => 'Website'+" : ", :hint => "Put here the address of your website or your blog" %>
+
+<%#= f.text_area :biography, :label => 'Biography'+" : ", :hint => "Give us some information about you" %>

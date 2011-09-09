@@ -1,0 +1,32 @@
+<div id="specific_menu">
+  <% if @link.first %>
+        <% for i in 0..(@link.size-1) %>
+              <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+                <div id='nav_3'><ul>
+                  <% end %>
+              <li><a href="<%=@link[i].link_src%>" class="liselected">
+              <%= @link[i].link_name%> </a>
+             </li>
+                  <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@link.size-1) %>
+                  </ul></div>
+              <% end %>
+        <% end %>
+  <% else %>
+    <div id="specific_menu">No Links Has Been Approved</div>
+  <% end %>
+</div>
+
+</div>
+
+<div id="container">
+  <% if @link %>
+    <div id="description_competition">
+      <div id="content">
+             Approved Links Are
+             <%for link in @link%>
+                  <h3> <%= link_to  link.link_name,  link.link_src , :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %> </h3>
+               <%end%>
+       </div>
+       </div> 	
+    <%end%>
+</div> 

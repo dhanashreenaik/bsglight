@@ -1,0 +1,52 @@
+<div id="specific_menu">
+  <% if @app_home.first %>
+        <% for i in 0..(@app_home.size-1) %>
+              <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+                <div id='nav_3'><ul>
+                  <% end %>
+              <li><a href="#">
+              <%#= @app_home[0].bookshopdetails%> </a>
+             </li>
+                  <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@app_home.size-1) %>
+                  </ul></div>
+              <% end %>
+        <% end %>
+  <% else %>
+    <div id="specific_menu"></div>
+  <% end %>
+</div>
+
+</div>
+
+<div id="container">
+  <% if @app_home %>
+    <div id="description_competition">
+      <div id="content">
+            <%if  !@app_home[0].blank?%>
+                  <h3><%=@oldlabelvalue['houres']%></h3><%=@app_home[0].houres %>
+		          <h3><%=@oldlabelvalue['openings']%></h3><%=@app_home[0].openings %>
+		          <h3><%=@oldlabelvalue['staff']%></h3><%=@app_home[0].staff %>
+		          <h3><%=@oldlabelvalue['cost']%></h3>
+		          
+		          <%@app_home[0].costs.each do |cost| %>
+		          <p><%=cost%></p>
+		          <%end%>
+		          
+		          
+		          <h3><a href="<%=@app_home[0].gallery_planlink%>">
+		          <%=@oldlabelvalue['gallery_planlink']%></a></h3>
+		          <h3><%=@oldlabelvalue['bookings']%></h3><%=@app_home[0].bookings %>
+		          <h3><%=@oldlabelvalue['bsgproposallink']%></h3><%=@app_home[0].bsgproposallink %>
+		          <h3><%=@oldlabelvalue['opening_night']%></h3><%=@app_home[0].opening_night %>
+		          <h3><%=@oldlabelvalue['staffed']%></h3><%=@app_home[0].staffed %>
+		          <h3><%=@oldlabelvalue['mailing_list_number']%><%=@app_home[0].mailing_list_number %></h3>
+		         <p> <%=@app_home[0].mailing_list_desc %></p>
+		          <h3><%=@oldlabelvalue['invitation']%></h3><%=@app_home[0].invitation %>
+		           <h3><%=@oldlabelvalue['advertising']%></h3><%=@app_home[0].advertising %>
+		           <h3><%=@oldlabelvalue['sales']%></h3><%=@app_home[0].sales %>
+		           <h3><%=@oldlabelvalue['your_obligations']%></h3><%=@app_home[0].your_obligations %>
+             <%end%>   
+       </div>
+       </div> 	
+    <%end%>
+</div> 

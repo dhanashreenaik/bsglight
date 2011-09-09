@@ -1,0 +1,29 @@
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter News Letter Here</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+          
+          <form action="/admin/newsletters" enctype="multipart/form-data" method="post">
+    
+          <p>
+            <label>Title</label>
+            <%=text_field :newsletter,:title%>
+          <p>
+          <p>
+            <label>Content</label>
+           <%=fckeditor_textarea("newsletter", "news_letter_content", :toolbarSet => 'Simple', :width => '100%', :height => '1000px') %>
+            <%#=f.text_area :news_letter_content, :class => "mceEditor"%>
+          <p>
+            <%= submit_tag  'Create' %>
+          </p>
+          
+          </form>
+
+<%= link_to 'Back', newsletters_path %>
+		</div>
+	
+	
+</div>

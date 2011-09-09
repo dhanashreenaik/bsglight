@@ -1,0 +1,40 @@
+<%= superadmin_tabs_generator() %>
+
+<div class="objectListWithTab">
+  <div class="blockCornerLeft"></div><div class="blockElementHeader sevH">
+    <span id="item_count">Mailer Settings</span>
+  </div><div class="blockCornerRight"></div>
+
+  <div class="contentList superadmin">
+    <% form_for :mailer_config,
+      @mailer_config_hash,
+      :url => updating_superadmin_mailer_settings_path,
+      :html => {:method => :put, :multipart => true} do |f| -%>
+
+      <label>Address:</label>
+      <div class="formElement"><%= f.text_field :sa_mailer_address, :noHint => "yes" %></div>
+
+      <label>Domain Name:</label>
+      <div class="formElement"><%= f.text_field :sa_mailer_domain, :noHint => "yes" %></div>
+
+      <label>Port:</label>
+      <div class="formElement"><%= f.text_field :sa_mailer_port, :noHint => "yes" %></div>
+
+      <label>Username:</label>
+      <div class="formElement"><%= f.text_field :sa_mailer_user_name, :noHint => "yes" %></div>
+
+      <label>Password:</label>
+      <div class="formElement"><%= f.password_field :sa_mailer_password, :noHint => "yes" %></div>
+
+      <label>Authentication:</label>
+      <div class="formElement">
+        <%= f.select :sa_mailer_authentication, ['none', 'plain', 'login', 'cram_md5'],{},{} %>
+      </div>
+
+      <label>Enable starttls auto ?:</label>
+      <div class="formElement"><%= f.check_box :sa_mailer_enable_starttls_auto %></div>
+
+      <button type="submit" class="submitButton"><span><%=I18n.t('general.button.update')%></span></button>
+    <% end %>
+  </div>
+</div>

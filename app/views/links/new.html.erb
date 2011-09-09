@@ -1,0 +1,28 @@
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter Here Link</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+				<form action="/admin/links" method="post">
+                    <label>Link Name *:</label>
+					<div class="formElement">
+					    <%=text_field "link","link_name" %>
+					</div>
+                    <label>Link Src *:</label>
+					<div class="formElement">
+					    <%=text_field "link","link_src",:value=>"http://" %>
+					</div>
+					<%=hidden_field "link","user_id",:value=>current_user.id%>
+					
+					
+					<button type="submit" class="submitButton">
+						<span>Create</span>
+					</button>
+				</form>
+		</div>
+	
+	
+</div>

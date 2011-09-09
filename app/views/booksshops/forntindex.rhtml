@@ -1,0 +1,35 @@
+<div id="specific_menu">
+  <% if @bookshop.first %>
+        <% for i in 0..(@bookshop.size-1) %>
+              <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+                <div id='nav_3'><ul>
+                  <% end %>
+              <li>
+	      <div class="detailsoflink">
+			<a href="#" class="liselected">
+			<%= @bookshop[0].bookshopdetails%> </a>
+	      </div>
+	      
+             </li>
+                  <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@bookshop.size-1) %>
+                  </ul></div>
+              <% end %>
+        <% end %>
+  <% else %>
+    <div id="specific_menu">No Book Shop Is Available</div>
+  <% end %>
+</div>
+
+</div>
+
+<div id="container">
+  <% if @bookshop %>
+    <div id="description_competition">
+      <div id="content">
+            <%if  !@bookshop[0].blank?%>
+                <h2><%= @bookshop[0].bookshopdetails %></h2>
+             <%end%>   
+       </div>
+       </div> 	
+    <%end%>
+</div> 

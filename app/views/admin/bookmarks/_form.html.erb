@@ -1,0 +1,16 @@
+<% form_for_item @current_object, title do |f| -%>
+
+  <% is_copyright = (@current_object.state == 'copyright') ? true : false %>
+  
+  <%= f.text_field  :link, 
+					:label => I18n.t('bookmark.field.link_label')+" * : " , 
+					:readonly => is_copyright %>
+
+  <%= f.text_field  :categories, 
+					:label => I18n.t('bookmark.field.categories_label')+ " : ", 
+					:readonly => is_copyright %>
+					
+  <% if is_copyright %>
+    <%= f.datetime_select :date_published, :label => I18n.t('bookmark.field.published_date_label') + " :", :type => "hidden" %>
+  <% end %>
+<% end %>

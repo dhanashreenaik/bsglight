@@ -1,0 +1,21 @@
+
+
+<% item_show( :title => 'Competition',  :object => @current_object ) do %>
+
+	<div class="description">
+		<%fchar = @image_array[params[:image_id].to_i].split("work")[0]%>
+			 <%=@artwork.send fchar+"worktitle"%>
+			
+			<br><br><br>
+			<b>Artwork Image</b>
+	</div>
+	<%=image_tag("/system/gallery/#{@artwork.send   fchar+'workimage'  }", :class => "image_preview",:width=>48,:height=>48)%>
+	<br>
+			<b>Work Medium</b> :- <%=@artwork.send fchar+"workmedium"%>
+			<br>
+			<b>Work Size </b>:- <%=@artwork.send fchar+"worksize"%>
+			<br>
+			<b>Work Price </b>:- <%=@artwork.send fchar+"workprice"%>
+			<br>
+	
+<%end%>

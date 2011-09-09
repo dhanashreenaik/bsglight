@@ -1,0 +1,15 @@
+<% form_for_item @current_object, title do |f| -%>
+
+<% f.field(:people, :label => 'Contacts_selection : ') do %>
+  <%= old_school_switching_lists(
+    :ajax_url => filtering_contacts_admin_groups_url,
+    :object_id => @current_object.id,
+    :filters_options => options_for_select((('A'..'Z').to_a+['0-9']).map{ |e| [e, e] }),
+    :remaining_objects => @remaining_members,
+    :selected_objects => @selected_members,
+    :field => 'email'
+  )
+  %>
+<% end %>
+
+<% end -%>

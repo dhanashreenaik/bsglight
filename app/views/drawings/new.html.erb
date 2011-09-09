@@ -1,0 +1,22 @@
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Enter Here Life Drawing Details</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+				<form action="/admin/drawings" method="post">
+                    <label>Life Drawings  Details *:</label>
+					<div class="formElement">
+					
+					<%=text_area "drawing","drawingdetails" ,:cols=>30,:rows=>1%>
+					 </div>
+					<button type="submit" class="submitButton">
+						<span>Create</span>
+					</button>
+				</form>
+		</div>
+	
+	
+</div>

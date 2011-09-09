@@ -1,0 +1,28 @@
+
+<div class="objectList small">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+					<span id="item_count">Group Show Selection</span>
+	</div>
+	<div class="blockCornerRight"></div>
+	<div class="contentList filtered sixH">
+	          <form action="/addusergroupshow/<%=@user.id%>" method="post">
+  <div>
+ <label>Add <%=@user.profile.full_name%> To Group Shows</label> 
+ </div>
+  <div>
+<select size="6" name="groupshows[user_ids][]"  id="groupshows_ids_" multiple="true">
+    <%for gs in @groupshows%>
+           <%if @selectedtitlearray.include? gs.title%>  
+            <option value="<%=gs.id%>" selected="selected"><%=gs.title%></option>
+        <%else%>
+            <option value="<%=gs.id%>"><%=gs.title%></option>
+        <%end%>    
+        
+    <%end%>
+  </select>
+ </div> 
+<%=submit_tag "Add To Group Show",:style=>"margin-left:130px;margin-top:20px;width:150px;"%>                    
+</form>
+		</div>
+	</div>

@@ -1,0 +1,127 @@
+
+<style>
+.changecolorgray{
+  color: #444444;
+  line-height: 15px;
+}
+</style>
+<script type="text/javascript">
+           function changetheline(){
+
+                   cmbv = document.getElementById("invoicing_info_payment_medium").value;
+                   
+                   if  (cmbv == "cash")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "You will need to come into the gallery at 322 Brunswick St, Fitzroy to make your payment";
+                   }
+                   if  (cmbv == "cheque")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "Make out to BSG and send to 322 Brunswick St, Fitzroy 3065";
+                   }
+                   if  (cmbv == "bank")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "Please pay to BSG, BSB 063212, Account No  1017 2051, CBA with your name on the transaction";
+                   }
+                   if  (cmbv == "online")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "";
+                   }
+                   if  (cmbv == "paypal")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "";
+                   }
+
+           }
+
+						function change_entry_fee_value()
+						{
+						changed_value = 0
+						for (myvalue=0;myvalue<=document.getElementById('field-5da43579005846d').selectedIndex;myvalue++)
+						{
+						changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				    }
+						   document.getElementById("change_entry_fee").value=changed_value;
+						}
+								function change_the_required_field_value(entry_fee_value_for_calculation){
+						  changed_value = 0
+						    for (myvalue=0;myvalue<=entry_fee_value_for_calculation;myvalue++)
+						    {
+						      changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				        }
+				        return changed_value;
+						}
+					
+</script>
+						<div>
+<% form_for 'payment', :url =>"shopping_cart_payment", :builder =>BlankFormBuilder,:html=>{ :method => :post } do |f| %>
+                <div>
+                          <%= hidden_field_tag :user_id, :value => @current_user.id %>
+                            <div class="changecolorgray">
+                                      Payment
+                            </div>   
+                            <%= select 'invoicing_info', 'payment_medium', [['VISA', 'visa'], ['Master Card', 'master card'],['Paypal','paypal']], {},:style=>"float:left",:onchange=>"changetheline()"%>
+                            
+                            <div style="clear:both;"></div>
+                            <div class="changecolorgray">
+                                      <span >First Name</span> <span style="margin-left:131px;">Last Name</span>
+                             </div>   
+                            <%= text_field  :credit_card,:first_name, :label => 'First name' ,:style=>"width:165px;height:16px;float:left"%>
+                            <%= text_field :credit_card, :last_name, :label => 'Last name' ,:style=>"width:254px;height:16px;margin-left:12px;"%>
+                            <%= hidden_field :credit_card, :user_id,:value=>current_user.id%>
+                  
+                               <div class="changecolorgray">
+                                        Number
+                                </div>
+                                 <%#= text_field :credit_card, :number, :label => 'Number',:value=>"4987654321098769",:style=>"width:242px;height:16px;"%>
+                                 <%= text_field  :credit_card,:number0, :label => 'Number',:value=>"4",:style=>"width:15px;height:16px;text-align: center;" ,:onblur=>"checkcreditcardno('credit_card_number0')"%>
+                                 <%= text_field  :credit_card,:number1, :label => 'Number',:value=>"9",:style=>"width:15px;height:16px;text-align: center;",:onblur=>"checkcreditcardno('credit_card_number1')"%>
+                                 <%= text_field  :credit_card,:number2, :label => 'Number',:value=>"8",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number2')"%>
+                                 <%= text_field  :credit_card,:number3, :label => 'Number',:value=>"7",:style=>"width:15px;height:16px; text-align: center;margin-right:20px;",:onblur=>"checkcreditcardno('credit_card_number3')"%>
+                                 <%= text_field  :credit_card,:number4, :label => 'Number',:value=>"6",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number4')"%>
+                                 <%= text_field  :credit_card,:number5, :label => 'Number',:value=>"5",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number5')"%>
+                                 <%= text_field  :credit_card,:number6, :label => 'Number',:value=>"4",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number6')"%>
+                                 <%= text_field  :credit_card,:number7, :label => 'Number',:value=>"3",:style=>"width:15px;height:16px; text-align: center; margin-right:20px;",:onblur=>"checkcreditcardno('credit_card_number7')"%>
+                                 <%= text_field  :credit_card,:number8, :label => 'Number',:value=>"2",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number8')"%>
+                                 <%= text_field  :credit_card,:number9, :label => 'Number',:value=>"1",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number9')"%>
+                                 <%= text_field  :credit_card,:number10, :label => 'Number',:value=>"0",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number10')"%>
+                                 <%= text_field  :credit_card,:number11, :label => 'Number',:value=>"9",:style=>"width:15px;height:16px; text-align: center; margin-right:20px;",:onblur=>"checkcreditcardno('credit_card_number11')"%>
+                                 <%= text_field  :credit_card,:number12, :label => 'Number',:value=>"8",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number12')"%>
+                                 <%= text_field  :credit_card,:number13, :label => 'Number',:value=>"7",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number13')"%>
+                                 <%= text_field  :credit_card,:number14, :label => 'Number',:value=>"6",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number14')"%>
+                                 <%= text_field  :credit_card,:number15, :label => 'Number',:value=>"9",:style=>"width:15px;height:16px; text-align: center;",:onblur=>"checkcreditcardno('credit_card_number15')"%>
+ 
+                  
+                                 <div class="changecolorgray">
+                                         <span> Expiry Date</span><span style="margin-left:124px;">Verification code (3 digits)</span>
+                                  </div>
+                                    <%=date_select:credit_card, :expiring_date, {:order => [:year, :month], :label => 'Expiring date' ,:default => { :year =>   2013,:month=>05 },:start_year=>1995,:end_year=>2015},:style=>"text-align: center"%>
+                                 <%= text_field :credit_card, :verification_value, :label => 'Verification value' ,:value=>"123" ,:style=>"width:76px;height:16px;text-align: center"%>
+                                 <div class="changecolorgray" style="clear:both;margin:5px;">
+                                        
+                                  </div>    
+                                  <%#= select 'invoicing_info', 'payment_medium', [['Online', 'online'],['Paypal','paypal']], {},:style=>"float:left",:onchange=>"changetheline()"%>
+                                  <div style="clear: both; float: left; padding-top: 20px;">
+                                  
+                                  <%=  submit_to_remote 'da_btn', "Proceed",{ :url => "shopping_cart_payment", :update =>    'modal_space_answer',:complete=>"document.getElementById  ('show_ajax_request').style.display='none'" ,:before=>"document.getElementById  ('show_ajax_request').style.display='block';"}%>
+                                  
+                                    
+                                    <div id="show_ajax_request" style="display:none;height:25px;width:20px;margin-left:10px;float:right">
+                                              <img height="18" src="/images/ajax-spinner.gif" alt="loading" >
+                                   </div>
+                                    
+                                  </div>  
+                                   
+                </div>
+                <b>
+                <div id="modal_space_answer" style="margin-top:1px;clear:both" >
+                </div>
+                </b>
+</div><%#div style="height:570px;" end%>
+
+  <% end %>
+
+<div id="paypal_form">
+</div>
+    
+
+

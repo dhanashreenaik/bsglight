@@ -1,0 +1,116 @@
+  
+<% blank_main_div(:title =>"Contacts list (#{@num} results)", :hsize => 'sixH') do %>
+  
+  <table id="profiles">
+    <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>&nbsp  State</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+      <% @current_objects.each do |profile| %>
+        <tr>
+            <%if  profile.user.login != "admin" and  profile.user.login != "superadmin"%>
+              <td><%=link_to profile.first_name , admin_profile_path(profile.id)%></td>
+              <td><%=link_to profile.last_name , admin_profile_path(profile.id)%></td>
+              <td><%=link_to profile.email_address, admin_profile_path(profile.id) %></td>
+              <td><%=h profile.country_state %></td>
+             <%else%>
+              <td><%=link_to profile.first_name , '' %></td>
+              <td><%=link_to profile.last_name , ''%></td>
+              <td><%=link_to profile.email_address, '' %></td>
+              <td><%=h profile.country_state %></td>
+            <%end%>
+
+
+  </tr>
+ <% end %>
+  </tbody>
+  <tfoot>
+    <tr style="display:none;">
+      <td colspan="5">
+	            No rows match the filter...
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+              <br/></br>  
+                        <div>
+                          <form action="/admin/send_news_letter">
+                            <%if @newsletter%>
+                              <select size="6" name="newsletter"  id="category_ids_" >
+                                <%for newsletter in @newsletter%>
+                                <option  value="<%=newsletter.id%>"><%=newsletter.title%></option>
+                                <%end%>
+                              </select>
+                            <%=hidden_field_tag "categoryid",@filters * ","%>
+                            
+                            <%=submit_tag "send newsletter", :style => "width:115px;"%>
+                            <%end%>
+                          </form>
+                        </div>
+            
+<% end %>
+
+
+<div class="rightBlocks">
+	<div class="itemShowRightBlock">
+	    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+			Actions
+		</div><div class="blockCornerRight"></div>
+	    <div class="blockElementBody">
+	        <%= link_to I18n.t('user.new.add_user'), new_admin_user_path %><br /><br />
+			Filter the list with text <br />
+			<input id="filter223" /><br /><br />
+                        Filter the list by categories <br />
+                        <div id="filterthecategory">
+                        <%#= link_to 'All', admin_profiles_path %>
+                        <%# Category.all.each do |cat| %>
+                          <%#= link_to cat.name, admin_profiles_path(:category => cat.id) %>
+                        <%# end %>
+                        <% form_for 'filter', :url => filter_admin_profiles_path, :html => { :method =>:post } do |f| %>
+                          <%= select_tag "category_ids[]", options_from_collection_for_select(Category.all, 'id', 'name', :selected => @filters), :multiple => true, :size => 6,:class=>"collectionlist" %>
+                          <%= f.submit 'filter', :class => "submitfilter" %>
+                        <% end %>
+                        </div>
+          
+             </div>
+                
+                
+	</div>
+</div>
+
+
+
+<script>
+  $(document).ready(function()
+    {
+      $("#profiles").tablesorter();
+        <%#*$("#profiles").tablesorter({ sortList: [[0, 0]], widgets: ['zebra'] });%>
+
+        <%#*$("#profiles tbody tr").quicksearch({%>
+            <%#*labelText: 'Search: ',%>
+            <%#*attached: '#profiles',%>
+            <%#*position: 'before',%>
+            <%#*delay: 100,%>
+            <%#*loaderText: 'Loading...',%>
+            <%#*onAfter: function() {%>
+                <%#*if ($("#profiles tbody tr:visible").length != 0) {%>
+                    <%#*$("#profiles").trigger("update");%>
+                    <%#*$("#profiles").trigger("appendCache");%>
+                    <%#*$("#profiles tfoot tr").hide();%>
+                <%#*}%>
+                <%#*else {%>
+                    <%#*$("#profiles tfoot tr").show();%>
+                <%#*}%>
+            <%#*}%>
+        <%#*});%>
+
+    }
+);
+</script>

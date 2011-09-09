@@ -1,0 +1,88 @@
+
+<% blank_main_div(:title => @current_object.full_name, :hsize => 'sixH') do %>
+
+  <div class="userDetails">
+    <div id="allll">
+      <div id="ggg" style ="margin: Opx; padding: Opx; float: left">
+        <%= render :partial => "admin/profiles/profile_show", :locals => { :profile => @current_object } %>
+      </div>
+
+      <div id="ddd" style ="margin: Opx; padding: Opx; float: right">
+        <%= render :partial => 'admin/profiles/specific/artist_show', :locals => { :profile => @current_object, :no_bio => true } %>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <b>Biography :</b><br />
+    <%=h @current_object.biography %>
+
+    <% if @current_object.user %>
+      <%#= render :partial => 'admin/profiles/data' %>
+    <% else %>
+      Create a user link to that profile before to link data to it. Functionality coming soon ...
+    <% end %>
+    
+  </div>
+<% end %>
+
+<div class="rightBlocks">
+  
+  <div class="itemShowRightBlock">
+    <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+    <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+  </div>
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">What can I do?</div><div class="blockCornerRight"></div>
+    	<div class="blockElementBody">
+      	<!-- TODO TRANSLATE -->
+        <%#= link_to I18n.t('general.link.back_to_list'), admin_profiles_path %>
+        <%#= link_to I18n.t('general.link.add'), new_admin_profile_path %>
+        <%= link_to I18n.t('general.link.edit'), edit_admin_profile_path(@current_object)%>
+        <%=link_to "My Cart" ,"/admin/orders/show_cart"%>
+        <%=link_to "My Orders" ,:url=>"/admin/orders"%>
+        <%=link_to "My Link" ,:url=>"/admin/links"%>
+        <%=link_to "Add Artwork" ,"/admin/artworks/new"%>
+        <%#= link_to I18n.t('general.link.delete'), "javascript:;",
+          :class => "deleteLink",
+          :modal_id => "#modalDelete_#{@current_object.id.to_s}"
+      	%>
+      	<div style="display:none">
+          <div id="modalDelete_<%=@current_object.id.to_s%>" class="modalDelete">
+            <p><%= I18n.t('item.destroy.delete_conform')%></p>
+            <%= link_to I18n.t('general.common_word.yes1'), admin_profile_path(@current_object), :method => :delete%> |
+            <%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+          </div>
+        </div>
+        <%#= @current_object.user ? link_to('Private workspace for the user linked to', container_path(@current_object.user.private_workspace)) : link_to('Profile workspace', container_path(@current_object.profile_workspace)) %>
+    </div>
+  </div>
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">User info</div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <% if @current_object.user %>
+      <%= image_tag @current_object.user.avatar.url(:thumb), :class => "avatar", :align => "left"%>
+      <p><b><%=I18n.t('user.field.login_label')%> : </b><%= @current_object.user.login %></p>
+      <p><b><%=I18n.t('user.field.email_label')%> : </b><%= @current_object.user.email %></p>
+      <p><b><%=I18n.t('user.field.system_role_id_label')%> : </b><%= @current_object.user.system_role.name %></p>
+        <% if @current_object.user.activation_code.to_s.length > 15 && current_user.has_system_role('admin') %>
+          <form action="<%= resend_activation_mail_or_activate_manually_admin_user_path(@current_object.user.activation_code) %>" method="post" >
+            <input type="submit" name="resend_activation_mail" value="Resend activation mail" style="width:180px" />
+            <input type="submit" name="activate_manually" value="Activate manually" style="width:180px" />
+          </form>
+        <% end %>
+      <% else %>
+        <%= link_to "Link a user to that profile", '#' %>
+      <% end %>
+    </div>
+  </div>
+
+  <!--<div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">Categories</div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <%= (l=@current_object.categories.all(:order => "name ASC")).first ? l.map{ |e| e.name+'<br />' } : '(none)' -%>
+    </div>
+  </div>
+-->
+</div>

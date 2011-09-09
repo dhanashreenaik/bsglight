@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  get_encoding_progress('<%= object.id %>','<%= object.class.to_s.underscore %>');
+</script>
+<%#= periodically_call_remote :update=> 'progress',
+:condition => "cancel==true",
+:url => {:action=> 'get_progress', :id => object.id},
+:frequency => 120 %>
+<div id="states">
+    <% if object.state == 'uploaded' %>
+        <%= object.state.capitalize%>
+        <%= image_tag "/images/loader.gif" %>
+    <% else %>
+        <%= object.state.capitalize %>
+    <% end %>
+</div>

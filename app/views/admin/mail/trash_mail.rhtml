@@ -1,0 +1,247 @@
+<style>
+</style>
+<script>
+function change_the_flag(attrid)
+{
+  if (document.getElementById(attrid).className == "mouse-link"){
+      document.getElementById(attrid).className = "mouse-onclik";
+      }
+  else
+  {
+      document.getElementById(attrid).className = "mouse-link";
+   }   
+}
+
+function select_all_checkbox(checkboxlength,checkboxnamearray){
+  if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < checkboxlength; i++)
+            {
+        	    checkboxnamearray[i].checked = true ;
+       	    }
+    }
+	else
+  	{
+  	   for (i=0; i  < checkboxlength ; i++ )
+  	      {
+          	checkboxnamearray[i].checked = false ;
+         	} 
+	  }
+  }
+//  #{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray})
+function select_all_checkbox_flag(messagesentlength,messagerecdlength,messagesentarray,messagerecdarray)
+{
+   if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < messagesentlength; i++)
+            {
+        	    messagesentarray[i].checked = true ;
+       	    }
+       	    
+      for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = true ;
+       	    } 	    
+    }
+	else
+  	{
+  	   for (i=0; i  < messagesentlength ; i++ )
+  	      {
+          	messagesentarray[i].checked = false ;
+         	} 
+         	 for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = false ;
+       	    } 	 
+	  }
+}
+
+
+//  #{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray})
+function select_all_checkbox_trash(messagesentlength,messagerecdlength,messagesentarray,messagerecdarray)
+{
+   if(document.getElementById('delete_all_message').checked)
+    {
+      for (i=0; i < messagesentlength; i++)
+            {
+        	    messagesentarray[i].checked = true ;
+       	    }
+       	    
+      for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = true ;
+       	    } 	    
+    }
+	else
+  	{
+  	   for (i=0; i  < messagesentlength ; i++ )
+  	      {
+          	messagesentarray[i].checked = false ;
+         	} 
+         	 for (i=0; i < messagerecdlength; i++)
+            {
+        	    messagerecdarray[i].checked = false ;
+       	    } 	 
+	  }
+}
+
+function submitForm(){
+if (confirm("Are You Sure"))
+  {
+  document.myform.submit();
+  }
+
+}
+
+function Moveto(){
+  document.myform.action = "/admin/moveto";
+  document.getElementById('selected_label').value = document.getElementById('selectlabel').value
+  document.myform.submit();
+}
+
+function set_the_signature(signature)
+{
+  document.getElementById("signature").value = signature
+}
+
+</script>
+<div style="padding-left:30%;">
+   
+<form action="/admin/create_label" >
+<!--<a href="#" onclick="Moveto();">Move To</a>&nbsp;&nbsp;&nbsp;-->
+<select name="select" id="selectlabel" onchange="Moveto();">
+    <option value="select">Move To</option>
+    <%for mlabelname in @created_label%>
+        <option value="<%=mlabelname.labelname%>"><%=mlabelname.labelname%></option>
+    <%end%>
+</select> 
+<a href="#" onclick="return submitForm();" >Delete</a>&nbsp;&nbsp;&nbsp;
+
+create label  &nbsp;
+<%=text_field_tag "createlabel",'',:style=>"width:90px;padding:0px;"%></form>
+</div>
+
+<div style="border: 1px solid rgb(170, 170, 170); float: left; margin: 1em; padding: 1em; width: 10%;" id="mailbox_list">
+  <p>
+  <strong><%=link_to_remote "Compose" ,:update => "",:url => { :action => "compose_new_mail"}%>
+  </strong>
+  </p>
+    <p>
+  <strong><%=link_to_remote "Inbox" ,:update => "",:url => { :action => "index"}%></strong></p>
+    <p>
+  <strong><%=link_to_remote "Sent" ,:update => "",:url => { :action => "sent_mail"}%></strong></p>
+    <p>
+  <strong><%=link_to_remote "Trash" ,:update => "",:url => { :action => "trash_mail"}%>
+  </strong></p>
+  <strong><%#=link_to_remote "Flagged" ,:update => "",:url => { :action => "show_flag_email"}%>
+      <!--<img src="/images/flag-2.png"/>-->
+  </strong></p>
+  <strong><%=link_to_remote "Unknown_Email" ,:update => "",:url => { :action => "unknown_email"}%>
+  </strong></p>
+  
+    
+ 
+ <p><strong style="color: #F79646;">Label</strong></p> 
+<%for mlabelname in @created_label%>
+<p>
+<%=link_to_remote mlabelname.labelname,:update => "",:url => { :action => "show_labeled_email",:id=>mlabelname.id}%>
+<span style="margin-left:20px;"><%=link_to_remote  'x',:url=>{:action=>"delete_label", :id=>mlabelname.id },:confirm=>"Are You Sure"%></span>
+</p>
+
+
+
+
+
+<%end%>
+ 
+  
+  </div>
+<div>
+<%checkboxarrayname = []%>
+<%@messages.each do |msg| checkboxarrayname <<  "delete_message"+msg.id.to_s end%>
+<%checkboxarraynamestring= "["+(checkboxarrayname * ",")+"]" %>
+
+<div id="table_structer_of_email">
+<form action="/admin/delete_from_trash" name="myform" method="post">
+<h3>Trash</h3>
+<table cellpadding="10" style="padding-left:20px;" border="1"><tr>
+     <th>
+   <%msglength=0%>  
+<%checkboxsentarrayname = []%>
+  <%@messages.each do |msg| 
+    if msg.instance_of?(MessageCopy)
+      msglength = msglength+1  
+      checkboxsentarrayname <<  "delete_message_recd" + msg.id.to_s 
+    end
+end %>
+
+<%messagesentarray= "["+(checkboxsentarrayname * ",")+"]" %>
+<%checkboxrecdarrayname = []%>
+<%@messages_sent_delete.each do |msg| checkboxrecdarrayname <<  "delete_message_mail"+msg.id.to_s end%>
+<%messagerecdarray= "["+(checkboxrecdarrayname * ",")+"]" %>
+<%#messagesentlength=@messages.length%>
+
+<%messagesentlength=msglength%>
+<%messagerecdlength=@messages_sent_delete.length%>
+
+     <%=check_box_tag "delete_all_message" ,0,false,:onClick=>"select_all_checkbox_trash(#{messagesentlength},#{messagerecdlength},#{messagesentarray},#{messagerecdarray});"%>
+    </th>
+    <th>
+    From
+    </th>
+    <th>
+    Subject
+    </th>
+    <th>
+    Date Received
+    </th>
+
+    </tr>
+    <%for message in @messages%>
+    <%if message.instance_of?(MessageCopy)%>
+    <tr>
+    <td>
+      <%=check_box_tag "delete_message_recd"+message.id.to_s  ,message.id%>
+    </td>
+    <td>
+    <%=h message.author.login %>
+    </td>
+    <td>
+    <%= link_to_remote message.subject ,:update => "",:url => { :action => "show_message", :id => message.id }%>
+    </td>
+    <td>
+    <%=message.created_at.strftime("%Y-%m-%d")%>
+    </td>
+    </tr>
+    <%end%>
+    <%end%>
+ 
+   <%for message in @messages_sent_delete %>
+       
+    <tr>
+    <td>
+      <%=check_box_tag "delete_message_mail"+message.id.to_s  ,message.id%>
+    </td>
+    
+    <td>
+    <%=h message.author.login %>
+    </td>
+    <td>
+    <%= link_to_remote message.subject ,:update => "",:url => { :action => "show_message", :id => message.id }%>
+    </td>
+    <td>
+    <%=message.created_at.strftime("%Y-%m-%d")%>
+    </td>
+    </tr>
+
+    <%end%>
+    </table>
+    
+</form>    
+       <%= will_paginate @messages %>
+
+</div>    
+<div style="width:500px;height:1000px;border:1px solid red;padding-left:50px;margin:150px;clear:both" id="show_details">
+</div>
+
+

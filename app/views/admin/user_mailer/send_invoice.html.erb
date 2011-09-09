@@ -1,0 +1,9 @@
+Hello,
+
+Please find attached your invoice For Your Payment For 
+<%if @invoice.purchasable.class == CompetitionsUser%>
+<%=@invoice.purchasable.competition.title%>
+<%end%>
+<%if @invoice.purchasable.class == ExhibitionsUser%>
+    <%=@invoice.purchasable.exhibition.title%>
+<%end%>
