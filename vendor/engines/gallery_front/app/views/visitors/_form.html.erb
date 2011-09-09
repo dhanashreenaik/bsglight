@@ -1,0 +1,70 @@
+<style>
+#form p {
+  margin-bottom:5px;  
+}
+#form{
+  height:455px;
+}
+</style>
+<% form_for @current_object, :url => admin_users_path, :html => { :method => :post, :id => 'form' ,:class=>"form_subscribe",:style=>"height:455px;"} do |f| %>
+			<div class="form-registration">
+        <p>Email (This will be your UserName)</p>
+       <label><%= f.text_field :email,:class=>"reg-field" %>
+       </label>
+      
+   <% f.fields_for :profile do |p| %>
+
+
+		<p>Password <span style="position:relative; margin-left:146px;">Confirm
+ Password Code</span></p>
+      <div class="error-password">
+      <label><%= f.password_field :password, :style=>"width:183px;float:left;",:class=>"reg-field" %>&nbsp;
+      </label>
+      </div>
+     <label> <%= f.password_field :password_confirmation, :style=>"width:183px;",:class=>"reg-field" %></label>
+
+       <p style="clear:both;">Address</p> 
+      <label><%= p.text_field :address, :class=>"reg-field" %>
+      </label>
+
+      <p>First name</p>
+      <label><%= p.text_field :first_name,:class=>"reg-field" %>
+      </label>
+      
+     		<p>Last name</p>
+      	<label><%= p.text_field :last_name, :class=>"reg-field" %>
+      	</label>
+
+       <p>Website</p> 
+      <label><%= p.text_field :website, :class=>"reg-field" %>
+      </label>
+      
+       <p>State</p> 
+      <label><%= p.text_field :country_state,:class=>"reg-field" %>
+      </label>
+
+
+       <p>Country</p> 
+      <label><%= p.text_field :country, :class=>"reg-field" %>
+      </label>
+       <p>Suburb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post Code</p>
+   
+      <label><%= p.text_field :suburb,:style=>"float:left; width:230px;",:class=>"reg-field" %>
+      </label>
+      <%= p.text_field :zip_code,  :style=>"margin-left: 4px; width:139px;" ,:class=>"reg-field" %>
+      
+       <p>Phone</p>
+      <label><%= p.text_field :phone_number ,:class=>"reg-field" %>
+      </label>
+     
+   <% end %>
+
+<!--      <p>User Name (This Should Be Email)</p>
+      <label><%= f.text_field :email, :size => '50' %>
+      </label>  -->
+      
+
+    <p><button name="submit" id="next">>>submit</button></p>
+    </div>
+  <% end %>
+

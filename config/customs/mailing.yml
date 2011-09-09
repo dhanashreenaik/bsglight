@@ -1,0 +1,16 @@
+--- 
+sa_mailing_port: !str
+  str: "993"
+  "@_rails_html_safe": false
+sa_mailing_user_name: !str
+  str: "test@pragtech.co.in"
+  "@_rails_html_safe": false
+sa_mailing_host: !str
+  str: "imap.gmail.com"
+  "@_rails_html_safe": false
+sa_mailing_enable_ssl: !str
+  str: "1"
+  "@_rails_html_safe": false
+sa_mailing_password: !str
+  str: "test123"
+  "@_rails_html_safe": false

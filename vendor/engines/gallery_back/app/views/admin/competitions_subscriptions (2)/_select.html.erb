@@ -1,0 +1,13 @@
+<% blank_main_div(:title => 'Subscription selection', :hsize => 'sixH', :modal => true) do %>
+
+<% form_for 'submission', :url => subscribe_admin_competitions_subscriptions_path, :builder => BlankFormBuilder, :html => { :method => :post, :multipart => true } do %>
+
+  <% @competition.competitions_subscriptions.each do |s| %>
+    <%= radio_button 'selection', 'cs_id', s.id %> <%= s.to_s %>
+  <% end %>
+
+  <%= blank_form_submit_button(:name => 'Select', :remote => true, :url => subscribe_admin_competitions_subscriptions_path, :update => 'modal_space') %>
+
+<% end %>
+
+<% end %>

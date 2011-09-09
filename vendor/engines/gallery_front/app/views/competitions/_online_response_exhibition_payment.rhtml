@@ -1,0 +1,5 @@
+After Your Payment Is Done Please Add The Artwork1356458798*/
+
+<%=link_to_remote "Add Artwork", :update => "",
+    :url => {:action => "add_exhibition_artwork",:exhibition_user_id => exhibition_user_id,:artwork_count=>artwork_count }
+%>

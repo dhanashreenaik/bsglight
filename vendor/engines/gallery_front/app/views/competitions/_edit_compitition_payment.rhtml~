@@ -1,0 +1,112 @@
+<style>
+.changecolorgray{
+  color: #444444;
+  line-height: 15px;
+}
+</style>
+<script type="text/javascript">
+						function change_entry_fee_value()
+						{
+						   changed_value = 0
+						for (myvalue=0;myvalue<=document.getElementById('field-5da43579005846d').selectedIndex;myvalue++)
+						{
+						   changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				    }
+						   document.getElementById("change_entry_fee").value=changed_value;
+						}
+						function change_the_required_field_value(entry_fee_value_for_calculation){
+						  changed_value = 0
+						    for (myvalue=0;myvalue<=entry_fee_value_for_calculation;myvalue++)
+						    {
+						      changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				        }
+				        return changed_value;
+						}
+</script>
+<div >
+        <% form_for 'payment',  :url => "create_the_payment",  :builder => BlankFormBuilder,  :html => { :method => :post } do |f| %>
+               <input type="hidden" id="mychangevalue0" value="0">
+    			     <%i=1%>
+      		   	 <%competition.entry_fees.each  do |x|%>
+      								  <input type="hidden" id="mychangevalue<%=i%>" value="<%=x.split('$')[1]%>">
+        							  <%i=i+1%>
+      				 <%end%>			
+               <div class="changecolorgray">
+                      You Have Already Paid $<span id="rupees_paid"></span> For <%=order.total_entry %>&nbsp;&nbsp;Entries
+          		        <script>
+                      			document.getElementById("rupees_paid").innerHTML= change_the_required_field_value(<%=order.total_entry%>)
+                  		</script>
+          		</div>
+	            <!--<div>
+		                  <%# if order.total_entry.to_i != 0%>
+		                          <%#=link_to_remote "Edit Artworks", :update => "",:url => { :action => "edit_images_front", :id => competition.id,:order_id=>order.id }
+		                          %>
+                     <%#end%>		  
+	            </div>--> 
+	            
+   	<select name="competitions_user[total_entry]" id="field-5da43579005846d" onChange="change_entry_fee_value();" style="width:40px;height:25px;">
+      								<option value="0">0</option>
+        								     <%i=1%>
+           									 <%competition.entry_fees.each do |x|%>
+                  									<%if i == order.total_entry.to_i%>
+							                  	  			<option value="<%=i%>" selected="selected"><%=i%></option>
+							                  		<%else%>
+							                    	      	<option value="<%=i%>"><%=i%></option>
+							                  		<%end%>
+							                  		<%i=i+1%>
+							          		<%end%>
+            	</select>
+	      			<div style="float:left">
+	                	<input type="hidden" id="order_id" name="order_id" value="<%=order.id%>"/>		
+	          	</div>&nbsp;&nbsp;
+       	<font size="2px;">$</font>&nbsp;&nbsp;&nbsp;<input type="text" id="change_entry_fee"   value="0" readonly="true" style="width:30px;height:16px;"/>
+	      			<script>
+	                      		document.getElementById("change_entry_fee").value=change_the_required_field_value(<%=order.total_entry%>)
+	          	</script>
+            <div>
+                      <% fields_for credit_card do |ff| %>
+                              <%= ff.hidden_field :user_id, :value => @current_user.id %>
+                              <div class="changecolorgray" >
+                                    Payment
+                              </div>     
+                              <%= ff.select :type_of_card, [['VISA', 'visa'], ['Master Card', 'master_card']], :label => 'Type' %>
+                              <div class="changecolorgray">
+                                  <span >First Name</span> <span style="margin-left:60px;">Last Name</span>
+                               </div>   
+                                <%= ff.text_field :first_name, :label => 'First name' ,:style=>"width:104px;height:16px;float:left"%>
+                                <%= ff.text_field :last_name, :label => 'Last name' ,:style=>"width:104px;height:16px;"%>
+                                  <div class="changecolorgray" >
+                                      Number
+                                   </div>
+                                          <%= ff.text_field :number, :label => 'Number',:value=>"4987654321098769",:style=>"width:215px;height:16px;"%>
+                                   <div class="changecolorgray">       
+                                        Expiry Date
+                                    </div>    
+                                    <%= ff.date_select :expiring_date, :order => [:year, :month], :label => 'Expiring date' ,:default => { :year => 2013,:month=>05 }%>
+                                    <div class="changecolorgray">       
+                                          Varification Value
+                                     </div>
+                                    <%= ff.text_field :verification_value, :label => 'Verification value' ,:value=>"123" ,:style=>"width:162px;height:16px;"%>
+                                    <div class="changecolorgray" >       
+                                           Payment type   
+                                    </div>                           
+                                      <%= select 'invoicing_info', 'payment_medium', [['Online', 'online'],['Cash','cash'],['Cheque','cheque'],['Paypal','paypal']] ,{},:style=>"float:left"%>
+                                      
+
+                                          <div style="float:left;margin-left:14px;">
+                                                  <%=  submit_to_remote 'da_btn', "Proceed",{ :url => "create_the_payment", :update =>    'modal_space_answer',:complete=>"document.getElementById  ('show_ajax_request').style.display='none'" ,:before=>"document.getElementById  ('show_ajax_request').style.display='block'"}%>
+                                           </div>  
+                                            <div id="show_ajax_request" style="display:none">
+                                                      <img alt="loading" src="/images/ajax-spinner.gif">
+                                            </div>
+
+                                    <div id="modal_space_answer" style="margin-top:5px;clear:both">
+                                    </div>
+            </div><%#blank div ends%>
+<%end%>
+
+ 
+<% end %>
+
+</div><%#<div style="height:570px;">ends%>
+

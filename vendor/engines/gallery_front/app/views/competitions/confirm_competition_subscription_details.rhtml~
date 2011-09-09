@@ -1,0 +1,102 @@
+<% blank_main_div(:title => 'Payment process', :hsize => 'sixH', :modal => true) do %>
+
+<% form_for 'payment',
+  :url => new_admin_payment_url,
+  :builder => BlankFormBuilder,
+  :html => { :method => :post } do |f| %>
+
+<label>Object : </label>
+    <div class="formElement" style="font-size:10px;margin-top:10px;">
+      You are going to purchase <br/><%= @order.title %>.
+    </div>
+
+<label>Total amount :</label>
+    <div class="formElement"  style="font-size:10px;margin-top:10px;">
+      The total amount to pay is : <%= @order.find_price(@order.competition.id) %> $.
+    </div>
+   
+    <div class="formElement"  style="font-size:10px;margin-top:10px;">
+      Deposit Required : <%= @order.find_price(@order.competition.id) %> $.
+    </div>
+ 
+<div>
+    <% fields_for @credit_card do |ff| %>
+      <%= ff.hidden_field :user_id, :value => @current_user.id %>
+      <label>Payment:-
+     </label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.select :type_of_card, [['VISA', 'visa'], ['Master Card', 'master_card']], :label => 'Type' %>
+      </div>
+      <br/>
+       <label>First Name:-
+     </label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.text_field :first_name, :label => 'First name' ,:style=>"width:200px;"%>
+      </div>
+      <br/>
+      <label>Last Name:-
+     </label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.text_field :last_name, :label => 'Last name' ,:style=>"width:200px;"%>
+      </div>
+      <br/>
+      <label>Number:-
+     </label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.text_field :number, :label => 'Number',:value=>"4987654321098769",:style=>"width:200px;"%>
+      </div>
+      <br/>
+      <label>Expiry Date:-
+     </label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.date_select :expiring_date, :order => [:year, :month], :label => 'Expiring date' ,:default => { :year => 2013,:month=>05 }%>
+      </div>
+      <label>
+      Varification Value:-
+     </label>
+     
+     <div class="formElement" style="font-size:10px;margin-top:10px;">
+      <%= ff.text_field :verification_value, :label => 'Verification value' ,:value=>"123" ,:style=>"width:200px;"%>
+      </div>
+       <label>Payment type : </label>
+<div class="formElement">
+  <%= select 'invoicing_info', 'payment_medium', [['Online', 'online'],['Cash','cash'],['Cheque','cheque'],['Paypal','paypal']] %>
+</div>
+        <div class="formElement" style="font-size:10px;margin-top:10px;">
+  <%#= blank_form_submit_button(:name => 'Proceed', :remote => true, :url => admin_payments_url, :update => 'modal_space_answer', :method => :post) %>
+<div id="show_ajax_request" style="display:none">
+<img alt="loading" src="/images/ajax-spinner.gif">
+</div>
+<%=  submit_to_remote 'da_btn', "Proceed",{ :url => admin_payments_url, :update =>  'modal_space_answer',:complete=>"document.getElementById('show_ajax_request').style.display='none'" ,:before=>"document.getElementById('show_ajax_request').style.display='block'"}%>
+  
+<div id="modal_space_answer">
+</div>
+
+<%end%>
+</div>
+<!--<label><b>Billing address : </b></label>
+    <div class="formElement">
+Address : <%= text_field_tag 'invoicing_info[billing][address]', @current_user.profile.address, :style => "width:400px;" %><br />
+City : <%= text_field_tag 'invoicing_info[billing][city]', @current_user.profile.city, :style => "width:200px;" %> Zipcode : <%= text_field_tag 'invoicing_info[billing][zip_code]', @current_user.profile.zip_code, :style => "width:70px;" %><br />
+Suburb : <%= text_field_tag 'invoicing_info[billing][suburb]', @current_user.profile.suburb, :style => "width:100px;" %> State : <%= text_field_tag 'invoicing_info[billing][state]', @current_user.profile.state, :style => "width:100px;" %>
+    </div>
+
+<label><b>Shipping address : </b></label>
+    <div class="formElement">
+Address : <%= text_field_tag 'invoicing_info[shipping][address]', @current_user.profile.address, :style => "width:400px;" %><br />
+City : <%= text_field_tag 'invoicing_info[shipping][city]', @current_user.profile.city, :style => "width:200px;" %> Zipcode : <%= text_field_tag 'invoicing_info[shipping][zip_code]', @current_user.profile.zip_code, :style => "width:70px;" %><br />
+Suburb : <%= text_field_tag 'invoicing_info[shipping][suburb]', @current_user.profile.suburb, :style => "width:100px;" %> State : <%= text_field_tag 'invoicing_info[shipping][state]', @current_user.profile.state, :style => "width:100px;" %>
+    </div>
+-->
+
+<div class="formElement">
+    <%#= blank_form_submit_button(:object => @order, :name => 'Validate') %>
+    <%#= blank_form_submit_button :name => 'Validate', :remote => true, :url => generate_invoice_admin_invoices_url, :update => 'modal_space', :method => :post %>
+ </div>   
+    <%#= button_to_function 'Validate', remote_function(:url => generate_invoice_admin_invoices_url,
+    :update => { :success => 'modal_space', :failure => "fail" }), :type => 'submit', :class => 'submitButton' %>
+  <% end %>
+
+<% end %>
+
+

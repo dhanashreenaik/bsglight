@@ -1,0 +1,78 @@
+<% form_for_item @current_object, title do |f| -%>
+
+
+  <%= f.text_field :submission_deadline, :label => 'Deadline For Entries' ,:onclick=>"show_date_option();" %>
+
+  <%= f.text_field :location, :label => 'Location' %>
+  
+  <%= f.text_field :no_of_entry, :label => 'No of Entries'  %>
+  
+  <%= f.text_field :cjudges, :label => 'Judges'  %>
+  
+  <%= f.text_area :entry_fees, :label => 'Entry Fee Format:-'+'<br/>'+' 1 works $50 '+'<br/>'+' 2 works $60'+'<br/> And Also no Empty Line'  %>
+
+  
+  
+ <%= f.text_field :format, :label => 'Format'  %>
+ 
+ <%= f.text_field :delivery, :label => 'Delivery'  %>
+  
+ <%= f.text_field :collection, :label => 'Collection'  %>
+ 
+ <%= f.text_field :commission, :label => 'Commission'  %>
+ 
+ <%= f.text_field :insurance, :label => 'Insurance'  %>
+ 
+ 
+  <%= f.text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+
+  <%= f.text_field :return_of_artwork, :label => 'Return Of Artwork:', :hint => 'Enter Only coma(,) seperated values. e.g. i will pick up on 15th,i will pick up on 31, etc'  %>
+  
+  <%= f.text_field :how_did_you_here, :label => 'How Did You Here About Prize:', :hint => 'Enter Only coma(,) seperated values. e.g. news paper,BSG website, etc'  %>
+  
+  <%= f.text_area :prizes_detail, :label => 'Prize Details. Please Enter On New Line Each Prize. 1st prize $40'+'<br/>'+'2nd  prize $80', :hint => 'Please pass a line between each price' %>
+
+  <%#= f.select :judge_id, @judges.map{ |e| [e.profile.full_name, e.id] }, { :include_blank => '----------' }, :label => 'Judge' %>
+
+  <%#= f.text_field :commission, :label => 'Commission' %>
+
+  <%= f.select :state, [['Open', 'open'], ['Publish the final artworks list', 'final_published'], ['Publish the results of the competition', 'results_publish']], :label => 'State' %>
+
+  <%= f.text_area :message_for_subscribers, :label => 'Message for subscribers: ' %>
+  
+
+<label>Exhibition Runs</label><br />
+
+  <% f.fields_for :timing do |ff| %>
+    <%= add_timing_fields(:form => ff, :places_list => nil, :period_used => false, :one_day => false, :time_used => false) %>
+  <% end %>
+
+ <%#= f.text_field :exhibition_date, :label => 'Exhibition Start And End Dates:-' %>
+
+
+<!--<label>SUBSCRIPTIONS PART</label><br />
+
+  <%# f.fields_for :competitions_subscriptions do |s| %>
+    <%#= render :partial => 'admin/competitions_subscriptions/competitions_subscription_fields', :locals => {:f => s } %>
+  <% #end %>
+  <label><%#= link_to_add_fields "Add subscription", f, :competitions_subscriptions %></label>
+-->
+<% end -%>
+<script>
+  
+  // function show_date_option(){
+
+	$(function() {
+		$( "#competition_submission_deadline" ).datepicker({
+			showOn: "button",
+			buttonImage: "/images/calendar.gif",
+			buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd' 
+		});
+	});
+	
+	//}
+	</script>
+
+	
+	

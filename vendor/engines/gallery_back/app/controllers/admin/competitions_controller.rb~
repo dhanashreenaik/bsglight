@@ -1,0 +1,145 @@
+# This controller is managing the different actions relative to the Image item.
+#
+# It is using a mixin function called 'acts_as_item' from the ActsAsItem::ControllerMethods::ClassMethods,
+# so see the documentation of that module for further informations.
+#
+class Admin::CompetitionsController < Admin::ApplicationController
+   before_filter :workspace_id
+
+    def  workspace_id
+       if  params["competition"] && params["competition"]["workspace_ids"].blank?
+        params["competition"]["workspace_ids"]=Workspace.find(:first, :conditions => { :creator_id => current_user.id}).id.to_s
+       end
+    end
+
+	def  send_winner_email
+       @artworks_competition = ArtworksCompetition.find(params[:id])
+	    QueuedMail.add('UserMailer', 'send_winner_email',[@artworks_competition,@artworks_competition.competitions_user.user], 0, send_now=true)	
+	    flash[:notice]="The Email Is Sent To  #{@artworks_competition.competitions_user.user.profile.full_name}"
+	    redirect_to :back
+    end
+
+	# Method defined in the ActsAsItem:ControllerMethods:ClassMethods (see that library fro more information)
+	acts_as_item do
+
+		before :new, :edit do
+			
+			@places = Gallery.all
+			@current_object.build_timing if @current_object.timing.nil?
+			@judges = User.find(:all, :conditions => "system_role_id=2 OR system_role_id=#{Role.find_by_name('judge').id}")
+			@current_object.competitions_subscriptions.build if @current_object.competitions_subscriptions.empty?
+		end
+		
+	   before :update do
+         begin
+         @current_object.submission_deadline = Date.civil(params[:competition][:submission_deadline].split("-")[0].to_i,params[:competition][:submission_deadline].split("-")[1].to_i,params[:competition][:submission_deadline].split("-")[2].to_i)
+	     rescue
+	     end
+	   end
+	   before :create do
+             begin
+             @current_object.submission_deadline = Date.civil(params[:competition][:submission_deadline].split("-")[0].to_i,params[:competition][:submission_deadline].split("-")[1].to_i,params[:competition][:submission_deadline].split("-")[2].to_i)
+	          rescue
+	          end
+	   end
+		
+		
+		after :create_fails, :update_fails do
+			#raise @current_object.errors.inspect
+			@places = Gallery.all
+			@current_object.build_timing if @current_object.timing.nil?
+			@judges = User.find(:all, :conditions => "system_role_id=1 OR system_role_id=2")
+			@current_object.competitions_subscriptions.build if @current_object.competitions_subscriptions.empty?
+		end
+
+      before :destroy do
+				
+		  @current_object.competitions_users.each do |cu|
+		    Invoice.delete_all("purchasablei_id = #{cu.id}")
+		  end    
+      
+      end 
+      
+      		
+		
+		before :show do
+		
+			if @current_object.state == 'results_publish'
+				@artworks_competitions = @current_object.artworks_competitions.all(:conditions=>["competitions_users_id != 'null'"], :order => "mark DESC")
+                			
+			elsif @current_object.state == 'final_published'
+				@artworks_competitions = @current_object.artworks_competitions.all( :conditions => ["state =  'selected' and competitions_users_id != 'null' "])
+			else
+			
+				@artworks_competitions = @current_object.artworks_competitions.all(:conditions=>["competitions_users_id != 'null'"])
+         		#@artworks_competitions =  CompetitionsUser.find(:all,  :conditions => { :competition_id =>  @current_object.id })
+			end
+			get_artworks_lists
+			@my_subscription = CompetitionsUser.find(:first,  :conditions => { :user_id => @current_user.id, :competition_id => @current_object.id })
+		end
+		
+	end
+
+	def submit_artworks
+		@current_object = Competition.find(params[:id])
+		if @current_user.has_system_role('admin')
+			@current_object.artwork_ids = params[:selectedOptions].split(',')
+			@current_object.save
+		elsif a=CompetitionsUser.find(:first, :conditions => { :user_id => @current_user.id, :competition_id => @current_object.id })
+			my_subscription = a.competitions_subscription
+			params[:selectedOptions] += ",#{(@current_object.artworks - @current_user.private_workspace.artworks).map{ |e| e.id }.join(',')}" if params[:selectedOptions]
+			@current_object.artwork_ids= params[:selectedOptions].split(',')[0..my_subscription.maximum_works_number-1]
+			@current_object.save
+		end
+		redirect_to item_path(@current_object)
+	end
+
+    def open
+			@competitionuser = CompetitionsUser.find(:all,:conditions=>["competition_id = ?   ",params[:id]])
+    end
+   	
+   	def finalist
+   	      competitionuser = CompetitionsUser.find(:all,:include=>["artworks_competitions"],:conditions=>["competition_id = ?   ",params[:id]])
+                @competitionuser  = []
+                competitionuser.each do |ac| 
+                ac.artworks_competitions.each do |x|  
+                  if x.state == "selected"
+                  @competitionuser  << x.competitions_user
+                  end
+               end 
+   	end
+   	@competitionuser.uniq!
+	end
+	
+	def winner
+	         competitionuser = CompetitionsUser.find(:all,:include=>["artworks_competitions"],:conditions=>["competition_id = ?   ",params[:id]])
+                @competitionuser  = []
+                competitionuser.each do |ac| 
+                ac.artworks_competitions.each do |x|  
+                  if x.state == "selected"
+                  @competitionuser  << x.competitions_user
+                  end
+               end 
+   	end
+   	@competitionuser.uniq!
+	end
+	
+	
+	private
+
+	def get_artworks_lists
+		if @current_user.has_system_role('admin')
+			@selected_artworks = @current_object.new_record? ? [] : @current_object.artworks
+			
+
+			@remaining_artworks = @current_object.competitions_users.map{ |e| e.user }.delete_if{ |e|;!e.private_workspace }.map{ |e| e.private_workspace.artworks }.flatten - @selected_artworks
+		elsif CompetitionsUser.exists?(:user_id => @current_user.id, :competition_id => @current_object.id)
+			
+			@selected_artworks = @current_object.new_record? ? [] : @current_object.artworks & @current_user.private_workspace.artworks
+			# TODO hack for rights ...
+			@remaining_artworks = @current_user.private_workspace.artworks - @selected_artworks
+		end
+		
+	end
+
+end

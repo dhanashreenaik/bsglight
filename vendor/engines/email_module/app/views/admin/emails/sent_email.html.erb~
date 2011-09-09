@@ -1,0 +1,46 @@
+<div style="border: 1px solid greay;padding:10px;margin:10px;">
+<%= link_to 'Inbox',        inbox_admin_emails_path(:profile_id => current_user.profile.id) ,:style=>"color:#f79646"%>
+<%= link_to 'Compose Mail', compose_mail_admin_emails_path  ,:style=>"color:#f79646"%>
+  
+
+</div>    
+
+<div style="border: 1px solid greay;padding:10px;margin:10px;" >
+<h3>Sent Email</h3>
+
+<div>
+
+<div><h5>
+	<span style="padding:20px;">
+			To Mail
+		  </span>
+	<span style="padding-left:130px;">
+			From Mail
+		  </span>
+		  <span style="padding-left:120px;">
+			Subject
+		  </span>
+		  <span style="padding-left:20px;">
+			Replay/not Replay
+		  </span>
+	</h5>
+	
+	</div>	
+
+<%@quied_email.each do |email|%>
+<li>
+	<span style="padding:10px;">
+		<%=email.tomail%>
+	</span>
+	<span style="padding:10px;">
+		<%=email.frommail%>
+	</span>
+	<span style="padding:10px;">
+		<%= link_to email.args[1] ,"/admin/emails/detail_mail/#{email.id}"%>
+			
+	</span>
+	
+</li>
+<%end%>
+</div>
+</div>

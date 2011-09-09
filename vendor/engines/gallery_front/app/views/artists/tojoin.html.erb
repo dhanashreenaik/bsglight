@@ -1,0 +1,58 @@
+
+<div id="specific_menu">
+  <% if @groups.first %>
+    <% for i in 0..(@groups.size-1) %>
+      <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+        <div id='nav_3'><ul>
+           <%if params[:group_id].blank?%>
+                <li><a href="/tojoin" class="liselected">To Join</a></li>
+           <%else%>
+           <li><a href="/tojoin/<%=params[:group_id]%>" class="liselected">To Join</a></li>
+           <%end%>
+            
+            
+      <% end %>
+          <li><a href='<%= "/groups/#{@groups[i].id}"%>'  class="liselected"><%= @groups[i].title %></a></li>
+    <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@groups.size-1) %>
+          </ul></div>
+    <% end %>
+    <% end %>
+  <% else %>
+    <div id='nav_3'>
+      <ul><li>No artists for that group</li></ul>
+    </div>
+  <% end %>
+</div> 
+<%= render :partial => 'artists/artists_name' %>
+<div id="specific_menu">
+  <div id='nav_3'>
+    <ul><li>
+     <!-- HOW TO JOIN THAT GROUP ?<br /><br />
+      If you want to join that group, send <br/>
+      an email at contact@bsgart.au.co, with<br />
+      some artworks you want to show off.-->
+    </li></ul>
+  </div>
+</div>
+</div>
+<div id="container">
+  
+    <div id="description">
+      <div id="content">
+        <h2> To Join </h2>
+        <p>
+        To apply for a group show please email up to 10 images 72dpi 6-10cm wide
+        to mark@bsgart.com.au with your details and the name of the group show you
+        want to enter
+        </p>
+      </div>
+    </div>
+    <div id="list">
+      <% (@exhibition.artworks & @profile.user.private_workspace.artworks).each do |a| %>
+        <%= render :partial => 'exhibitions/artwork_show', :object => a %>
+      <% end %>
+    </div>
+  
+    <p></p>
+  
+</div>

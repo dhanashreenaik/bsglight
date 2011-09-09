@@ -1,0 +1,11 @@
+<% form_for @current_object, 
+  :url => admin_invoice_path(@current_object.id),
+  :builder => BlankFormBuilder,
+  :html => { :method => :put } do |f| %>
+
+  <% blank_main_div(:title => 'Invoice edition', :hsize => 'sixH') do %>
+    <%= render :partial => 'form', :locals => { :f => f} %>
+  <% end %>
+
+  
+<% end %>

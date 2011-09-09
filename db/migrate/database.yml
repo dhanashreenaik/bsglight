@@ -1,0 +1,24 @@
+DEFAULTS: &DEFAULTS
+  adapter: mysql
+  encoding: utf8
+#  host: mysql.pragtech.co.in
+#  username: pragmatic_paco
+#  password: global786
+  host: localhost
+  username: bsg_user
+  password: gallery
+  #socket: /var/run/mysqld/mysqld.sock
+
+development:
+  database: graphica_gallery
+  <<: *DEFAULTS
+
+test:
+  database: graphica_gallery
+  <<: *DEFAULTS
+
+production:
+  database: graphica_gallery
+  <<: *DEFAULTS
+
+

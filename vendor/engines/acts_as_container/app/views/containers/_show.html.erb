@@ -1,0 +1,39 @@
+<%h content_for :title, "#{current_container.class.to_s}: " + current_container.title %>
+<div class="workspaceHeader">
+    <div class="workspaceLogo">
+		<%= image_tag @current_object.logo.url(:medium)%>
+    </div>
+
+    <div class="workspaceInfos">
+
+        <h2><%=  @current_object.title %></h2>
+        <div class="workspaceActions">
+            <% if @current_object.has_permission_for?('edit', @current_user, current_container_type) %>
+               <!--<%#= link_to I18n.t('general.link.edit'), edit_container_path(current_container) 
+	 %>&nbsp;|-->
+            <% end %>
+            <%#=yield(:container_actions) %>
+            <% if @current_object.has_permission_for?('new', @current_user, current_container_type) %>
+               <!--<%#= link_to "Upload Zip Items", new_container_zip_upload_path(current_container)  %>&nbsp;|-->
+            <% end %>
+            <% if @current_object.has_permission_for?('new', @current_user, current_container_type) %>
+               <!--<%#= link_to "Edit Uploaded Zip Items", edit_container_zip_upload_path(current_container)  %>&nbsp;|-->
+            <% end %>
+        </div>
+        <div class="description"><%= @current_object.description %></div>
+        <%= capture(&block) %>
+        <% if @current_object.state == 'Public' || @current_object.state == 'mi_public' %>
+            <br />
+            <h2><%= I18n.t('workspace.show.request_to_workspace_administrator')%> </h2>
+            <%= I18n.t('workspace.show.request_to_workspace_administrator_txt1')%>.<br />
+            <% form_for :question, :url => question_admin_workspace_path(current_container.id) do |f| %>
+                <%= f.select :type, [I18n.t('workspace.show.request_to_workspace_administrator_option1'), I18n.t('workspace.show.request_to_workspace_administrator_option2')] %><br />
+                <%= f.text_area :msg, :size => '50x5' %><br />
+                <%= f.submit I18n.t('general.button.send_request') %><br />
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+
+<%= render  :partial => 'admin/blank_lists/display_item_list', :locals => {:ajax_url => @ajax_url } %>

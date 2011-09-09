@@ -1,0 +1,11 @@
+<b>Exhibition Runs </b>
+
+<% if tim=@current_object.timing %>
+  <%= "#{ tim.period ? tim.period.name : tim.period_name}" %><br />
+  <%= "#{ I18n.l(tim.starting_time, :format => :time) } -- #{ I18n.l(tim.ending_time, :format => :time) }<br />" if tim.starting_time && tim.ending_time %>
+  <%#= "<bold>Status : <bold> #{tim.state}<br />" %>
+  <%= "Note : #{tim.note}<br />" %>
+  <%#= "Galleries : #{tim.galleries.map{ |e| e.title}.join(', ')}<br />" if tim.galleries.first %>
+<% else %>
+No timing defined !!!
+<% end %>

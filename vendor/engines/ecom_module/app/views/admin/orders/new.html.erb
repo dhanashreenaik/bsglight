@@ -1,0 +1,27 @@
+<% form_for @current_object, 
+  :url => admin_payments_path,
+  :builder => BlankFormBuilder,
+  :html => { :method => :post } do |f| %>
+
+  <% blank_main_div(:title => 'Payment settings', :hsize => 'sixH') do %>
+
+  <%= @current_user.profile.full_name %>, you will proceed the payment of <%= @invoice.purchasable.to_s %>, the total amount to pay is : <%= @invoice.final_amount.to_s %> AUD.
+
+    <% fields_for @credit_card, :builder => BlankFormBuilder do |ff| %>
+
+      <%= ff.hidden_field :user_id, :value => @current_user.id %>
+      <%= ff.select :type_of_card, [['VISA', 'visa']], :label => 'Type' %>
+      <%= ff.text_field :first_name, :label => 'First name' %>
+      <%= ff.text_field :last_name, :label => 'Last name' %>
+      <%= ff.text_field :number, :label => 'Number' %>
+      <%= ff.date_select :expiring_date, :order => [:month, :year], :label => 'Expiring date' %>
+      <%= ff.text_field :verification_value, :label => 'Verification value' %>
+
+    <% end %>
+
+  <%= blank_form_submit_button(:object => f.object, :name => 'Proceed') %>
+
+  <% end %>
+
+<% end %>
+

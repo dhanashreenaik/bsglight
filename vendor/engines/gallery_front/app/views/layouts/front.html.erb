@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>BSG</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/gallery_assets/gallery_front.css"/>
+<script src="/javascripts/prototype.js" type="text/javascript"></script>
+<script src="/javascripts/effects.js" type="text/javascript"></script>
+<script src="/javascripts/controls.js" type="text/javascript"></script>
+
+<script src="/gallery_assets/jquery-1.4.2.min.js"></script>
+<script language="javascript">
+function isNumber(n) {
+ if(!isNaN(parseFloat(n)) && isFinite(n))
+   {
+    return true; 
+   }
+   else{
+     return false;
+   }
+}
+function callmessagedisplay(element){
+  var myarray = ["title","image","medium","price","is_purchasable","width","height","edition_name","edition_number","size1","size2","price","editionnumber","editionname"]
+      for (i=0;i<myarray.length;i++)  
+      {
+        if (element.name.indexOf(myarray[i]) != -1)
+        {
+           if (myarray[i] == "size1" || myarray[i] == "size2")
+           {
+             alert("Please Enter Size"); 
+             return false;
+           }
+           if(myarray[i] == 'editionname'){
+             alert("Please Enter  Edition from ");
+             return false;
+           }
+           if(myarray[i] == 'editionnuber'){
+             alert("Please Enter  Edition Number ");
+             return false;
+           }
+           if(myarray[i] == 'edition_nuber'){
+             alert("Please Enter  Edition Number ");
+             return false;
+           }
+           if(myarray[i] == 'edition_name'){
+             alert("Please Enter  Edition from ");
+             return false;
+           }
+           else{
+             alert("Please Enter "+myarray[i]);
+             return false;
+            }
+            return
+        }
+      }
+  }
+function Checkfiles(formid,show_ajax_request,editionnumber,editionname)
+{
+  try{
+  
+    var elem = document.getElementById(formid).elements;
+        for(var i = 0; i < elem.length; i++)
+        {
+             if (elem[i].type  == "text")
+            {  
+                var fup = elem[i];
+                var fieldvalue = fup.value;
+                 if(fieldvalue == "" || fieldvalue == 0 || fieldvalue.charAt(0) == '')
+                  {
+                     if (elem[i].name.indexOf("depth") == -1)
+                        {
+                            callmessagedisplay(elem[i]);
+                            return false;
+                        }
+                  } 
+                else
+                  {
+                    myreturnvalue = check_numericvalue(elem[i],editionnumber,editionname);
+                    if(myreturnvalue)
+                      {
+                      }
+                    else{
+                     
+                      return false;
+                    }  
+                  }
+             }     
+            if (elem[i].type  == "file")
+            {
+               
+                var fup = elem[i];
+                var fileName = fup.value;
+                var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+                if(ext == "gif" || ext == "GIF" || ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" ||  ext ==  "PNG" || ext == "png")
+                  {
+                    // if (myreturnvalue){
+                    // myreturnvalue = true
+                    // }
+                    
+                    showajaximage = document.getElementById(show_ajax_request);
+                 if (showajaximage)
+                   {
+                     document.getElementById(show_ajax_request).style.display='block';
+                   }
+                    
+                  } 
+                else
+                  {
+                    alert("Please Upload The Image");
+                    fup.focus();
+                    myreturnvalue = false;
+                    return false;
+                  }
+              
+             }     
+              
+          } 
+          
+          var myeditionvalue = false;
+          var ednm=document.getElementById(editionname).value;
+          var ednu=document.getElementById(editionnumber).value;
+         
+          if(  ((parseInt(ednm) < parseInt(ednu))   || (ednm == parseInt(ednu))) && ( parseInt(ednm)!=0 && parseInt(ednu) !=0 ) )
+               {
+                var price=document.getElementById("artwork_price").value;
+                     if (parseInt(price) > 0 && parseInt(ednm) > 0 && parseInt(ednu) > 0) {
+                         myeditionvalue = true;
+                        }
+         
+                     }
+                     
+          else{
+           if (parseInt(ednm) > 0){
+                             alert("Please Enter edition from greater than edition number");
+                             myeditionvalue = false;
+                             return false;
+                          }
+                         else{
+                            alert("Please Enter Numeric value for edition from");
+                            myeditionvalue = false;
+                              return false;
+                          }
+                          if (parseInt(ednu) > 0){
+                             alert("Please Enter edition from greater than edition number");
+                              myeditionvalue = false;
+                              return false;
+                              }
+                          else{
+                                alert("Please Enter Numeric value for edition number");
+                                  myeditionvalue = false;
+                                  return false;
+                          }
+         
+                       return false;
+                      } 
+          
+             
+               if (myeditionvalue)   
+               {
+                  
+                 showajaximage = document.getElementById(show_ajax_request);
+                 if (showajaximage)
+                   {
+                     document.getElementById(show_ajax_request).style.display='block';
+                   }
+                 else
+                   {
+
+                   }
+               
+               
+              }
+              else
+                 {
+                   alert("but still im here");
+                 }
+         
+            
+      return myeditionvalue; 
+      
+  }catch(e)
+  {
+    //alert(e);
+  }
+}
+
+//function Checkfiles_simple(formid,show_ajax_request,editionnumber,editionname,dynamicId)
+function Checkfiles_simple(dynamicId,edit)
+
+{
+    try{
+    var title = 'artwork_title'+dynamicId;
+    var medium ='artwork_medium'+dynamicId;
+    var width = 'artwork_width'+dynamicId;
+    var height = 'artwork_height'+dynamicId;
+    var depth  = 'artwork_depth'+dynamicId;
+    var price = 'artwork_price'+dynamicId;
+    var editionname = 'artwork_edition_name'+dynamicId;
+    var editionnumber = 'artwork_edition_number'+dynamicId;
+    var artworkimage = 'artwork_image'+dynamicId;
+    if (document.getElementById(title).value == "" || document.getElementById(title).value == 0 || document.getElementById(title).value.charAt(0) == '')
+      {
+        alert("Please Enter Title");
+        return false;
+      }
+      
+    if (document.getElementById(medium).value == "" || document.getElementById(medium).value == 0 || document.getElementById(medium).value.charAt(0) == '')
+      {
+        alert("Please Enter Medium");
+        return false;
+      }  
+    if (!isNumber(document.getElementById(width).value))
+      {
+        alert("Please Enter Valid Width");
+        return false;
+      }
+   
+      if (!isNumber(document.getElementById(height).value))
+      {
+        alert("Please Enter Valid Height");
+        return false;
+      }
+   
+      if (document.getElementById(depth).value.charAt(0) != ''){
+        
+          if (!isNumber(document.getElementById(depth).value))
+        {
+          alert("Please Enter Valid Depth");
+          return false;
+        }
+        
+      }
+      
+   
+      
+      if (!isNumber(document.getElementById(price).value))
+      {
+        alert("Please Enter Price");
+        return false;
+      }
+      if (!isNumber(document.getElementById(editionname).value))
+      {
+        alert("Please Enter Edition From");
+        return false;
+      }
+      if (!isNumber(document.getElementById(editionnumber).value))
+      {
+        alert("Please Enter Edition To");
+        return false;
+      }
+      
+      if(parseInt(document.getElementById(editionname).value) > parseInt(document.getElementById(editionnumber).value))
+        {
+          alert("Please Enter Edition Number Greater Than Edition From");
+          return false;
+        }
+   
+      
+      if(edit)
+      {
+   
+        var fileName = document.getElementById(artworkimage).value;
+        var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+   
+        if(ext != '')
+          {
+          if(ext == "gif" || ext == "GIF" || ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" ||  ext ==  "PNG" || ext == "png")
+            {
+              //alert("wrong image");
+            }
+        else{
+          alert("Please Enter Image File");
+          return false;
+          }
+          }
+        
+      }
+      else
+        {
+          
+   
+      var fileName = document.getElementById(artworkimage).value
+      var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+      if(ext == "gif" || ext == "GIF" || ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" ||  ext ==  "PNG" || ext == "png")
+      {
+      }
+      else{
+        alert("Please Enter Image File");
+        return false;
+      }
+        }
+      document.getElementById('show_ajax_request'+dynamicId).style.display='block';
+      return true;
+      
+  }catch(e)
+  {
+    //alert(e);
+  }
+}
+
+
+
+
+function Checkfilescomp(formid,show_ajax_request,editionnumber,editionname)
+{
+  try{
+    var elem = document.getElementById(formid).elements;
+    var myreturnvalue = true;
+        for(var i = 0; i < elem.length; i++)
+        {
+             if (elem[i].type  == "text")
+            {  
+                var fup = elem[i];
+                var fieldvalue = fup.value;
+                 if(fieldvalue == "" || fieldvalue == 0 || fieldvalue.charAt(0) == '')
+                  {
+                     if (elem[i].name.indexOf("depth") == -1 )
+                        {
+                           if (elem[i].name.indexOf("3") == -1)
+                              {
+                                    callmessagedisplay(elem[i]);
+                                    return false;
+                               }     
+                        }
+                        else
+                        {
+                        }
+                  } 
+                else
+                  {
+                   
+                    myreturnvalue = check_numericvaluecomp(elem[i],editionnumber,editionname)
+                    
+                  }
+             }     
+                  
+                
+                                       
+           
+            if (elem[i].type  == "file")
+            {
+               
+   
+                var fup = elem[i];
+                var fileName = fup.value;
+                var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+                if(ext == "gif" || ext == "GIF" || ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" ||  ext ==  "PNG" || ext == "png")
+                  {
+                     if (myreturnvalue)
+                       {
+                         myreturnvalue = true;
+                       }
+                       
+                     
+                     
+                  } 
+                else
+                  {
+                    alert("Please Upload The Image");
+                    fup.focus();
+                    return false;
+                  }
+            }     
+           
+             
+          } 
+          
+          
+          var myeditionvalue = false;
+          var ednm=document.getElementById(editionname).value;
+          var ednu=document.getElementById(editionnumber).value;
+          
+          
+              if(((parseInt(ednm) < parseInt(ednu))   || (parseInt(ednm) == parseInt(ednu))) && ( parseInt(ednm)!=0 && parseInt(ednu) !=0 ))
+                     { 
+                        //var price=document.getElementById("artwork_price").value;
+                        //if (parseInt(price) > 0 && parseInt(ednm) > 0 && parseInt(ednu) > 0) {
+                         myeditionvalue = true;
+                        //}
+                     }
+                  else{
+                  
+                          if (parseInt(ednm) > 0){
+                              alert("Please Enter edition from greater than edition number");
+                              myeditionvalue = false;
+                              return false;
+                              }
+                          else{
+                            alert("Please Enter Numeric value for edition from");
+                            myeditionvalue = false;
+                              return false;
+                          }
+                          if (parseInt(ednu) > 0){
+                             alert("Please Enter edition from greater than edition number");
+                              myeditionvalue = false;
+                              return false;
+                              }
+                          else{
+                                alert("Please Enter Numeric value for edition number");
+                                  myeditionvalue = false;
+                                  return false;
+                          }
+                          
+                       return false;
+                      } 
+          
+          
+          
+
+          
+          if(myeditionvalue){
+           
+             showajaximage = document.getElementById(show_ajax_request);
+               if (showajaximage)
+                 {
+                   document.getElementById(show_ajax_request).style.display='block'
+                 }
+               
+          }
+         
+          
+      return myeditionvalue;            
+  }catch(e)  
+  {
+   // alert(e);
+  }
+}
+
+
+
+
+function check_numericvalue(element,editionnumber,editionname){
+  try{
+  /*here i need to check weather it is a number or not for price height width etc*/   
+    var myarray = ["price","width","height","edition_name","edition_number","worksize1","worksize2","editionnumber","editionname"]
+                 for (i=0;i<myarray.length;i++)  
+                    {  
+                        if (element.name.indexOf(myarray[i]) != -1)
+                            
+                            {
+                                var tfv= element.value;
+                                        
+                                    if (isNumber(tfv))
+                                       {
+                                       return true;
+                                       }
+                                    else
+                                       {
+                                        if( myarray[i] == "worksize1" ||  myarray[i] == "worksize2"){
+                                          alert("Please Enter Numeric value For Size" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "editionname" ){
+                                          alert("Please Enter Numeric value For edition from" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "edition_name" ){
+                                          alert("Please Enter Numeric value For edition from" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "edition_number" ){
+                                          alert("Please Enter Numeric value For edition number" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "editionnumber" ){
+                                          alert("Please Enter Numeric value For edition number" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "height" ){
+                                          alert("Please Enter Numeric value For height" );
+                                           return false;
+                                         }
+                                         if( myarray[i] == "width" ){
+                                          alert("Please Enter Numeric value For width" );
+                                           return false;
+                                         }
+                                         else
+                                         {
+                                           
+                                           
+                                           alert("Please Enter Numeric Value For  "+ myarray[i] );
+                                            return false;
+                                         }
+                                         return false;
+                                       }
+                             }   
+                            else{
+                            } 
+                      }
+                      return true;
+  }catch(e)  {
+   // alert(e);
+  }
+  }  
+    
+    
+    function check_numericvaluecomp(element,editionnumber,editionname){
+      try{
+    
+  /*here i need to check weather it is a number or not for price height width etc*/   
+    var myarray = ["price","width","height","edition_name","edition_number","worksize1","worksize2","editionnumber","editionname","size1","size2"]
+                 for (i=0;i<myarray.length;i++)  
+                    { 
+                        if (element.name.indexOf(myarray[i]) != -1)
+                            {
+                                    var tfv= element.value;
+                                      if (myarray[i] == "edition_number" || myarray[i] == "editionnumber"){  
+                                         var ednm=document.getElementById(editionname).value;
+                                         var ednu=document.getElementById(editionnumber).value;
+                                         if (  (ednm < ednu)   || (ednm == ednu) )
+                                          {
+                                          }   
+                                         else{
+                                             //alert("Please Enter edition from greater than edition number");
+                                             return false;
+                                          }
+                                       }
+                                    if (parseInt(tfv) > 0)
+                                       {
+                                         
+                                       
+                                       return true;
+                                       
+                                       }
+                                    else
+                                       {
+                                       if ( myarray[i] == "worksize1" ||  myarray[i] == "worksize2" || myarray[i] == "size2" || myarray[i] == "size1"){
+                                          alert("Please Enter Numeric value For Size" );
+                                           return false;
+                                         }
+                                         
+                                         if ( myarray[i] == "editionnumber" ){
+                                          alert("Please Enter Numeric value For Edition Number" );
+                                           return false;
+                                         }
+                                         if ( myarray[i] == "edition_number" ){
+                                          alert("Please Enter Numeric value For Edition Number" );
+                                           return false;
+                                         }
+                                         
+                                         if ( myarray[i] == "edition_name" ){
+                                          alert("Please Enter Numeric value For Edition from" );
+                                           return false;
+                                         }
+                                         
+                                         if ( myarray[i] == "editionname" ){
+                                          alert("Please Enter Numeric value For Edition from" );
+                                           return false;
+                                         }
+                                         else
+                                         {
+                                           alert("Please Enter Numeric Value For  "+ myarray[i] );
+                                            return false;
+                                         }
+                                         
+                                         
+                                         return false;
+                                       
+                                     }
+                             }   
+                            else{
+                             // return true;
+                            } 
+                      }
+    
+                         
+      }catch(e)
+      {
+        
+      }
+
+
+        }  
+
+    
+    
+</script>
+<script>
+      jQuery.noConflict();
+</script>
+<style>
+  #twolines a {
+    color: gray;
+  }
+</style>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery(".iteam").hover(
+    function() {
+      jQuery(this).children().first().show();
+    },
+    function() {
+      jQuery(this).children().first().hide();
+    }
+  )
+  });
+</script> 
+
+</head>
+
+<!-- Logo and Navigation -->
+<body>
+  <%#= flash_message_manager %>
+  <%=flash[:notice]%>
+  <div id="bsg-top-navigation">
+<div id="header">
+                <div id="logo">
+                     <a href="/"><img src="/gallery_assets/logo.png"></a>
+	                          <div id="twolines">
+                                <%= current_user ? "You are logged as #{@current_user.profile.full_name}" : '' %>
+                                <br/>
+	                                <%if !current_user %> 
+                                                    <%if  params[:action].to_s == 'login'%>	
+                                                           <a href="/login" ><font color=white>Login</font></a>
+                                                    <%else%>
+                                                           <a href="/login"><b><font color=grey>Login</font></b></a>
+                                                    <%end%>
+		                            <%else%>
+			                             <a href="/logout/<%=current_user.id%>"><font color=grey>Logout</font></a><br/>
+		                            <%end%>
+				                          <% if @current_user.nil? %>
+				                          <%if  params[:controller] == "visitors" and params[:action] == "new"%>	
+			                                <a href="/subscribe" class="liselected"><font color=white>Register</font></a>
+				                          <%else%>
+						                          <%if params[:controller] =="admin/users" and params[:action] == "create"%>
+							                          <a href="/subscribe" class="liselected"><font color=white>Register</font></a>
+						                          <%else%>
+							                          <a href="/subscribe" ><font color=grey>Register</font></a>
+						                          <%end%>
+				                          <%end%>
+				                          <%end%>
+		                        </div>
+                </div><%#logoisclosed%>
+	                 <div id="menu">
+		                        <div id="nav_1">
+		                                <ul>
+			                            <%if  params[:controller] == "exhibitions" and params[:action] == "current"%>	
+			                            <li ><a href="/current" class="liselected">Current</a></li>
+			                            <%else%>
+			                            <li><a href="/current">Current</a></li>
+			                            <%end%>
+			                            <%if  params[:controller] == "exhibitions" and params[:action] == "future"%>	
+			                            <li><a href="/future" class="liselected">Future</a></li>
+		                                     <%else%>	
+			                             <li><a href="/future">Future</a></li>
+			                             <%end%>
+			                             <%if  params[:controller] == "exhibitions" and params[:action] == "next"%>	
+			                            <li><a href="/next" class="liselected">Next</a></li>
+		                                     <%else%>	
+			                             <li><a href="/next" >Next</a></li>
+			                             <%end%>
+			                             <%if  params[:controller] == "artists" and params[:action] == "show"%>	
+			                            <li><a href="/artists" class="liselected">All Artists</a></li>
+		                                     <%else%>	
+			                             <li><a href="/artists">All Artists</a></li>
+			                             <%end%>
+				                        <%if  params[:controller] == "artists" and params[:action] == "genres"%>	
+			                            <li><a href="/genres" class="liselected">By Genre</a></li>
+		                                     <%else%>	
+			                             <li><a href="/genres">By Genre</a></li>
+			                             <%end%>
+		                                </ul>
+		                        </div>
+                        		<div id="nav_2">
+                            		<ul>
+			                    <%if  params[:controller] == "app_homes" and params[:action] == "index"%>	
+                                            <li><a href="/app_homes" class="liselected">Applications</a></li>
+			                    <%else%>
+			                    <li><a href="/app_homes"  >Applications</a></li>
+			                    <%end%>
+			                    <%if  ((params[:controller] == "artists") and (params[:action] == "groups" or params[:action] == "tojoin"))%>	
+                                            <li><a href="/groups" class="liselected">Group Shows</a></li>
+                                		<%else%>
+			                            <li><a href="/groups" >Group Shows</a></li>
+			                    <%end%>
+			
+			                    <%if  params[:controller] == "competitions" and params[:action] == "show"%>	
+			                    <li><a href="/competitions" class="liselected">Competitions</a></li>
+			                    <%else%>
+			                    <li><a href="/competitions">Competitions</a></li>
+			                    <%end%>
+                                            <% if @current_user.nil? %>
+		                      			  	<!-- <%if  params[:action] == "login"%>	
+                                              	<li><a href="/login" class="liselected">Login</a></li>
+			                    <%else%>
+				                    <li><a href="/login">Login</a></li>
+			                    <%end%>  -->
+                                            <% else %>
+                                              <%if params[:controller] == "visitors" and params[:action] == "home_page"%>
+                                              <li><a href="/" class="liselected">My Page</a></li>
+                                              <%else%>
+                                              <li><a href="/">My Page</a></li>
+                                              <%end%>
+                                              <%if params[:controller] == "shoppingcart" and params[:action] == "show_me_cart"%>
+                                              <li><a href="/shoppingcart/show_me_cart" class="liselected">Show Cart</a></li>
+                                              <%else%>
+                                              <li><a href="/shoppingcart/show_me_cart">Show Cart</a></li>
+                                              <%end%>
+                                              <!-- <li><a href="/logout">Logout</a></li>  -->
+                                            <% end %>
+                                			<%#*<li><a href="#">Extras</a></li>%>
+                            		</ul>
+		                        </div>
+                           <div id="nav_3">
+		                          <ul>
+			                  <%if  params[:controller] == "visitors" and params[:action] == "mailing_list"%>	
+				                  <li><a href="/mailing_list" class="liselected">Mailing List</a></li>
+			                  <%else%>
+				
+				                  <%if params[:profile] && params[:profile][:studio].blank?%>
+				                  <li><a href="/mailing_list" class="liselected">Mailing List</a></li>
+                                                  <%else%>
+                                                  <li><a href="/mailing_list" >Mailing List</a></li>
+                                                  <%end%>
+			                          
+			                  <%end%>
+                  <!--			<%#if  params[:controller] == "booksshops" and params[:action] == "index"%>	
+				                  <li><a href="/booksshops" class="liselected">Bookshop</a></li>
+			                  <%#else%>
+				                  <li><a href="/booksshops">Bookshop</a></li>
+			                  <%#end%>   -->
+
+			                  <%if  params[:controller] == "visitors" and params[:action] == "studios"%>	
+				                  <li><a href="/studios" class="liselected">Studios</a></li>
+			                  <%else%>
+                                                  
+                                                  
+                                                  <%if params[:profile] && params[:profile][:studio] == 'true'%>
+				                  <li><a href="/studios" class="liselected">Studios</a></li>
+                                                  <%else%>
+                                                  <li><a href="/studios">Studios</a></li>
+                                                  <%end%>
+                                                  
+                                                  
+			                  <%end%>
+
+			                  <%if  params[:controller] == "drawings" and params[:action] == "index"%>	
+				                  <li><a href="/drawings" class="liselected">Life Drawing</a></li>
+			                  <%else%>
+				                  <li><a href="/drawings">Life Drawing</a></li>
+			                  <%end%>
+			                  <%if  params[:controller] == "links" and params[:action] == "index"%>	
+				                  <li><a href="/links" class="liselected">Links</a></li>
+			                  <%else%>
+				                  <li><a href="/links" >Links</a></li>
+			                  <%end%>
+		                          <%#*<li><a href="#">Extras</a></li>%>
+		                          </ul>
+		                  </div>
+		                  
+
+</div>	<%#menu closed%>
+</div><%#header closed%>
+
+    <%= yield %>
+<!-- Footer -->
+<div id="footer" style="text-align:center">
+  
+ <%=Bottomline.find(:first).bottomline if Bottomline.find(:first)%>
+
+
+
+</div>
+</body>

@@ -1,0 +1,58 @@
+	<div style="border: 1px solid greay;margin:10px;">
+		<%= link_to 'Compose Mail', compose_mail_admin_emails_path,:style=>"color:#f79646" %>
+	</div>	
+	<div style="border: 1px solid greay;margin:10px;">
+		<%= link_to  'Sent',"/admin/emails/sent_mail/#{current_user.profile.id}" ,:style=>"color:#f79646" %>
+   </div>	    
+	<div style="border: 1px solid greay;padding-top:50px;margin:10px;" >
+		<h3>Inbox</h3>
+	<div>
+	<!--<div><h5>
+	<span style="padding:20px;">
+			To Mail
+		  </span>
+	<span style="padding-left:130px;">
+			From Mail
+		  </span>
+		  <span style="padding-left:120px;">
+			Subject
+		  </span>
+		  <span style="padding-left:20px;">
+			Replay/not Replay
+		  </span>
+	</h5>
+	
+	</div>	
+	-->
+	<form action="/admin/emails/delete_email">
+	<%@quied_email.each do |email|%>
+		<%color = @read.fetch(email.id.to_s,true) ? "#CCCCCC":"white" %>
+		<div style="border:1px solid black;background-color:<%=color%>">
+			<span>
+			<%=check_box "deletemail",email.id%>
+			</span>
+			<span style="margin-left:40px;">
+				<%=email.tomail%>
+			</span>
+			<span style="padding:10px;">
+				<%=email.frommail%>
+			</span>
+			<span style="padding:10px;">
+				<%= link_to email.args[1] ,"/admin/emails/detail_mail/#{email.id}", :style=>"color:#f79646"%>
+			</span>
+			<%if @replay.include? email.id%>
+				<span style="padding:10px;">
+					Replied	
+				</span>
+			<%else%>
+					<span style="padding:10px;">
+					</span>	
+			<%end%>
+							<!--<span style="padding:10px;">
+							   <a href="/admin/emails/delete_email/<%#=email.id%>">Delete Email</a>
+							</span>
+							-->
+		</div>			
+	<%end%>
+	<%=submit_tag "Delete Email"%>
+</form>

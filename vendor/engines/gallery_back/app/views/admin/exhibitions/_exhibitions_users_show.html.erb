@@ -1,0 +1,66 @@
+<% if @current_object.exhibitions_users.first %>
+<% if @current_user.has_system_role('admin') %>
+  <table id="artists">
+  <thead>
+  <tr>
+    <th>Full name</th>
+    <th>Email</th>
+    <th>State</th>
+  </tr>
+  </thead>
+
+  <% form_for 'prices_list', :url => set_prices_admin_exhibitions_users_url, :html => { :method => :post } do %>
+  <tbody>
+  <% @current_object.exhibitions_users.all(:include =>[:user => [:profile]]).each do |ue| %>
+  <tr>
+    <td><%=h ue.user.profile.full_name %></td>
+    <td><%=h ue.user.email %></td>
+    <td>
+      <%if ue.state != "validated" %>  
+        <%=" unpaid " %>
+      <%else%> 
+        <%=" paid " %>
+      <%end%> 
+    </td>
+    <td><%#= link_to 'Show', admin_profile_path(ue.user.profile.id) %>
+    </td>
+    <td>
+      <% if ue.invited_at.blank? %>
+        <%= link_to "Email Invoice", send_invitation_admin_exhibitions_user_path(ue.id) %>
+      <% elsif !ue.invited_at.blank?%>  
+          <%#here i need the blank d for alignment%>  
+          <%= link_to "Resend Invoice", send_invitation_admin_exhibitions_user_path(ue.id) %>
+     <%end%> 
+      </td>
+    <% if ue.state == 'published' %>
+    <td>
+      <%#here atually i need to add a column that will check weather the email is sent or not if it is sent then resend %>
+      <%= link_to 'Unpublish', update_state_admin_exhibitions_user_path(ue.id, :state => 'unpublished') %>
+      <%else%>
+    <% end %>
+      </td>
+      <%if ue.state != 'published'%> 
+       <td><%= link_to 'Publish', update_state_admin_exhibitions_user_path(ue.id, :state => 'published') %></td>
+      <%end%>
+    <td><%= text_field_tag "prices_list[#{ue.id}]", ue.price, :disabled => (['accepted', 'validated', 'published'].include?(ue.state)), :size => 8,:style=>"display:none" %></td>
+    <td><%= link_to 'Delete', delete_user_admin_exhibitions_user_path(ue.id) ,:method=>'post',:confirm=>"Are You Sure To Delete This User From #{@current_object.title}"%></td>
+  </tr>
+<% end %>
+  </tbody>
+  <%#= submit_tag  %>
+  <% end %>
+  <tfoot>
+    <tr style="display:none;">
+      <td colspan="5">
+	            No rows match the filter...
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+<% else %>
+  <%= @current_object.users.all(:include => [:profile]).map{ |e| e.profile.full_name }.join(', ') %>
+<% end %>
+<% else %>
+  No users already added.
+<% end %>

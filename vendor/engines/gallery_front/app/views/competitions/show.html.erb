@@ -1,0 +1,426 @@
+<style>
+.artwork_show {
+    border: 1px solid;
+    float: left;
+    height: 352px;
+    line-height: 13px;
+    position: relative;
+    width: auto;
+}
+</style>
+<script>
+function check_the_checkbox(){
+  if (document.getElementById("rails").checked)
+  {
+    
+    return true;
+  }
+  else
+  {
+  alert("Please Accept Terms And Conditions");
+  return false;
+  }
+
+  
+}
+</script>
+<script>
+  function calleditbrowseimage(comid,orderid){
+    document.getElementById('pleaseaccepttccheckbox').style.display='none';
+    document.getElementById('pleaseaccepttermsandcondition').style.display='none';
+    document.getElementById('click_to_browse_images').innerHTML = "Click<a onclick=\"jQuery.ajax({data:'', success:function(request){jQuery('#').html(request);}, type:'post', url:'/competitions/edit_images_front?id="+comid+"&amp;order_id="+orderid+"'}); return false;\" href=\"#\"> Here</a>  to Browse Images."
+    document.getElementById('click_to_browse_images').style.display='block';
+  }
+
+  
+ function pageScroll() {
+    	document.getElementById("description_competition").scrollBy(500,0); // horizontal and vertical scroll increments
+    	//scrolldelay = setTimeout('pageScroll()',100); // scrolls every 100 milliseconds
+        var objDiv = document.getElementById("description_competition");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+}
+
+</script>
+<div id="specific_menu">
+  <% if @competitions.first %>
+    <% for i in 0..(@competitions.size-1) %>
+      <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+        <div id='nav_3'><ul>
+          <% end %>
+          <li><a href='<%= "/competitions/#{@competitions[i].id}"%>' class="liselected"><%= @competitions[i].title %></a></li>
+          <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@competitions.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="specific_menu">No competitions available ...</div>
+  <% end %>
+</div>
+
+</div><%#bsg-top-navigationclosed%>
+
+<div id="container">
+   <% if @competition %>
+      <div id="description_competition">
+        <div id="content" style="padding: 20px 5px 20px 20px">
+            <h2><%= @competition.title %></h2>
+            
+            
+            
+        
+       <%if logged_in?%>     
+       <%else%>     
+        <!--Please  <a href="/login/<%=@competition.id%>"><b>Login</b></a>  To Enter Into Competition &nbsp;&nbsp;or &nbsp;&nbsp;
+       <a href="/subscribe/<%=@competition.id%>" > Register </a>  -->
+            
+      <%=link_to_remote "To Enter Competition cick here", :update => "",:url => { :action => "create_subscribe_competition_front_login", :id => @competition.id}%> 
+       
+       <%end%>     
+        
+            
+        <%if logged_in?%>  
+            <%if !@competitionuser.blank?%>
+            <%else%>   
+                  <span id="clickheretoenterintocompetition">
+                        Click  <%=link_to_remote "Here", :update => "",:url => { :action => "create_subscribe_competition_front", :id => @competition.id},:condition=>"check_the_checkbox()"
+                                %> To Enter the Competition
+                   </span>
+                   <br/>
+            <%end%>
+        <%end%>              
+        <%if logged_in?%>  
+            <%if !@competitionuser.blank?%>
+                   Click <%=link_to_remote "Here", :update => "",:url => { :action => "create_subscribe_competition_front_edit", :id => @competition.id,:order_id=>@competitionuser[0].id }
+                          %>  To Edit your entry 
+                  <br/>    
+                 Click<%=link_to_remote " Here", :update => "",:url => { :action => "edit_images_front", :id => @competition.id,:order_id=>@competitionuser[0].id }
+                       %>  to browse all works
+                 <br/>          
+            <%end%>      
+        <%end%>    
+         <%if logged_in?%>
+               Click <%=link_to_remote " Here", :update => "",:url => { :action => "show_buy_competition_artwork",:id=>@competition.id}
+                      %> To Buy Images
+         <%end%>               
+           
+       
+          <div id="click_to_browse_images" style="display:none">
+                     
+          </div>
+       
+		      
+        <%if logged_in?%>  
+		            <%if !@competitionuser.blank?%>
+		            <%else%>     
+		                <h4>
+                        <div style="float:left;margin-left:-5px;" id="pleaseaccepttccheckbox">
+                              <%=check_box_tag 'rails', 'accepted', false%>
+                        </div>
+                        <div style="margin-left: 10px;padding-top: 4px;" id="pleaseaccepttermsandcondition">
+                              Please Accept Terms And Conditions Before Entering Into A Competition.
+                        </div>
+                      </h4>
+                  <%end%>
+         <%end%>         
+            
+            
+            
+            
+            
+            
+                  <h4><%=@oldlabelvalue["description"]%></h4>
+	          <%=@competition.description%>
+	          <h4>$<%=@competition.prizes_total_amount%> in <%=@oldlabelvalue["prizes_total_amount"]%></h4>
+	          <%if  @competition.prizes_detail%>
+	  	      			  <% @competition.prizes_detail.each do |st| %>
+	  	           				<%=st%><br/>
+	  	       			  <%end%>
+	          <%end%>	
+	          <h4><%=@oldlabelvalue["location"]%></h4>
+	          <%=@competition.location%>
+	          <h4>EXHIBITION DATES</h4>
+	  	      Runs <%=@competition.timing.starting_date if @competition.timing%>  to <%=@competition.timing.ending_date if     @competition.timing%>. <%=@competition.timing.note if @competition.timing%>
+    	      <h4><%=@oldlabelvalue["submission_deadline"]%></h4>
+          	<%=@competition.submission_deadline%>
+    	      <h4><%=@oldlabelvalue["no_of_entry"]%></h4>
+    	      Each artist may submit up to <%=@competition.no_of_entry%> works in any medium inc sculpture and video.
+    	      <h4><%=@oldlabelvalue["cjudges"]%></h4>
+  		      <%=@competition.cjudges%>
+    	      <h4><%=@oldlabelvalue["entry_fees"]%></h4>
+            <%if  @competition.entry_fees%>
+			    		  <% @competition.entry_fees.each do |st| %>
+			      			<%=st%><br/>
+			    	  <%end%>
+			    <%end%>	
+		      <%#=@competition.entry_fees%>
+    	    <h4><%=@oldlabelvalue["format"]%></h4>
+		      <%=@competition.format%>
+    	    <h4><%=@oldlabelvalue["delivery"]%></h4>
+		      <%=@competition.delivery%>
+    	    <h4><%=@oldlabelvalue["collection"]%></h4>
+		      <%=@competition.collection%>
+    	    <h4>COMMISSION ON SOLD WORKS</h4>
+		      <%=@competition.commission%>
+    	    <h4><%=@oldlabelvalue["insurance"]%></h4>
+		      <%=@competition.insurance%><br/>
+            <h4><%=@oldlabelvalue["message_for_subscribers"]%></h4>
+		      <%=@competition.message_for_subscribers%><br/>          
+            <br/>
+           
+     
+		     
+        <%#= link_to 'Click here', enter_admin_competitions_subscriptions_path %>
+      </div><%#content div ended%>
+    </div><%#description_competition ended%>
+  
+    <div id="enterintocompetition" style="display:none;height:auto;" > 
+            <div id="description_competition" style="border-right: 1px solid white;width:500px">
+              <div id="content" style="padding-top:2px;">
+                <div id="enterintocompetitionfront">
+                </div>  
+              </div>
+            </div><%#description_competition ended%>
+    </div>
+    <div id="list" style="line-height: 7px;"> 
+      <div id="list_show">
+        <div id="iteam_imagelogin" style="display:none" class="artwork_show">
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="loginform" style="display:block">  
+                                        
+                                   </div>
+                              </div>
+                            </div>    
+          </div>          
+        <div id="iteam_imageregister" style="display:none" class="artwork_show">
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:0px;">
+                                   <div id="registerform" style="display:block">  
+                                        
+                                   </div>
+                              </div>
+                            </div>    
+          </div>          
+      </div>
+      
+    </div>
+  
+  
+  
+  
+  
+    <div id="list" style="line-height: 7px;"> 
+        <div id="list_show">
+                  <div id="iteam_image0" style="display:none" class="artwork_show">
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork0" style="display:none">  
+
+                                   </div>
+                              </div>
+                            </div>    
+                  </div>          
+                   <div id="iteam_image1" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork1" style="display:none"> 
+
+                                   </div>
+                              </div>
+                            </div>    
+                   </div>         
+                   <div id="iteam_image2" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork2" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>    
+                   </div>         
+                   <div id="iteam_image3" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork3" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   <div id="iteam_image4" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork4" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   
+                   <div id="iteam_image5" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork5" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   
+                   <div id="iteam_image6" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork6" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   
+                   
+                   <div id="iteam_image7" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork7" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   
+                   
+                   <div id="iteam_image8" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork8" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>           
+                   
+                   
+                   <div id="iteam_image9" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork9" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image10" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork10" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image11" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork11" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image12" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork12" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image13" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork13" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image14" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork14" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+                   </div>   
+          <div id="iteam_image15" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork15" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          <div id="iteam_image16" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork16" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          <div id="iteam_image17" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork17" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          <div id="iteam_image18" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork18" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          <div id="iteam_image19" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork19" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          <div id="iteam_image20" style="display:none" class="artwork_show">  
+                            <div id="description_competition">
+                              <div id="content" style="padding-top:10px;">
+                                   <div id="add_the_artwork20" style="display:none"> 
+                                   </div>
+                              </div>
+                            </div>  
+          </div>   
+          
+          
+          </div>
+    </div>  
+        <div id="buylist">
+          <div id="list">
+            <%if logged_in?%>
+                <%if !@winnerlist.blank?%>
+                      <%for win in @winnerlist%>
+                      <%=render :partial => 'competitions/artwork_showwin', :object => win %>
+                      <%end%>  
+                <%end%>
+                <% @competitionusers.each do |a| %>
+                    <%=  render :partial => 'competitions/artwork_show', :object => a %>
+                <% end %>
+            <%else%>
+           
+          <%if !@winnerlist.blank?%>
+           
+                 <%for win in @winnerlist%>
+                   <%=render :partial => 'competitions/artwork_showwin', :object => win %>
+               <%end%>  
+          <%end%>  
+          <% @competitionuser.each do |a| %>
+              <%= render :partial => 'competitions/artwork_show', :object => a %>
+          <% end %>
+            <%end%>
+         </div>
+       </div>   
+        
+  <% else %>
+  No competition available.
+  <% end %>
+</div><%#container ended%>

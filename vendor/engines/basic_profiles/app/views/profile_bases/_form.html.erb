@@ -1,0 +1,21 @@
+<div class="profile_part">
+
+  <% fields_for @profile, :builder => BlankFormBuilder do |f| %>
+
+    <label><%= I18n.t('people.field.salutation_label') %> : </label>
+
+    <div class="formElement">
+      <% %w(Mr Ms Miss).each do |s|  %>
+        <input id="user_salutation_<%= s.downcase %>" type="radio"
+               <%= "checked=true" if @profile.salutation == s %> value="<%= s %>"
+               name="user[salutation]" class = "checkboxes" /><%= I18n.t("general.common_word.#{s}") %>
+             <% end %>
+    </div>
+
+    <%= f.text_field :firstname, :label => I18n.t('user.field.first_name_label')+" * : ", :hint => "TODO hint" %>
+    <%= f.text_field :lastname, :label => I18n.t('user.field.last_name_label')+" * : ", :hint => "TODO hint" %>
+
+
+  <% end %>
+
+</div>

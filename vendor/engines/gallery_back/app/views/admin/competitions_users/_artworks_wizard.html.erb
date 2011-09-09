@@ -1,0 +1,28 @@
+<% blank_main_div(:title => 'Artworks for competition', :hsize => 'sixH', :modal => true) do %>
+<% form_for 'submission', :url => submit_artworks_admin_competitions_user_path(@competitions_user), :builder => BlankFormBuilder, :html => { :method => :post, :multipart => true } do %>
+  <div id="tabass">
+    <ul>
+      <% for i in 1..@competitions_user.competitions_subscription.maximum_works_number.to_i %>
+        <li><a href="#fragment-<%= i %>">Artwork <%= i %></a></li>
+      <% end %>
+    </ul>
+
+    <% for i in 1..@competitions_user.competitions_subscription.maximum_works_number.to_i %>
+      <div id="fragment-<%= i %>">
+        <% fields_for "#{i}", :builder => BlankFormBuilder do |f| %>
+        <% f.fields_for @competitions_user.instance_variable_get("@artwork#{i}"), :builder => BlankFormBuilder do |ff| %>
+          <%= render :partial => 'artwork_form', :locals => { :f => ff, :num => i } %>
+        <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+
+<script>
+  $("#tabass").tabs();
+</script>
+
+    <br />
+    <%= blank_form_submit_button(:name => 'Submit all') %>
+  <% end %>
+<% end %>

@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="/gallery_assets/prototype1602packer.js" type="text/javascript">
+</script>
+<script src="/gallery_assets/scriptaculous181packer.js" type="text/javascript">
+</script>
+<meta http-equiv=Content-Type content="text/html; charset=ISO-8859-1">
+<title>currentnew</title>
+<meta name="viewport" content="width = 3000, minimum-scale = 0.25, maximum-scale = 1.60">
+<meta name="generator" content="Freeway 5 Pro 5.4.2">
+<style type="text/css">
+<!--
+body { margin:0px; background-color:#fff; height:100% }
+html { height:100% }
+img { margin:0px; border-style:none }
+button { margin:0px; border-style:none; padding:0px; background-color:transparent; vertical-align:top }
+p:first-child { margin-top:0px }
+table { empty-cells:hide }
+.f-sp { font-size:1px; visibility:hidden }
+.f-lp { margin-bottom:0px }
+.f-fp { margin-top:0px }
+.f-x1 {  }
+.f-x2 {  }
+.f-x3 {  }
+em { font-style:italic }
+h1 { font-weight:bold; font-size:18px }
+h1:first-child { margin-top:0px }
+h2 { font-weight:bold; font-size:16px }
+h2:first-child { margin-top:0px }
+h3 { font-weight:bold; font-size:14px }
+h3:first-child { margin-top:0px }
+strong { font-weight:bold }
+.style26 { color:#b3b3b3; font-family:Arial,Helvetica,sans-serif; font-size:10px; line-height:1 }
+.style18 { color:#333; font-family:Arial,Helvetica,sans-serif; font-size:20px }
+.style19 { color:#333; font-family:Arial,Helvetica,sans-serif; font-size:10px }
+.style23 { color:#333; font-family:Arial,Helvetica,sans-serif; font-size:10px; line-height:0.1 }
+.style16 { color:#333; font-family:Arial,Helvetica,sans-serif; font-size:10px; line-height:1.2 }
+.style17 { color:#fff; font-family:Arial,Helvetica,sans-serif; font-size:10px; line-height:1.1 }
+.style48 { color:#fff; font-family:Arial,Helvetica,sans-serif; font-size:10px; line-height:0.1 }
+.style21 { color:#fff; font-family:Arial,Helvetica,sans-serif; font-size:10px }
+.style5 { color:#fff }
+-->
+</style>
+<!--[if lt IE 7]>
+<link rel=stylesheet type="text/css" href="css/ie6.css">
+<![endif]-->
+<script type="text/javascript">//<![CDATA[
+
+function FWFindLayer(lay)
+{
+	if (lay)
+	{
+		if (document.layers)
+			return document[lay];
+		else if (document.getElementById)
+			return document.getElementById(lay).style;
+		else if (document.all)
+			return document.all[lay].style;
+	}
+	return null;
+}
+
+
+function FWShowHideLayerFade(lay, vis, ch)
+{
+	if (ch && lay != "")
+	{
+		vis = (vis) ? "visible" : "hidden";
+		var obj = FWFindLayer(lay);
+		if (obj && obj.visibility != vis)
+		{
+			if(vis == "visible")
+			{
+				obj.visibility = vis;
+				new Effect.Appear(lay, {duration:0.5, delay:null});
+			}
+			else
+			{
+				new Effect.Fade(lay, {duration:0.5, delay:null, afterFinish:function(){obj.visibility = vis}});
+			}
+		}
+	}
+}
+
+
+function FWStripFileFromFilterString(filterString)
+{
+	var start,end;
+	var strSrc = "src='";
+	var strRes = "";
+
+	start = filterString.indexOf(strSrc);
+
+	if(start != -1)
+	{
+		start += strSrc.length;
+
+		end = filterString.indexOf("',",start);
+		if(end != -1)
+		{
+			strRes = filterString.substring(start,end);
+		}
+	}
+
+	return strRes;
+}
+
+
+var fwIsNetscape = navigator.appName == 'Netscape';
+
+
+fwLoad = new Object;
+function FWLoad(image)
+{
+	if (!document.images)
+		return null;
+	if (!fwLoad[image])
+	{
+		fwLoad[image]=new Image;
+		fwLoad[image].src=image;
+	}
+	return fwLoad[image].src;
+}
+
+
+fwRestore = new Object;
+function FWRestore(msg,chain)
+{
+	if (document.images)
+		for (var i in fwRestore)
+		{
+			var r = fwRestore[i];
+			if (r && (!chain || r.chain==chain) && r.msg==msg)
+			{
+				r.src = FWLoad(r.old);
+				fwRestore[i]=null;
+			}
+		}
+}
+
+
+function FWLSwap(name,msg,newImg,layer,chain,trigger)
+{
+	var r = fwRestore[name];
+	if (document.images && (!r || r.msg < msg))
+	{
+		var uselayers = fwIsNetscape && document.layers && layer != '';
+		var hld;
+		if (uselayers)
+			hld = document.layers[layer].document;
+		else
+			hld = document;
+		var im = hld.getElementById(name);
+		if (!im.old)
+		{
+			if(usingIEFix && im.runtimeStyle.filter)
+				im.old = FWStripFileFromFilterString(im.runtimeStyle.filter);
+			else
+				im.old = im.src;
+		}
+
+		im.msg = msg;
+		im.chain = chain;
+		im.trigger = trigger;
+		if (newImg) im.src = FWLoad(newImg);
+		fwRestore[name] = im;
+	}
+}
+
+
+function FWCallHit(func,targNum,msg)
+{
+	if(func)
+		for (var i in func)
+			func[i](targNum,msg);
+}
+function FW_Hit(frameset,chain,targNum,msg)
+{
+	if (frameset && frameset.length)
+		for (var i=0 ; i <frameset.length ; i++)
+		{
+			try
+			{
+				FW_Hit(frameset[i].frames,chain,targNum,msg);
+				FWCallHit(top["FT_"+chain],targNum,msg);
+				FWCallHit(frameset[i].window["FT_"+chain],targNum,msg);
+			}
+			catch(err)
+			{
+			}
+		}
+	else
+		FWCallHit(window["FT_"+chain],targNum,msg);
+}
+
+
+fwHit = new Object;
+function FWSlave(frameset,chain,targNum,msg)
+{
+	if (msg==1) fwHit[chain]=targNum;
+	FW_Hit(frameset,chain,targNum,1);
+}
+
+function FWSRestore(frameset,chain)
+{
+	var hit=fwHit[chain];
+	if (hit)
+		FW_Hit(frameset,chain,hit,0);
+	fwHit[chain]=null;
+}
+
+document.write("<style type=\"text/css\">");
+document.write("#item3a, #item1, #item4c, #item4d, #item5, #item5a, #item5a1, #item5a1a  { -moz-opacity: .999999; }");
+document.write("<\/style>");
+//]]></script>
+<script type="text/javascript">//<![CDATA[
+var usingIEFix = false;
+//]]></script>
+
+<!--[if lt IE 7]>
+<script type="text/javascript">//<![CDATA[
+usingIEFix = true;
+//]]></script>
+<![endif]-->
+
+
+</head>
+<body>
+<div id="PageDiv" style="position:relative; min-height:100%; width:3000px">
+	<table border=0 cellspacing=0 cellpadding=0 width=3001>
+		<colgroup>
+			<col width=3000>
+			<col width=1>
+		</colgroup>
+		<tr valign=top>
+			<td height=147 bgcolor="#333333" style="border:solid #fff 1px">
+				<table border=0 cellspacing=0 cellpadding=0 width=2998>
+					<colgroup>
+						<col width=123>
+						<col width=1>
+						<col width=13>
+						<col width=69>
+						<col width=7>
+						<col width=60>
+						<col width=2725>
+					</colgroup>
+					<tr valign=top>
+						<td height=20 colspan=6></td>
+						<td height=20></td>
+					</tr>
+					<tr valign=top>
+						<td height=108 rowspan=2></td>
+                                                <td height=108 rowspan=2 bgcolor="#b3b3b3"></td>
+						<td height=2 colspan=4></td>
+						<td height=2></td>
+					</tr>
+					<tr valign=top>
+						<td height=106></td>
+						<td height=107 rowspan=2><%= link_to 'current', root_path %></td>
+						<td height=107 rowspan=2><%= link_to 'artists', artists_path %></td>
+						<td height=118 rowspan=3>exhibitions</td>
+						<td height=106></td>
+					</tr>
+					<tr valign=top>
+						<td height=1 colspan=3></td>
+						<td height=1></td>
+					</tr>
+					<tr valign=top>
+						<td height=11 colspan=5></td>
+						<td height=11></td>
+					</tr>
+					<tr class="f-sp">
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=123 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=1 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=13 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=69 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=7 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=60 height=1 alt="" style="float:left"></td>
+						<td height=7><img src="/gallery_assets/_clear.gif" border=0 width=2725 height=1 alt="" style="float:left"></td>
+					</tr>
+				</table>
+			</td>
+			<td height=149></td>
+		</tr>
+		<tr class="f-sp">
+			<td><img src="/gallery_assets/_clear.gif" border=0 width=3000 height=1 alt="" style="float:left"></td>
+			<td height=351><img src="/gallery_assets/_clear.gif" border=0 width=1 height=1 alt="" style="float:left"></td>
+		</tr>
+	</table>
+	<table border=0 cellspacing=0 cellpadding=0 width=3001>
+		<colgroup>
+			<col width=3000>
+			<col width=1>
+		</colgroup>
+		<tr valign=top>
+			<td height=221 bgcolor="#333333" style="border:solid #fff 1px">
+				<table border=0 cellspacing=0 cellpadding=0 width=2998>
+					<colgroup>
+						<col width=35>
+						<col width=579>
+						<col width=2384>
+					</colgroup>
+					<tr valign=top>
+						<td height=13 colspan=2></td>
+						<td height=13></td>
+					</tr>
+					<tr valign=top>
+						<td height=107></td>
+						<td height=107><p class="style26 f-lp">brunswick street gallery   I  &#109;&#97;&#114;&#107;&#64;&#98;&#115;&#103;&#97;&#114;&#116;&#46;&#99;&#111;&#109;&#46;&#97;&#117;   I  bsgart.com.au   I  ph 0419 390 478   I  10am-10pm 7 days a week</p>
+						</td>
+						<td height=107></td>
+					</tr>
+					<tr class="f-sp">
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=35 height=1 alt="" style="float:left"></td>
+						<td><img src="/gallery_assets/_clear.gif" border=0 width=579 height=1 alt="" style="float:left"></td>
+						<td height=101><img src="/gallery_assets/_clear.gif" border=0 width=2384 height=1 alt="" style="float:left"></td>
+					</tr>
+				</table>
+			</td>
+			<td height=223></td>
+		</tr>
+		<tr class="f-sp">
+			<td><img src="/gallery_assets/_clear.gif" border=0 width=3000 height=1 alt="" style="float:left"></td>
+			<td height=1><img src="/gallery_assets/_clear.gif" border=0 width=1 height=1 alt="" style="float:left"></td>
+		</tr>
+	</table>
+
+  <%= yield %>
+
+	<map name="map1">
+	<area alt="" coords="0,96,23,106" href="login.html">
+	<area alt="" coords="1,72,41,82" href="exhibiting.html">
+	<area alt="" coords="0,48,55,58" href="competitions.html">
+	<area alt="" coords="0,24,25,32" href="artistsa.html">
+	<area alt="" coords="0,0,31,8" href="currentnew.html">
+	</map>
+	<map name="map2">
+	<area alt="" coords="1,48,26,56" href="bookshop.html">
+	<area alt="" coords="0,24,42,32" href="subscribe.html">
+	<area alt="" coords="1,0,55,10" href="groupshowsnew.html">
+	</map>
+</div>
+<script type="text/javascript">//<![CDATA[
+function FWImage_Indigo(chain,msg)
+{
+	if (chain==1)
+		FWShowHideLayerFade("item5",msg,msg);
+	else
+		FWShowHideLayerFade("item5",!msg,msg);
+	if (chain==2)
+		FWShowHideLayerFade("item5a",msg,msg);
+	else
+		FWShowHideLayerFade("item5a",!msg,msg);
+	if (chain==3)
+		FWShowHideLayerFade("item5a1",msg,msg);
+	else
+		FWShowHideLayerFade("item5a1",!msg,msg);
+	if (chain==4)
+		FWShowHideLayerFade("item5a1a",msg,msg);
+	else
+		FWShowHideLayerFade("item5a1a",!msg,msg);
+}
+window.FT_Indigo=new Object;
+window.FT_Indigo['0']=FWImage_Indigo;
+//]]></script></body>
+</html>

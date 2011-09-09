@@ -1,0 +1,114 @@
+<script src="/gallery_assets/jquery-1.4.2.min.js"></script>
+<style>
+.changecolorgray{
+  color: #444444;
+  line-height: 15px;
+}
+</style>
+<script type="text/javascript">
+           function changetheline(){
+
+                   cmbv = document.getElementById("invoicing_info_payment_medium").value;
+                   
+                   if  (cmbv == "cash")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "You will need to come into the gallery at 322 Brunswick St, Fitzroy to make your payment";
+                   }
+                   if  (cmbv == "cheque")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "Make out to BSG and send to 322 Brunswick St, Fitzroy 3065";
+                   }
+                   if  (cmbv == "bank")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "Please pay to BSG, BSB 063212, Account No  1017 2051, CBA with your name on the transaction";
+                   }
+                   if  (cmbv == "online")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "";
+                   }
+                   if  (cmbv == "paypal")
+                   {
+                      document.getElementById("changethelineinfo").innerHTML = "";
+                   }
+
+           }
+
+						function change_entry_fee_value()
+						{
+						changed_value = 0
+						for (myvalue=0;myvalue<=document.getElementById('field-5da43579005846d').selectedIndex;myvalue++)
+						{
+						changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				    }
+						   document.getElementById("change_entry_fee").value=changed_value;
+						}
+								function change_the_required_field_value(entry_fee_value_for_calculation){
+						  changed_value = 0
+						    for (myvalue=0;myvalue<=entry_fee_value_for_calculation;myvalue++)
+						    {
+						      changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+				        }
+				        return changed_value;
+						}
+					
+</script>
+					<div  class="inputfont">
+<% form_for 'invoice', :url => "/admin/invoices/create_the_payment", :builder => BlankFormBuilder,  :html => { :method => :post } do |f| %>
+               <input type="hidden" id="invoiceid" name="invoiceid" value="<%=params[:id]%>"/>                             
+               <input type="hidden" id="mychangevalue0" value="0"/>
+	       <div>
+                  		  <%#=link_to_remote "Edit Artworks", :update => "",:url => { :action => "edit_images_front", :id => competition.id,:order_id=>order.id }%>
+                </div>
+            		<div style="float:left">
+                    	
+                </div>&nbsp;
+                <div>
+                            <% fields_for @credit_card do |ff| %>
+                            <%= ff.hidden_field :user_id, :value => @current_user.id %>
+                            <%= ff.select :type_of_card, [['VISA', 'visa'], ['Master Card', 'master_card']], :label => 'Type' %>
+                             <div class="changecolorgray">
+                                      <span >First Name</span> <span style="margin-left:75px;">Last Name</span>
+                             </div>   
+                             <%= ff.text_field :first_name, :label => 'First name' ,:style=>"width:117px;height:16px;"%>
+                             <%= ff.text_field :last_name, :label => 'Last name' ,:style=>"width:117px;height:16px;"%>
+                             <div class="changecolorgray">
+                                        Biography
+                             </div> 
+                              <%=text_area_tag 'biography',current_user.profile.biography,:cols=>35 %>
+                                <div class="changecolorgray">
+                                        Number
+                                </div>
+                                 <%= ff.text_field :number, :label => 'Number',:value=>"4987654321098769",:style=>"width:242px;height:16px;"%>
+                                 <div class="changecolorgray">
+                                         <span> Expiry Date</span><span style="margin-left:112px;">Varification Value</span>
+                                  </div>
+                                    <%= ff.date_select :expiring_date, {:order => [:year, :month], :label => 'Expiring date' ,:default => { :year =>   2013,:month=>05 },:start_year=>1995,:end_year=>2015},:style=>"float:left"%>
+                                 <%= ff.text_field :verification_value, :label => 'Verification value' ,:value=>"123" ,:style=>"width:76px;height:16px;"%>
+                                 <div class="changecolorgray" style="clear:both;margin:5px;">
+                                        
+                                  </div>    
+                                  <%= select 'invoicing_info', 'payment_medium', [['Online', 'online'],['Paypal', 'paypal']], {},:style=>"float:left",:onchange=>"changetheline()"%>
+                                  <div style="float:left;margin-left:54px;">
+                                  
+                                  <%=  submit_to_remote 'da_btn', "Proceed",{ :url => "/admin/invoices/create_the_payment", :update =>    'modal_space_answer',:complete=>"document.getElementById  ('show_ajax_request').style.display='none'" ,:before=>"document.getElementById  ('show_ajax_request').style.display='block';"}%>
+                                  
+                                   </div>  
+                                   <div id="show_ajax_request" style="display:none">
+                                              <img height="18" src="/images/ajax-spinner.gif" alt="loading" >
+                                             
+                                  </div>
+                </div><%#the blank div ends%>
+                <div id="changethelineinfo" style="margin-top:1px;clear:both;width:250px;">
+                </div>
+                <b>
+                <div id="modal_space_answer" style="margin-top:1px;clear:both" >
+                </div>
+                </b>
+</div><%#div style="height:570px;" end%>
+<%end%>
+  <% end %>
+
+<div id="paypal_form">
+</div>
+    
+

@@ -1,0 +1,37 @@
+
+
+    
+    
+      <% if @current_user.nil? %>
+        <% form_for 'session', :url => admin_session_path, :html => { :method => :post,:class=>"" } do |f| %>
+         <%if params[:msg] == "buy artwork"%>
+              <%="Need To Login To Buy An Artwork"%>
+         <%end%>
+      <%= flash_messages_manager(['notice', 'error'], 'modal', false) %><br/><br />
+        <p style="margin:5px 0px">Email Address </p>
+      <label><input name="email" type="text" id="email" size="50" />
+      </label>
+            <p style="margin:5px 0px">Password</p>
+      <label><input name="password" type="password" id="password" size="50" />
+      </label>
+        
+        
+      
+    <p><button name="submit" id="next">>>submit</button></p>
+       
+  <% end %>
+          <p>
+            <!-- this will open the registration page -->
+            Click   <%=link_to_remote "here", :update => "",:url => { :action => "create_subscribe_competition_front_register", :id => params[:id]}%> 
+            to register 
+          </p>
+    <% else %>
+    <p>
+    <label><%= "You are already loggued as #{@current_user.login}."  %></label>
+    </p>
+    <br /><br />
+    <%= link_to 'Logout', admin_logout_url %>
+    <% end %>
+
+     
+

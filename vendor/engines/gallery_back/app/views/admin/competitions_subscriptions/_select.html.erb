@@ -1,0 +1,749 @@
+<script>
+function  check_term(){
+	if(document.getElementById('term_and_condition').checked) 
+	{
+	return true;
+	}
+	else
+	{
+	alert("Please Select The Terms And Conditions")
+	return false;
+	}
+}
+</script>
+<% blank_main_div(:title => 'Subscription selection', :hsize => 'sixH', :modal => true) do %>
+	<form method="post" action="/admin/competitions/create_competition" enctype="multipart/form-data" onsubmit="return check_term()">
+				<table>
+				<tbody><tr>
+							<td valign="top">
+								<strong>Name:</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[name]" id="competitions_user_name" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Email Address:</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[email]" id="competitions_user_email" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Street:</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[street]" id="competitions_user_street" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Suburb:</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[suburb]" id="competitions_user_suburb" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Post Code:</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[post_code]" id="competitions_user_post_code" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>How did you here about the Prize:</strong>
+							</td>
+							<td valign="top">
+								<select name="competitions_user[here_prize]" id="competitions_user_here_prize">
+									<option value="BSG Website">BSG Website</option>
+									<option value="NAVA Website">NAVA Website</option>
+
+									<option value="Arts Hub Website">Arts Hub Website</option>
+									<option value="Art Almanac">Art Almanac</option>
+									<option value="Art Gallery Guide">Art Gallery Guide</option>
+									<option value="Aust Art Collector">Aust Art Collector</option>
+									<option value="The Age">The Age</option>
+									<option value="Flier">Flier</option>
+
+									<option value="Word of Mouth">Word of Mouth</option>
+									<option value="RRR">RRR</option>
+									<option value="ArtsConnect">ArtsConnect</option>
+									<option value="Other">Other</option>
+								</select>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>If other where?</strong>
+							</td>
+							<td valign="top">
+								<input name="competitions_user[others]" id="field-073dae70373b224" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>How Many Entries?</strong>
+							</td>
+							<td valign="top">
+								<select name="competitions_user[total_entry]" id="field-5da43579005846d">
+									<option value="1">1</option>
+									<option value="2">2</option>
+
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Payment:</strong>
+
+							</td>
+							<td valign="top">
+								<select name="competitions_user[payment_type]" id="field-ca58a8718fa4e8f">
+									<option value="Paypal (mark@bsgart.com.au)">Paypal (mark@bsgart.com.au)</option>
+									<option value="Online (BSB 062 312 AC NO 1017 2051)">Online (BSB 062 312 AC NO 1017 2051)</option>
+									<option value="Cheque">Cheque</option>
+									<option value="Cash">Cash</option>
+
+									<option value="Credit Card">Credit Card</option>
+								</select>
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>If Credit Card Name on Card:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[card_name]" id="field-6c20a07dddae414" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Card Number:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[card_number]" id="field-f8ce18fd9a4fd4c" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Expiry Date:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[exp_date]" id="field-ab390d1ac553a01" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fworktitle]" id="field-28b2641aed510f0" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[[fworkmedium]]" id="field-35aefdde6159fe0" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[[fworksize]]" id="field-c65f89902a9847f" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[[fworkprice]]" id="field-a94ac5a259d7675" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fworkimage]" id="field-7a24db800403e5f" type="file">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[sworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[sworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[sworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[sworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[sworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>
+						
+						
+						
+						
+							<tr>
+							<td valign="top">
+								<strong>3rd Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[tworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[tworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[tworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[tworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[tworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>4th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[foworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[foworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[foworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[foworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[foworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>5th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fiworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fiworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fiworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fiworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[fiworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>6th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[siworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[siworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[siworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[siworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[siworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>7th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[seworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[seworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[seworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[seworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[seworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>8th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[eworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[eworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[eworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[eworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[eworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>9th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[nworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[nworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[nworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[nworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[nworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>10th Work Title:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[teworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Medium:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[teworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Size (cm):</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[teworksize]" id="field-b8077a68b677209" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Price:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[teworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Image:</strong>
+							</td>
+
+							<td valign="top">
+								<input name="competitions_user[teworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	
+						
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>Return of Artwork:</strong>
+							</td>
+
+							<td valign="top">
+								<select name="competitions_user[return_of_artwork]" id="field-6360fe4d6ac1957">
+									<option value="I will pick up on Sat 15th Jan 2011">I will pick up on Sat 15th Jan 2011</option>
+									<option value="I will pick up on Sun 16th Jan 2011">I will pick up on Sun 16th Jan 2011</option>
+									<option value="I will organise a courier to pick up on Friday 14th Jan 2011">I will organise a courier to pick up on Friday 14th Jan 2011</option>
+									<option value="Please send back by Aust Post COD">Please send back by Aust Post COD</option>
+								</select>
+
+								
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>Bank Account (For payment if work sold - include BSB):</strong>
+							</td>
+							<td valign="top">
+								Bank Account:-<input name=competitions_user[bank_account]" id="field-9d77ecd88421011" size="40" value="" type="text">
+								BSB No:-<input name=competitions_user[bsb_no]" id="field-9d77ecd88421011" size="40" value="" type="text">
+
+								
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>At The End Of Show:</strong>
+							</td>
+							<td valign="top">
+									<select name="competitions_user[at_end_work]" >
+									<option value="I will pick up unsold work">I will pick up unsold work</option>
+									<option value="I will organise a courier">I will organise a courier</option>
+									<option value="Please send back COD">Please send back COD</option>
+								</select>
+
+								
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>Biography (500 words or less):</strong>
+							</td>
+							<td valign="top">
+								<textarea name="competitions_user[biography]" id="field-9bf7ef24509d728" rows="6" cols="40"></textarea>
+
+								
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>I agree to the terms and conditions:</strong>
+							</td>
+							<td valign="top">
+								<input name="agree" id="term_and_condition" value="Agree" type="radio"> Agree<br>
+
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								
+							</td>
+						</tr>
+					</tbody>
+					</table>
+					
+					<%=hidden_field_tag "competionid",@competition.id%>
+					<%=submit_tag%>
+		</form>
+<% end %>

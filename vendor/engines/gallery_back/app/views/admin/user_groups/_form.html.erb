@@ -1,0 +1,15 @@
+<% form_for_item @current_object, title do |f| -%>
+
+<% f.field(:people, :label => 'Users selection : ') do %>
+  <%= old_school_switching_lists(
+        :ajax_url => filtering_users_admin_user_groups_url,
+        :object_id => @current_object.id,
+        :filters_options => options_for_select((('A'..'Z').to_a+['0-9']).map{ |e| [e, e] }),
+        :remaining_objects => @remaining_profiles,
+        :selected_objects => @selected_profiles,
+        :field => :full_name
+      )
+  %>
+<% end -%>
+
+<% end -%>

@@ -1,0 +1,36 @@
+--- 
+sa_ws_types: []
+
+sa_mandatory_user_activation: "true"
+sa_logo_url: /config_files/logo.jpg
+sa_contact_email: test@pragtech.co.in
+sa_application_name: BSG Web Application
+sa_layouts: []
+
+sa_item_categories: []
+
+sa_default_layout: gallery
+sa_containers: 
+- workspace
+sa_per_page_default: 5
+sa_application_url: http://173.230.149.35
+sa_exception_followers_email: 
+- francois.turbelin@pragtech.co.in
+sa_profiles: 
+- profile_contact
+- profile_artist
+sa_default_language: en-US
+sa_feed_items_importation_types: []
+
+sa_exception_notifier_activated: "true"
+sa_favicon_url: /config_files/favicon.ico
+sa_allowed_free_user_creation: "true"
+sa_items: 
+- newsletter
+- artwork
+- competition
+- exhibition
+- gallery
+sa_automatic_private_workspace: "true"
+sa_languages: 
+- en-US

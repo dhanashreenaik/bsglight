@@ -1,0 +1,10 @@
+--- 
+sa_active_merchant_password: !str 
+  str: redftreed
+  "@_rails_html_safe": false
+sa_active_merchant_login: !str 
+  str: btgbgtbgbtg
+  "@_rails_html_safe": false
+sa_active_merchant_gateway: !str 
+  str: Eway
+  "@_rails_html_safe": false

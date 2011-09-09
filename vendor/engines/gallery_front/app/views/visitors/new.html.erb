@@ -1,0 +1,18 @@
+</div>
+
+<div id="containersubscribe_reg">
+
+    <div id="list">
+
+      <%= render :partial => 'visitors/form' %>
+            <% if @current_object.errors.first %>
+                <div id="form">
+                  <%= "ERRORS DURING USER CREATION :<br /><br />" %>
+                  <%@current_object.errors.each do |attr,msg|%>
+                  <%=msg%><br/>
+                  <%end%>
+                </div>
+                <% end %>
+   </div>
+    
+</div>

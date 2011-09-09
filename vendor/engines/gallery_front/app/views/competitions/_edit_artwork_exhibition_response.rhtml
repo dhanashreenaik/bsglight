@@ -1,0 +1,87 @@
+
+      <style>
+      .changecolorgray{
+        color: #444444;
+        line-height: 15px;
+      }
+      </style>
+      <%if !messageforimageuploaded.blank?%>
+            <%=messageforimageuploaded%>
+      <%end%>
+      <div  class="inputfont">
+       <form action="/competitions/create_exhibition_artwork" class="new_artwork" enctype="multipart/form-data" id="add_the_artwork_to_competition<%=updateimage.id%>" method="post" onsubmit="return Checkfiles_simple('<%=updateimage.id%>',true)" target="upload_frame<%=updateimage.id%>">
+              <%=hidden_field_tag "artwork_id",updateimage.id%>
+                    <div class="changecolorgray">
+                					<label>Title </label>
+                     </div>
+      							<input type="text" ajax="true" hint="Title of Item" id="artwork_title<%=updateimage.id%>" itemclass="Artwork" name="artwork[title<%=updateimage.id%>]" style="width:375px;height:14px;"  validate="title" value="<%=updateimage.title%>"/>
+                    <div class="changecolorgray">                   
+					                    <label>Medium </label>
+                    </div>
+        						<input type="text" ajax="true" id="artwork_medium<%=updateimage.id%>" itemclass="Artwork" name="artwork[medium<%=updateimage.id%>]" size="30" url="/admin/artworks/validate" validate="medium" value="<%=updateimage.medium%>" style="width:375px;height:14px;"/>
+                    <div class="changecolorgray">		
+					<label>
+                                          	<span style="font-size: 10px;margin-right:85px;">width (cm)  </span>
+                                                <span style="font-size: 10px;margin-right:75px;">height (cm)</span>
+                                                <span style="font-size: 10px;"> depth (cm) - if 3d work</span>
+                                                
+                                        </label>
+		   </div>
+					          <font style="color: #444444;">
+                  					<input type="text" id="artwork_width<%=updateimage.id%>" name="artwork[width<%=updateimage.id%>]" style="width: 113px;height:14px;" value="<%=updateimage.width%>"> x <input type="text" id="artwork_height<%=updateimage.id%>" name="artwork[height<%=updateimage.id%>]" style="width: 113px;height:14px;" value="<%=updateimage.height%>"/> x <input type="text" id="artwork_depth<%=updateimage.id%>" name="artwork[depth<%=updateimage.id%>]" style="width: 113px;height:14px;" value="<%=updateimage.depth%>"/> 
+	<div class="changecolorgray"> 
+                          <span style="padding-right:100px">
+                               Price
+                           </span> 
+                          <span style="padding-right:75px;padding-left:8px;">
+                               Edition From
+                          </span> 
+                        <span>
+                               Edition Number
+                          </span> 
+                      </div>
+                    <input type="text" ajax="true" id="artwork_price<%=updateimage.id%>" itemclass="Artwork" name="artwork[price<%=updateimage.id%>]" style="width: 113px;height: 14px;" url="/admin/artworks/validate" validate="price" value="<%=updateimage.price%>" />
+           
+                    <input type="text" id="artwork_edition_name<%=updateimage.id%>" name="artwork[edition_name<%=updateimage.id%>]" style="width: 105px;height: 14px;margin-left:10px;" value="<%=updateimage.edition_name%>"/> of <input type="text" id="artwork_edition_number<%=updateimage.id%>" name="artwork[edition_number<%=updateimage.id%>]" style="width: 113px;height: 14px;" value="<%=updateimage.edition_number%>"/>
+          					
+                  
+                </font>
+                <!--
+				      <div class="changecolorgray">
+		            		<label>For Sale      Not For Sale</label>
+				      </div>
+    <div style="float:left;margin-right:50px;">				      
+     <% if updateimage.is_purchasable %>
+     	            <input type="radio" name="artwork[is_purchasable<%=updateimage.id%>]" value=1 checked="checked">&nbsp;&nbsp;&nbsp;&nbsp;
+    	          	<input type="radio" name="artwork[is_purchasable<%=updateimage.id%>]" value=0>
+     <%else%>
+     	            <input type="radio" name="artwork[is_purchasable<%=updateimage.id%>]" value=1>&nbsp;&nbsp;&nbsp;&nbsp;
+    	          	<input type="radio" name="artwork[is_purchasable<%=updateimage.id%>]" value=0 checked="checked">
+     <%end%>
+		</div>      		
+                -->
+              <input type="radio"  name="artwork[is_purchasable]" value=1 checked="checked"  style="display:none"/> 
+                     					<div class="changecolorgray">
+            							<label>Image</label>
+      							</div>
+      	<input type="file" class="file" id="artwork_image<%=updateimage.id%>" name="artwork[image<%=updateimage.id%>]" size="22" value="/images/original/missing.png" style="float:left"/>
+              
+				<div style="padding-left:2px;float:left">
+                        	   <button class="submitButton" type="submit" >
+                                	  <span>Upload</span>
+                                   </button>
+                                </div>
+                                
+        <div style="display: none;padding-top:2px;padding-left:2px;" id="show_ajax_request<%=updateimage.id%>">
+           <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+        </div>                                                     
+        <div style="clear:both;float:left">
+            <img src="/uploaded_files/production/artwork/<%=updateimage.id%>/thumb/<%=updateimage.image_file_name%>" />
+        </div>
+        
+                                                        
+        </form>
+</div>
+
+
+

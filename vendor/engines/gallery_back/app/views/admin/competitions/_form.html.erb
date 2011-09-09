@@ -1,0 +1,393 @@
+<style>
+  #competition_state{
+    margin-left:20px;
+  }
+  </style>
+<div style="color:black;padding-left:45px;">
+     <%i=0%> 
+     <%for error in @current_object.errors%>
+        <%="<b>"+error[0].to_s + "</b> " + error[1].to_s.to_s + "  " %>
+          <%i=i+1%>
+          <%if i==3%>  
+            </br>
+            <%i=0%>
+            
+           <%end%> 
+     <%end%>
+</div>
+
+<% form_for_item @current_object, "Competition Creation" do |f| -%>
+
+
+
+
+<table>
+   <tr align="left">
+   <td valign="bottom">
+   <%if !@oldlabelvalue.blank?%>
+    <%=text_field_tag  "headerdescription",@oldlabelvalue["description"],:style=>"width:150px;float:left;"%>  
+   <%else%> 
+   <%=text_field_tag  "headerdescription","Description",:style=>"width:150px;float:left;"%>  
+   <%end%>
+   </td>
+   <td valign="bottom"> 
+    <%= f.text_field :description, :label => ''  %>
+   </td>
+   </tr> 
+</table>
+<table>
+   <tr align="left">
+   <td valign="bottom">
+   <%if !@oldlabelvalue.blank?%>
+    <%=text_field_tag  "headersubmission_deadline",@oldlabelvalue["submission_deadline"],:style=>"width:150px;float:left;"%>  
+   <%else%> 
+   <%=text_field_tag  "headersubmission_deadline","Deadline Of  Entries",:style=>"width:150px;float:left;"%>  
+   <%end%>
+   </td>
+   <td valign="bottom"> 
+    <%= f.text_field :submission_deadline, :label => '' ,:onclick=>"show_date_option();" %>
+   </td>
+   </tr> 
+</table>
+   <table>
+   <tr align="left">
+   <td valign="bottom">
+   <%if !@oldlabelvalue.blank?%>
+          <%=text_field_tag "headerlocation",@oldlabelvalue["location"],:style=>"width:150px;float:left;"%>  
+   <%else%>      
+          <%=text_field_tag "headerlocation","Location",:style=>"width:150px;float:left;"%>  
+   <%end%>
+   </td>
+   <td valign="bottom">
+          <%= f.text_field :location, :label => '' %>
+  </td>
+  </tr>
+  </table>
+  <table>
+   <tr align="left">
+   <td valign="bottom">
+        <%if !@oldlabelvalue.blank?%>
+        <%=text_field_tag "headerno_of_entry",@oldlabelvalue["no_of_entry"],:style=>"width:150px;float:left;"%>  
+        <%else%>
+        <%=text_field_tag "headerno_of_entry","No of Entries",:style=>"width:150px;float:left;"%>  
+        <%end%>
+          
+   </td>
+   <td valign="bottom">
+     <%= f.text_field :no_of_entry, :label => ''  %>
+   </td>
+   </tr> 
+    </table>
+   <table> 
+    <tr align="left">
+        <td valign="bottom">
+          <%if !@oldlabelvalue.blank?%>
+            <%=text_field_tag "headercjudges",@oldlabelvalue["cjudges"],:style=>"width:150px;float:left;"%>  
+          <%else%>  
+            <%=text_field_tag "headercjudges","Judges",:style=>"width:150px;float:left;"%>  
+          <%end%>
+        </td>
+         <td valign="bottom">
+            <%= f.text_field :cjudges, :label => ''  %>
+         </td>   
+    </tr>
+     </table>
+<br/>
+   <table>  
+    <tr align="left">
+        <td valign="top">
+        <%if !@oldlabelvalue.blank?%>
+        <%=text_field_tag "headerentry_fees",@oldlabelvalue["entry_fees"],:style=>"width:150px;float:left;margin-top:19px;"%>  
+        <%else%>
+        <%=text_field_tag "headerentry_fees","Entry Fee Format",:style=>"width:150px;float:left;margin-top:19px;"%>  
+        <%end%>
+          
+        </td>    
+        <td valign="bottom">
+          <label style="width:400px;">
+            This Field Should Not Contain Empty Line.Used For Fees At Front End.And Format Is As Follows
+            <br/> 1 works $50 <br/> 2 works $60
+          </label>  
+            
+            <%= f.text_area :entry_fees, :label => '',:style=>"width:430px;"  %>
+         </td>
+    </tr>
+    </table>
+  <table>  
+     <tr align="left"> 
+        <td valign="bottom">
+           <%if !@oldlabelvalue.blank?%>
+           <%=text_field_tag "headerformat",@oldlabelvalue["format"],:style=>"width:150px;float:left;"%>  
+           <%else%>
+           <%=text_field_tag "headerformat","Format",:style=>"width:150px;float:left;"%>  
+           <%end%>
+            
+        </td>    
+        <td valign="bottom">
+           <%= f.text_field :format, :label => ''  %>
+         </td> 
+     </tr>
+      
+      </table>
+    <table>  
+    <tr align="left">
+   <td valign="bottom">
+   
+   <table>
+        <tr align="left"> 
+        <td valign="bottom">
+            <%if !@oldlabelvalue.blank?%>
+            <%=text_field_tag "headerdelivery",@oldlabelvalue["delivery"],:style=>"width:150px;float:left;"%>  
+            <%else%>
+            <%=text_field_tag "headerdelivery","Delivery",:style=>"width:150px;float:left;"%>  
+            <%end%>
+                
+        </td>    
+        <td valign="bottom">
+             <%= f.text_field :delivery, :label => ''  %>
+        </td>  
+        </tr>
+    </table>    
+    <table>
+    <tr align="left">
+        <td valign="bottom">
+          <%if !@oldlabelvalue.blank?%>
+          <%=text_field_tag "headercollection",@oldlabelvalue["collection"],:style=>"width:150px;float:left;"%>  
+          <%else%>
+          <%=text_field_tag "headercollection","Collection",:style=>"width:150px;float:left;"%>  
+          <%end%>
+            
+        </td>    
+        <td valign="bottom">
+           <%= f.text_field :collection, :label => ''  %>
+        </td> 
+    </tr>    
+    </table>
+   <table> 
+    <tr align="left">
+      <td valign="bottom">
+          <%if !@oldlabelvalue.blank?%>
+          <%=text_field_tag "headercommission",@oldlabelvalue["commission"],:style=>"width:150px;float:left;"%>  
+          <%else%>
+          <%=text_field_tag "headercommission","Commission",:style=>"width:150px;float:left;"%>  
+          <%end%>
+            
+        </td>    
+     <td valign="bottom">
+        <%= f.text_field :commission, :label => ''  %>
+     </td>   
+    </tr>  
+ 
+ </table>
+<table> 
+    <tr align="left">
+    <td valign="bottom">
+          <%if !@oldlabelvalue.blank?%>
+          <%=text_field_tag "headerinsurance",@oldlabelvalue["insurance"],:style=>"width:150px;float:left;"%>  
+          <%else%>
+          <%=text_field_tag "headerinsurance","Insurance",:style=>"width:150px;float:left;"%>  
+          <%end%>
+            
+        </td>    
+    <td valign="bottom">
+          <%= f.text_field :insurance, :label => ''  %>
+     </td>
+    </tr>
+</table>      
+<table> 
+   
+  <tr align="left">
+        <td valign="bottom">
+           <%if !@oldlabelvalue.blank?%>
+           <%=text_field_tag "headerprizes_total_amount",@oldlabelvalue["prizes_total_amount"],:style=>"width:150px;float:left;"%>  
+           <%else%>
+           <%=text_field_tag "headerprizes_total_amount","Prizes total amount",:style=>"width:150px;float:left;"%>  
+           <%end%>
+            
+        </td>    
+        <td valign="bottom">
+            <%= f.text_field :prizes_total_amount, :label => '', :hint => 'Should be an integer representing AUD'  %>
+         </td> 
+    </tr>
+
+</table>          
+    </table>
+<!--
+   <table> 
+    <tr align="left">
+      <td valign="bottom">
+      <%if !@oldlabelvalue.blank?%>
+      <%=text_field_tag "headerreturn_of_artwork",@oldlabelvalue["return_of_artwork"],:style=>"width:150px;float:left;"%>  
+      <%else%>
+      <%=text_field_tag "headerreturn_of_artwork","Return Of Artwork",:style=>"width:150px;float:left;"%>  
+      <%end%>
+            
+            
+      </td>    
+      <td valign="bottom">
+        <%= f.text_field :return_of_artwork, :label => '', :hint => 'Enter Only coma(,) seperated values. e.g. i will pick up on 15th,i will pick up on 31, etc'  %>
+      </td>  
+    </tr>
+    
+    </table>
+
+   <table> 
+    <tr align="left">  
+       <td valign="bottom">
+          <%if !@oldlabelvalue.blank?%>
+          <%=text_field_tag "headerhow_did_you_here",@oldlabelvalue["how_did_you_here"],:style=>"width:150px;float:left;"%>  
+          <%else%>
+          <%=text_field_tag "headerhow_did_you_here","How Did You Here About Prize",:style=>"width:150px;float:left;"%>  
+          <%end%>
+            
+      </td>    
+       <td valign="bottom">
+         <%= f.text_field :how_did_you_here, :label => '', :hint => 'Enter Only coma(,) seperated values. e.g. news paper,BSG website, etc'  %>
+        </td> 
+    </tr>
+    
+    </table>-->
+<br/>
+  <table>  
+    <tr align="left">
+     <td valign="top">
+     <%if !@oldlabelvalue.blank?%>
+     <%=text_field_tag "headerprizes_detail",@oldlabelvalue["prizes_detail"],:style=>"width:150px;float:left;margin-top:19px;"%>  
+     <%else%>
+     <%=text_field_tag "headerprizes_detail","Prize Details",:style=>"width:150px;float:left;margin-top:19px;"%>  
+     <%end%>
+            
+            
+      </td>    
+      <td valign="bottom">
+        <label style="width:400px">
+          Prize Details. Please Enter On New Line Each Prize. 1st prize $40<br/>2nd  prize $80
+          </label>
+  <%= f.text_area :prizes_detail, :label => '', :hint => 'Please pass a line between each price',:style=>"width:430px;" %>
+      </td>
+    </tr>  
+    
+    </table>
+   <table> 
+    
+    <tr align="left">
+      <td valign="bottom">
+  <%= f.select :state, [['Open', 'open'], ['Publish the final artworks list', 'final_published'], ['Publish the results of the competition', 'results_publish']], :label => 'State',:style=>"margin-left:20px;"%>
+    </td>
+    </tr>
+    
+    </table>
+<br/>
+
+<table> 
+    <tr align="left">
+<div style="margin-top: 28px;">
+     <td valign="top">
+          <%if !@oldlabelvalue.blank?%>
+             <%=text_field_tag "headermessage_for_subscribers",@oldlabelvalue["message_for_subscribers"],:style=>"margin-top:28px;width:150px;float:left;"%>  
+          <%else%>
+             <%=text_field_tag "headermessage_for_subscribers","Message for subscribers",:style=>"margin-top:28px;width:150px;float:left;"%>  
+          <%end%>
+      </td> 
+</div>   
+     <td valign="top">
+            <%= f.text_area :message_for_subscribers, :label => '',:style=>"width:430px;" %>
+      </td>
+    </tr>  
+</table>
+
+
+
+<table> 
+    <tr align="left">
+<div style="margin-top: 28px;">
+     <td valign="top" style="float:left;margin-top:28px;margin-left:110px;width:50px;">
+       Notes
+      </td> 
+</div>   
+     <td valign="top">
+            <%= f.text_field :notes, :label => '',:style=>"width:430px;",:value=>"#{@current_object.notes}" %>
+      </td>
+    </tr>  
+</table>
+
+<table> 
+    <tr align="left">
+<div style="margin-top: 28px;">
+     <td valign="top" style="float:left;margin-top:28px;margin-left:110px;width:150px;margin-left:10px">
+       Open State Message
+      </td> 
+</div>   
+     <td valign="top">
+            <%= f.text_field :openstatemsg, :label => '',:style=>"width:430px;",:value=>"#{@current_object.openstatemsg}" %>
+      </td>
+    </tr>  
+</table>
+
+<table> 
+    <tr align="left">
+<div style="margin-top: 28px;">
+     <td valign="top" style="float:left;margin-top:28px;margin-left:110px;width:150px;margin-left:10px">
+       Publish Final Artwork
+      </td> 
+</div>   
+     <td valign="top">
+            <%= f.text_field :publishfinalmsg, :label => '',:style=>"width:430px;",:value=>"#{@current_object.publishfinalmsg}" %>
+      </td>
+    </tr>  
+</table>
+
+
+
+
+
+
+
+<label>Exhibition Runs </label><br />
+  <div style="margin-left:22px;">
+  <% f.fields_for :timing do |ff| %>
+    
+    
+    <%= add_timing_fields(:form => ff, :places_list => @places, :period_used => false, :one_day => false, :time_used => false,:period_id=>@oldtimingperiodid) %>
+  <% end %>
+  </div>
+ <%#= f.text_field :exhibition_date, :label => 'Exhibition Start And End Dates:-' %>
+
+
+<!--<label>SUBSCRIPTIONS PART</label><br />
+
+  <%# f.fields_for :competitions_subscriptions do |s| %>
+    <%#= render :partial => 'admin/competitions_subscriptions/competitions_subscription_fields', :locals => {:f => s } %>
+  <% #end %>
+  <label><%#= link_to_add_fields "Add subscription", f, :competitions_subscriptions %></label>
+-->
+
+<% end -%>
+
+
+<script>
+  
+   function show_date_option(){
+
+	$(function() {
+		$( "#competition_submission_deadline" ).datepicker({
+			showOn: "button",
+			buttonImage: "/images/calendar.gif",
+			buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd' 
+		});
+	});
+	
+	}
+        $(function() {
+		$( "#competition_submission_deadline" ).datepicker({
+			showOn: "button",
+			buttonImage: "/images/calendar.gif",
+			buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd' 
+		});
+	});
+	</script>
+
+	
+	

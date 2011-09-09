@@ -1,0 +1,19 @@
+     <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="myformpaypal">
+        <input type="hidden" name="cmd" id="cmd" value="_express-checkout">
+        <input type="hidden" name="token" value="<%=token%>">
+        <input type="hidden" name="useraction" value="commit">
+         <input type="image" name="submit" border="0"  src="https://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online" style="display:none" />
+     </form>
+        
+        
+        <script>
+        function submit_my_form(){
+        document.forms["myformpaypal"].submit();
+        }
+        </script>
+        
+        
+        
+        
+        
+

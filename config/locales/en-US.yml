@@ -1,0 +1,894 @@
+--- 
+en-US: 
+  activerecord: 
+    errors: 
+      messages: 
+        accepted: "{{attribute}} must be accepted"
+        taken: "{{attribute}} has already been taken"
+        not_a_number: "{{attribute}} is not a number"
+        greater_than_or_equal_to: "{{attribute}} must be greater than or equal to {{count}}"
+        less_than_or_equal_to: "{{attribute}} must be less than or equal to {{count}}"
+        exclusion: "{{attribute}} is reserved"
+        odd: "{{attribute}} must be odd"
+        invalid: "{{attribute}} is invalid"
+        empty: "{{attribute}} can't be empty"
+        wrong_length: "{{attribute}} is the wrong length (should be {{count}} characters)"
+        less_than: "{{attribute}} must be less than {{count}}"
+        even: "{{attribute}} must be even"
+        greater_than: "{{attribute}} must be greater than {{count}}"
+        equal_to: "{{attribute}} must be equal to {{count}}"
+        inclusion: "{{attribute}} is not included in the list"
+      models: 
+        user: 
+          attributes: 
+            avatar: 
+              content_type: Image is not one of the allowed file types.
+            login: 
+              invalid: The 'First Name Or Last Name' field can take only alpha-numeric characters.
+        page: 
+          attributes: 
+            title: 
+              taken: "{{attribute}} has already been taken in one of selected workspace"
+    attributes: 
+      article: 
+        title: Title
+        body: Body
+        description: Description
+      audio: 
+        title: Title
+        description: Description
+      bookmark: 
+        title: Title
+        description: Description
+        copyright: Copyright
+        link: Link
+      user: 
+        company: Location
+        password_confirmation: Password confirmation
+        activity: Activity
+        lastname: Last name
+        edito: Edito
+        firstname: First name
+        mobile: Mobile
+        phone: Phone
+        address: Address
+        login: Login
+        password: Password
+        email: Email
+      workspace: 
+        title: Title
+        description: Description
+      permission: 
+        name: Name
+      feed_source: 
+        url: Url
+        copyright: Copyright
+      cms_file: 
+        title: Title
+        description: Description
+      newsletter: 
+        from_email: From email
+        title: Title
+        body: Body
+        description: Description
+      group: 
+        title: Title
+        description: Description
+      video: 
+        title: Title
+        description: Description
+      image: 
+        title: Title
+        description: Description
+      person: 
+        city: City
+        company: Company
+        job_title: Job title
+        postal_code: Postal code
+        notes: Notes
+        street: Street
+        fax: Fax
+        web_page: Web page
+        first_name: First name
+        last_name: Last name
+        email: Email
+        primary_phone: Primary phone
+        mobile_phone: Mobile phone
+    menu: 
+      add: Add
+      add_help: This menu helps you to add content
+  time: 
+    am: am
+    formats: 
+      default: "%a %b %d %H:%M:%S %Z %Y"
+      verb: "%d %b %y"
+      time: "%H:%M"
+      short1: "%d %B %Y"
+      only_second: "%S"
+      datetime: 
+        formats: 
+          default: "%Y-%m-%dT%H:%M:%S%Z"
+      short: time"%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+      long1: "%d %B %Y at %H:%M:%S"
+    pm: pm
+  date: 
+    order: 
+    - :year
+    - :month
+    - :day
+    abbr_day_names: 
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    formats: 
+      default: "%Y-%m-%d"
+      only_day: "%e"
+      short: "%e %b"
+      long: "%B %e, %Y"
+    month_names: 
+    - 
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    day_names: 
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    abbr_month_names: 
+    - 
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+
+  user: 
+    new: 
+      flash_notice: "User Successfully Created."
+      title: "Your Private Information"
+      add_user: "Add a New User"
+      flash_error: "There was Problem While Creating the User."
+    administration: 
+      user_management: "User management"
+      list_title: "Users list"
+      title: "Administration"
+      administrator: "Administrator"
+      workspace_management: "Workspace management"
+      website_management: "Website management"
+      folder_management: "Folders management"
+    forgot_password: 
+      flash_notice: "A link that allows you to change your password has been send by Mail."
+      title: "Password Reset Request"
+      back_to_login: "Back to Login"
+      flash_error: "There is no User with this Mail address."
+      password_label: "Enter your Password and a Reactivation Link will be sent to you by Mail."
+    edit: 
+      flash_notice: "Updated Successfully."
+      flash_error: "Updation Failed."
+    field: 
+      birth_date_label: "Date of birth"
+      login_hint: "Enter Login Details"
+      password_hint: "Leave Empty to Keep Old Password"
+      photo_label: "Photo"
+      login_label: "Login"
+      confirm_password_hint: "Leave Empty to Keep Old Password"
+      phone_hint: "Personal Telephone Number"
+      system_role_id_label: "System role"
+      newsletter_label: "Receive the newsletter?"
+      first_name_label: "First name"
+      results_per_page_label: "Results per page"
+      gender_label: "Gender"
+      confirm_password_label: "Confirm Password"
+      select_language_label: "Select language"
+      mobile_label: "Mobile"
+      location_hint: "Where are you?"
+      address_hint: "Enter your Full Address"
+      phone_label: "Phone"
+      edito_label: "Edito"
+      activity_label: "Activity"
+      mobile_hint: "Personal mobile Number"
+      layout_label: "Layout"
+      address_label: "Address"
+      last_name_label: "Last name"
+      middle_name_label: "Middle name"
+      full_name_label: "Full name"
+      password_label: "Password"
+      email_label: "Email"
+      nationality_label: "Nationality"
+      location_label: "Location"
+      profilable_type_label: "Profile type"
+      profilable_type_hint: "Choose the profile you want to be"
+      biography_label: "Biography"
+      biography_hint: "Enter a short presentation of yourself"
+      website_label: "Website"
+      website_hint: "Enter your website address"
+    reset_password: 
+      flash_notice: "Password has been Successfully Changed."
+      title: "Reset Password"
+      confirm_new_password: "Confirm New Password"
+      flash_error_link: "Invalid Link."
+      flash_error: "Password not Changed."
+      validate_this_password: "Validate Password"
+      new_password: "New Password"
+    session: 
+      flash_notice: "Logged in Successfully."
+      login_hint: "Enter Login Details"
+      password_hint: "Your password"
+      login_error: "Impossible to be connected with"
+      password_forgotten: "Password Forgotten"
+      login_label: "Login"
+      no_workspace_linked: "No workpace linked. Contact the administrator."
+      logout_notice: "You have been disconnected."
+      inscription: "Create an account"
+      flash_error: "Invalid Login or Password."
+      login_button: "Login"
+      password_label: "Password"
+      remember_me: "Remember me"
+    locking: 
+      lock_flash_notice: "User locked"
+      unlock_flash_notice: "User unlocked"
+      flash_error: "Error"
+    show: 
+      update_user: "Update Private Information"
+      title: "Private Information"
+  bookmark: 
+    new: 
+      title: "New Bookmark"
+    edit: 
+      title: "Edit Bookmark"
+    field: 
+      published_date_label: "Published Date"
+      author_label: "Author"
+      last_updated_label: "Last updated"
+      link_label: "Link"
+      copyright_label: "Copyright"
+      categories_label: "Categories"
+    show: 
+      title: "Show Publication"
+  article: 
+    new: 
+      automatic_date_field: "Automatic Date Field"
+      title: "Add a New Article"
+    edit: 
+      title: "Edit Article"
+    field: 
+      article_label: "Body"
+      add_new_file: "Add a New File"
+      article_hint: "Body of this article"
+      assosiated_file_label: "Associated File"
+  rating: 
+    index: 
+      title: "List of ratings"
+      link: "Ratings"
+  audio: 
+    new: 
+      title: "Add a New audio"
+    edit: 
+      title: "Edit audio"
+    field: 
+      audio_label: "Audio"
+  general:
+    field:
+      created_at: "Created at"
+      updated_at: "Updated at"
+    button: 
+      delete: "Delete"
+      search: "Search"
+      add: "Add"
+      download: "Download"
+      submit: "Submit"
+      send_request: "Send Request"
+      create_a_new_workspace: "Create a New Workspace"
+      cancel: "Cancel"
+      create: "Create"
+      create_and_continue: "Create and continue"
+      save: "Save"
+      send: "Send"
+      update: "Update"
+    common_message: 
+      404_error_header: "The page you were looking for doesn't exist."
+      404_error_message: "You may have mistyped the address or the page may have moved."
+      permission_denied: "Permission denied"
+      error_during_file_transfer: "Error occured during file transfer"
+      500_error_header: "We're sorry, but something went wrong."
+      file_size_must_be_between: "file size must be between {{min}} and {{max}} bytes"
+      500_error_message: "We've been notified about this issue and we'll take a look at it shortly."
+      must_be_set: "must be set"
+    language: 
+      es-ES: "Spanish(ESP)"
+      fr-FR: "French(FRA)"
+      en-US: "English(US)"
+    type: 
+      public: "Public"
+      closed: "Closed"
+      archived: "Archived"
+      authorized: "Authorized"
+    role: 
+      user: "User"
+      ws_admin: "Workspace administrator"
+      writer: "Writer"
+      superadmin: "Superadministrator"
+      site_manager: "Site manager"
+      reader: "Reader"
+      admin: "System administrator"
+      moderator: "Moderator"
+      co-admin: "Administrator"
+      artist: "Artist"
+      judge: "Judge"
+    txt: 
+      select_a_file: "Select a Link"
+      select_from_file: "Select from file system"
+      feed_item_importation_type: "Feed Items Imporation Types"
+    copyright: 
+      copyright_restriction: "Some fields can't be modified as this element is Copyright protected."
+    container:
+      workspace: "Workspace"
+      website: "Website"
+      folder: "Folder"
+    item: 
+      bookmark: "Bookmark"
+      audio: "Audio"
+      article: "Article"
+      advert: "Advert"
+      publication: "Publication"
+      feed_source: "RSS Feed"
+      newsletter: "Newsletter"
+      cms_file: "CMS File"
+      page: "Page"
+      image: "Image"
+      video: "Video"
+      group: "Group"
+      programme: "Programme"
+      artwork: "Artwork"
+      gallery: "Gallery"
+      exhibition: "Exhibition"
+      competition: "Competition"
+      user_group: "Group Show"
+    profile:
+      profile_base: Basic
+      profile_contact: Visitor
+      profile_artist: Artist
+    common_word: 
+      to1: "To"
+      from1: "From"
+      select_country: "Select country"
+      prev: "Previous"
+      unsubscribed: "unsubscribed"
+      of: "of"
+      by: "by"
+      and: "and"
+      all: "All"
+      found: "found"
+      Male: "Male"
+      none: "none"
+      captcha_field: "Enter the value on the image"
+      confirmation: "Are you sure ?"
+      last_connected: "Last connected"
+      role: "role"
+      Female: "Female"
+      Mr: "Mr."
+      here: "here"
+      no1: "no"
+      in: "in"
+      Miss: "Miss."
+      Ms: "Ms."
+      on1: "on"
+      subscribed: "subscribed"
+      select_all: "Select all"
+      next: "Next"
+      your: "your"
+      click: "click"
+      ajax_message_captcha_invalid: "The verification code is incorrect."
+      not_subscribed: "not subscribed"
+      state: "State"
+      with: "with"
+      yes1: "yes"
+      selected: "Selected"
+      remaining: "Remaining"
+    link: 
+      delete: "Delete"
+      edit: "Edit"
+      display: "Display"
+      add: "Add"
+      back_to_list: "Go back to the list"
+    menu: 
+      add: "Add"
+      add_help: "This menu helps you to add content"
+    object: 
+      user: "user"
+      workspace: "workspace"
+      item: "item"
+      comment: "comment"
+      contact: "contact"
+    layout: 
+      app_fat_menu: "App fat menu"
+      application: "Application"
+    notifications: 
+      list_models: "Watch Items :"
+      list_actions: "Send a notification when an item is:"
+      create: "created"
+      destroy: "deleted"
+      update: "updated"
+      link: "Notifications"
+  workspace: 
+    unsubscription: 
+      flash_notice: "Vous êtes désinscrit de cet espace de travail."
+      flash_error: "Vous n'avez pas été désinscrit de cet espace de travail."
+    new: 
+      flash_notice: "Workspace Created Successfully"
+      title: "Create a New Workspace"
+      add_user_text: "In order to add users to this workspace, you have first to save it to check the integrity of that workspace."
+      flash_error: "Workspace Creation Failed"
+    add_user: 
+      user_exist_alert: "This user is already selected"
+      name: "Name"
+      title: "Add a New User"
+      role: "Role"
+    edit: 
+      flash_notice: "Workspace Updated Successfully"
+      title: "Modifiy Workspace"
+      workspace_configuration: "Workspace Configuration"
+      manage_users_and_rights: "Manage Users and Rights"
+      available_ws_types: "Available workspace types"
+      flash_error: "Workspace Update Failed"
+      available_item_categories: "Available item categories"
+      associated_user: "Associated Users"
+      available_items: "Available Items"
+    type: 
+      public: "Public"
+      closed: "Closed"
+      archived: "Archived"
+      authorized: "Authorized"
+    field: 
+      logo_label: "Logo"
+      description_label: "Description"
+      title_label: "Title"
+      state_label: "Select Type of Workspace"
+    question: 
+      flash_notice: "Votre demande a bien été envoyée."
+      flash_error: "Votre demande n'a pu être envoyée."
+    subscription: 
+      flash_notice: "Vous êtes inscrit sur cet espace de travail."
+      flash_error: "Vous n'avez pas été inscrit sur cet espace de travail."
+    show: 
+      no_feed_items: "There is no feed item "
+      subscribe_to_newsletter: "subscribe to the newsletter"
+      manage_contacts: "manage workspace contacts"
+      title: "Workspace"
+      your_subscription: "Your Subscription"
+      unsubscribe_to_newsletter: "unsubscribe from the newsletter"
+      join_workspace: "subscribe as reader"
+      last_five_item: "Last Five Items"
+      leave_workspace: "leave the workspace"
+      other_actions: "Other actions"
+      request_to_workspace_administrator: "Request to the workspace administrator"
+      public_workspace: "Public Workspace"
+      request_to_workspace_administrator_txt1: "You can send an email to the workspace administrator filling this form below."
+    add_contacts: 
+      flash_notice: "Contacts are saved successfully"
+      title: "Assign contacts to"
+      available_contacts: "Available contactas"
+      current_contacts: "Assigned contacts"
+  mailer: 
+    common: 
+      signature: "The '{{who}}' crew"
+      greetings: "Regards."
+      thanks: "Thanks for your visit."
+    newsletter_template: 
+      unsubscribe: "To unsubscribe for this newsletter, click <a href='{{link}}' >here</a>"
+    signup_notification: 
+      account_created: "Your account has been created."
+      click_here: "Click on the following link to activate your account"
+      subject: "Account activation"
+      justification: "The activation allows us to control any abusive use of our website."
+    reset_notification: 
+      click_here: "Click on the following link to reset your password"
+      subject: "Reset password"
+      presentation: "{{who}}, we have been aware that you have forgotten your password on {{where}}."
+  workspace_contact: 
+    list: 
+      changed_state_flash_notice: "Selected contacts state has been changed to {{state}}"
+      remove_these_contacts_from_this_worksapce: "Remove these contacts from this workspace"
+      delete_person_alert_confirm: "This will delete the person. Use remove if you just want to remove it from this workspace. Are you sure?"
+      change_state_to: "Change state to"
+      action: "Action"
+      order_by_time: "Order by time"
+      removed_contact_flash_notice: "Selected contacts are successfully removed from this workspace"
+      order_by_email: "Order by email"
+      linked_to_group_flash_notice: "Selected contacts are successfully linked to group {{name}}"
+      no_contacts: "No contacts in this workspace"
+      link_these_contacts_to_group: "Link these contacts to the group"
+      all_contacts: "All the contacts"
+      do_the_action: "Do the action"
+      non_linked_to_a_group: "Non-linked to a group"
+  publication: 
+    new: 
+      title: "Add a New Publication"
+      automatic_date_field: "The Fields Publication Date and Last Update are Managed Directly by the System."
+    edit: 
+      title: "Edit publication"
+    field: 
+      published_date_label: "Published date"
+      author_label: "Author"
+      ssosiated_file_label: "Associated file"
+      last_updated_label: "Last updated"
+      link_label: "Link"
+      copyright_label: "Copyright"
+      categories_label: "Categories"
+  website_contact: 
+    new: 
+      flash_notice: "Contact successfully created"
+      title: "New website contact"
+      flash_error: "There was problem while creating the website contact"
+      link: "Add new website contact"
+    edit: 
+      title: "Modifiy website contact"
+    field: 
+      last_name_hint: "Contact last name"
+      first_name_hint: "Contact first name"
+      phone_hint: "Contact phone number"
+      from_email_hint: "Contact email"
+      first_name_label: "First name"
+      email_body_label: "Body"
+      phone_label: "Phone number"
+      email_subject_label: "Subject"
+      last_name_label: "Last name"
+      receive_newsletter_label: "Receive newsletters?"
+      from_email_label: "Email"
+    destroy: 
+      flash_notice: "Website contact sucessfully deleted"
+      delete_confirm: "This will delete the website contact. Use remove if you just want to remove it from this workspace. Are you sure?"
+      flash_error: "Website contact deletion Failed"
+    show: 
+      title: "Website contact details"
+      website: "Website"
+      sent_on: "Sent on"
+  feed_source: 
+    chek_feed: 
+      flash_notice_already_subscribed: "Already Subscribed."
+      flash_notice_blank: "Give a Value for this Feed."
+    new: 
+      title: "New RSS Feed"
+      valid_feed: "Feed url validation is done"
+      automatic_date_field: "Automatic Date Field"
+      flash_notice_valid: "The RSS feed has given these Details, Validate them to Subscribe to this Feed."
+      flash_notice_invalid: "Invalid Feed"
+    edit: 
+      title: "Edit RSS feed"
+    field: 
+      url_label: "URL"
+      author_label: "Author"
+      url_hint: "Enter url and check for validation"
+      last_updated_label: "Last updated"
+      copyright_label: "Copyright"
+    show: 
+      add_bookmark: "Import to Bookmarks"
+      title: "Show Feed"
+      add_publication: "Import to Publications"
+      print_item: "Print Items"
+    what_to_do: 
+      new_rss_feed_option_two: "2. Activate Predefined Feed"
+      new_rss_feed_create: "Create"
+      new_rss_feed_check: "Check this Feed"
+      new_rss_feed_option_three: "3. Create Personnal Feed"
+      new_rss_feed_option_one: "1. Add an Existing Feed"
+  newsletter: 
+    new: 
+      title: "Add Newsletter"
+    edit: 
+      title: "Edit Newsletter"
+    field: 
+      body_label: "Body"
+      from_email_hint: "From email address"
+      subject_label: "Subject"
+      body_hint: "Body of this Newsletter"
+      subject_hint: "Email subject"
+      from_email_label: "From email"
+    send_newsletter: 
+      queued_newsletter_flash_notice: "Newsletter in queue"
+      queued_newsletter_flash_error: "Newsletter not queued"
+      sent_to: "Sent to"
+      send_newsletter: "Send Newsletter"
+      send_newsletter_to_user_list: "Send this Newsletter to user list"
+    show: 
+      not_already_sent: "This newsletter has not been send to any group yet."
+    unsubscribe: 
+      flash_notice: "Unsubscribed successfully."
+  cms_file: 
+    new: 
+      title: "Add a New file"
+    edit: 
+      title: "Edit file"
+    field: 
+      file_label: "File"
+  item: 
+    new:
+      title: "{{item_type}} creation for {{user}}"
+      flash_notice: "Created Successfully"
+      state_info: "Don't forget that if you want to access ths item through FCKEditor, you need to set the 'Workflow' as 'published'."
+      flash_error: "Creation Failed"
+    edit:
+      title: "{{item_type}} edition"
+      flash_notice: "Updated Successfully"
+      flash_error: "Updation Failed"
+    field: 
+      add_keyword: "Add a keyword"
+      keyword_hint: "Specified keywords for searching that item"
+      title_hint: "Title of Item"
+      title_label: "Title"
+      description_label: "Description"
+      keyword_label: "Keywords"
+      state_hint: "Specify the state of the item"
+      add_tag: "Add a tag"
+      state_label: "Workflow"
+      description_hint: "Description of Item"
+    destroy: 
+      flash_notice: "Deleted Sucessfully"
+      delete_conform: "Are you sure you want to delete this item?"
+      flash_error: "Deletion Failed"
+    show: 
+      get_in_another_format: "Other format"
+      associated_workspace: "Associated workspace:"
+      associated_folder: "Associated folders"
+      associated_website: "Associated websites"
+    index: 
+      no_item: "There is no item of this type."
+    common_word: 
+      invalid_type_alert: "Please upload file only allowed types( {{types}}). Select a new file to upload and submit again."
+      rate: "Rate"
+      tag: "Tag"
+      no_item_types: "No item types are available."
+      output_formate: "Output Format"
+      list_empty: "That list is empty."
+      summary: "Summary"
+      select_at_least_one_workspace: "Select at least one workspace"
+      corrupted_file: "Corrupted File"
+      comment: "Comment(s)"
+  people: 
+    new: 
+      title: "New Person"
+    import_people: 
+      unsaved_records_flash_error2: "email ids. Because of invalid email formate or those are already exist."
+      note_label: "Note"
+      wrong_file_flash_error: "Please select .csv file only."
+      select_csv_file_label: "Select a CSV File"
+      title_order_flash_error: "Please read <b>Note</b> and provide proper csv, first row is titles and order should be as shown in Note."
+      get_empty_csv_file: "Get empty csv file"
+      csv_parser_error: "There was an error while parsing your CSV file"
+      saved_records_flash_notice: "Saved records successfully"
+      note_description: "Please upload csv file and first row of csv file showld be titles(must be [First name, Last name, Email, Gender, Primary phone, Mobile phone, Fax, Street, City, Postal code, Country, Company, Web page, Job title, Notes] only and email should be mandatory,"
+      label: "Import contacts from csv file"
+      unsaved_records_flash_error1: "Failed to save records which has"
+    field: 
+      date_of_birth_label: "Date of birth"
+      newsletter_lable: "Receive newsletters?"
+      postal_code_label: "Postal code"
+      job_title_label: "Job title"
+      country_label: "Country"
+      fax_label: "Fax"
+      salutation_label: "Salutation"
+      web_page_label: "Web page"
+      first_name_label: "First name"
+      notes_label: "Notes"
+      city_label: "City"
+      gender_label: "Gender"
+      mobile_phone_label: "Mobile phone"
+      street_label: "Street"
+      company_label: "Company"
+      last_name_label: "Last name"
+      origin_label: "Origin"
+      primary_phone_label: "Primary phone"
+      email_label: "E-mail"
+    index: 
+      add_new_person: "Add a new person"
+      name: "Name"
+      imported_from_csv: "Imported from CSV"
+      title: "People"
+      delete_confirm: "Are you sure!"
+      export_people_to_csv: "Export people to csv"
+      import_people_from_csv: "Import people from csv"
+      subscribed_on: "Subscribed on"
+      export: "Export"
+      front_contacts: "Front contacts"
+      created_from_back: "Created from back"
+  page: 
+    new: 
+      title: "Add a New Page"
+      body_after_creation: "The body of the page will be accessible after the creation."
+    edit: 
+      title: "Edit the Page"
+      no_website_linked: "There is no website linked to the choosen workspace, link one in order to edit your page."
+      more_than_one_ws_linked: "There are more than one workspace linked to this page, it will make conflict with fronts."
+    field: 
+      page_title_hint: "Enter the HTML title for this page"
+      body_label: "Body"
+      type_page_label: "Type of the page"
+      title_hint: "Choose properly the title of your page because you will not be able to change it after creation."
+      title_label: "Title"
+      page_title_label: "Title of the page"
+      body_hint: "Body of this page"
+  datetime: 
+    distance_in_words: 
+      default: "%d %B %Y at %H:%M:%S"
+      one_minute_ago: "1 minute ago"
+      x_days_ago: "{{count}} days ago"
+      x_minutes_ago: "{{count}} minutes ago"
+      one_day_ago: "1 day ago"
+      less_than_a_minute: "less than a minute ago"
+      one_hour_ago: "1 hour ago"
+      x_hours_ago: "{{count}} hours ago"
+  home: 
+    index: 
+      latest_workspace: "Latest Workspaces"
+      top_five_item: "Top Five Items"
+      best_rated: "Best Rated"
+      title: "My Workspaces"
+      latest_user: "Latest Users"
+      latest_feed: "Latest Feeds"
+      most_commented: "Most Commented"
+      latest_activity: "Latest Activities"
+      show_my_feeds: "Show my RSS feeds"
+      my_personnal_information: "My Personnal Information"
+      feed_item: "Feed Items"
+  image: 
+    new: 
+      title: "Add a New image"
+    edit: 
+      title: "Edit Image"
+    field: 
+      image_label: "Image"
+  video: 
+    new: 
+      title: "Add a New Video"
+    edit: 
+      title: "Edit video"
+    field: 
+      video_label: "Video"
+  comment: 
+    add_comment: 
+      ajax_message_comment_submited: "Your comment has been submited to the Administrator, you will receive an email for its publication."
+      ajax_message_comment_published: "Your comment has been added successfully."
+      button_publish: "Publish my comment"
+    edit: 
+      flash_notice: "Comment successfully updated"
+      title: "Comment edition"
+      flash_error: "Error during update"
+    field: 
+      text: "Body"
+      state: "State"
+    index: 
+      title: "Comments list"
+    state: 
+      all: "All"
+      validate: "Validate"
+      validated: "Validated"
+      rejected: "Rejected"
+      reject: "Reject"
+      posted: "Posted"
+  group: 
+    new: 
+      no_workspace_no_contacts: "As the workspace is not already determinated, no contacts are available. Edit the workspace after creation to get it right."
+      title: "New Group"
+    edit: 
+      title: "Edit Group"
+    field: 
+      available_people_label: "Available People"
+      people_label: "People"
+      assigned_people_label: "Assigned People"
+    show: 
+      export_to_csv: "Export this group to CSV file"
+    index: 
+      go_to_contacts: "See all the contacts of that workspace"
+      title: "Groups list"
+      add_new_group: "Add a new group"
+      members: "Members"
+    contacts: 
+      select_contacts: "Select your personnal contacts accessible for that workspace"
+      title: "Workspace contacts management"
+      add_people: "Add a new person as contact"
+    subscribe: 
+      subscribe_flash_error: "Impossible to subscribe"
+      unsubscribe_flash_error: "Impossible to unsubscribe"
+      subscribe_flash_notice: "Subscribed to the newsletter of that workspace"
+      unsubscribe_flash_notice: "Your subscription to the newsletter of that workspace has been removed."
+  layout: 
+    general: 
+      other: "Other"
+    search: 
+      filter_viewed_number: "Number of view"
+      date_alert: "From date must be less than To date"
+      displaying: "Displaying"
+      result: "Result"
+      filter_comments_number: "Number of comments"
+      filter_email: "Email"
+      filter_rates_average: "Rate"
+      filter_asc: "Ascending order"
+      author_label: "Author"
+      advance_search: "Advanced Search"
+      filter_desc: "Descending order"
+      title_label: "Title"
+      filter_login: "Login"
+      search_period_label: "Search period"
+      filter_created_at: "Creation date"
+      search_label: "Search"
+      order_by: "Order by"
+      you_have_searched_for: "You Searched"
+      your_search_result: "Your Search Result"
+      information_on_searched_item: "Information on Searched Items"
+      type_label: "Type"
+      no_result: "No results found with your criterions."
+      item_category: "Item types"
+      filter_title: "Title"
+    popup: 
+      page_title: "Pop up for {{what}}"
+      filter_by_workspace: "Filter by workspace"
+      filter_by_item_type: "Filter by type"
+      display_all_picure: "Display all the pictures"
+      filter_help: "This menu helps you to filter the list of item displayed above."
+    application: 
+      change_language: "Change language"
+      no_add_content: "You need to create a container or to have rights inside one before to add content."
+      new_workspace: "New Workspace"
+      workspaces: "Workspaces"
+      administration: "Administration"
+      title: "Blank Engine"
+      superadministration: "Superadministration"
+      logout: "Logout"
+      workspaces_selection: "Select Container"
+      my_account: "My account"
+      my_data: "My data"
+      public_data: "Public data"
+      all_content: "All accessible content"
+      public_workspace: "Public workspace"
+      calendar: "Calendar"
+      my_private_workspace: "My private workspace"
+      advanced_search: "Advanced Search"
+      add_items: "Add Items"
+      add_containers: "Add Containers"
+      add_people: "Add People"
+      personal_contacts: "Personal contacts"
+      content: "Content"
+      users: "Users"
+      home_page: "Home page"
+      all_elements: "All Elements"
+      welcome_message: "Welcome"
+    menu: 
+      search: "Search"
+      add: "Add"
+      configure_help: "This menu helps you to change BA settings"
+      display: "Display"
+      configure: "Configure"
+      search_help: "Can't find what you searching for? Use advanced search"
+      content_help: "This menu let you access to all your content"
+      content: "Content"
+      other: "Other"
+      add_help: "This menu helps you to add content"
+    footer: 
+      faq: "FAQ"
+      site_map: "Site Map"
+      contact: "Contact"

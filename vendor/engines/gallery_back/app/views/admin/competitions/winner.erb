@@ -1,0 +1,8 @@
+<div  style="padding-left:200px;">
+<h3>This Are  Latest Five Winners For This competition Selected By Admin/judges </h3>
+</div>
+<div  style="padding-left:200px;">
+<%for  cu in @competitionuser %>
+<%=render :partial=>"artwork_show" ,:object=>cu%>
+<%end%>
+</div>

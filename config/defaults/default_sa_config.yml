@@ -1,0 +1,34 @@
+---
+sa_items: []
+sa_containers: []
+sa_profiles:
+- !str
+  str: profile_base
+  "@_rails_html_safe": false
+sa_languages:
+- en-US
+sa_default_language: en-US
+
+sa_feed_items_importation_types: []
+
+sa_ws_types: []
+
+sa_item_categories: []
+
+sa_allowed_free_user_creation: "false"
+sa_automatic_private_workspace: "true"
+sa_mandatory_user_activation: "true"
+
+sa_application_name:
+sa_application_url:
+sa_favicon_url: /config_files/favicon.ico
+sa_logo_url:
+sa_per_page_default: 10
+sa_default_layout: "app_fat_menu"
+sa_exception_notifier_activated: "false"
+sa_contact_email: ""
+
+sa_layouts: []
+sa_exception_followers_email: []
+sa_default_language: "en-US"
+

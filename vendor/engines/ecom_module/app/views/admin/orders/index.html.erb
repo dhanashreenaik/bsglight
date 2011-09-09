@@ -1,0 +1,25 @@
+PAYMENTS LIST :
+
+<table>
+  <tr>
+    <th>Invoice</th>
+    <th>Client</th>
+    <th>Amount in cents</th>
+    <th>State</th>
+    <th>Updated at</th>
+  </tr>
+
+  <% Payment.all.each do |p| %>
+  <tr>
+    <th><%= p.invoice_id %></th>
+    <th><%= p.invoice.client.profile.full_name if p.invoice %></th>
+    <th><%= p.amount_in_cents %></th>
+    <th><%= p.state %></th>
+    <th><%= I18n.l(p.updated_at, :format => :short) %></th>
+    <th>
+      <%#= link_to('Accept', update_state_admin_timing_path(t)+"?new_state=accepted") %>
+      <%#= link_to('Refuse', update_state_admin_timing_path(t)+"?new_state=refused")  %>
+    </th>
+  </tr>
+  <% end %>
+</table>

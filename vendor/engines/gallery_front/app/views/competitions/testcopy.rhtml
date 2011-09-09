@@ -1,0 +1,128 @@
+
+
+ 
+
+
+<style>
+    .changecolorgray{
+        color: #444444;
+        line-height: 15px;
+  }
+</style>
+<script>
+  function checkthebiographyfield(i){
+   /*  alert('m not get called here');
+    if(document.getElementById("biography").value.length == 0 )
+      {
+        alert("please enter biography");
+        return false;
+      }
+      else{
+       
+        return true;
+      }
+     */ 
+     document.getElementById("show_ajax_request"+i).style.display='block';
+  }
+  
+  
+</script>  
+<%title_message_array = ['First Work','Second Work',' Third Work','Fourth Work','Fifth Work','Sixth Work','Seventh Work','Eight Work','Ninth Work','Tenth Work']%>
+<!--
+  <div class="changecolorgray">
+    <%#=link_to_remote "Add Artwork", :update => "",
+           :url => {:action => "add_the_artwork",:competition_id => competition_id,:artwork_count=>artwork_count ,:order_id=>order_id}
+    %>
+ </div>-->
+ 
+ <div id="messageforimageuploaded" style="padding-top:0px;margin-top:-8px">
+<h3>
+<%if !messageforimageuploaded.blank?%>
+  <%=messageforimageuploaded%>
+<%end%>
+</h3>   
+ </div>
+ 
+<%if i == total_entry%>
+<h2> Biography
+ </h2>
+<br/>
+    <form action="upload_the_biography" method="post"    id="add_the_artwork_to_competition_biography"  >  
+     <textarea rows="13" cols="46" name="biography" id="biography">
+        please write your biography
+     </textarea>
+      <%=hidden_field_tag "total_entry",total_entry%>    
+      <%=hidden_field_tag "order_id",order_id%>  
+       <%= submit_to_remote 'create_btn', 'Proceed', :url => { :action => 'upload_the_biography' },:before=>"checkthebiographyfield(#{i})" %>
+   </form>  
+ <div style="display: none;padding-top:2px;" id="show_ajax_request<%=i%>">
+                                   <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+                       </div>
+<script>
+  calleditbrowseimage('<%=com_id%>','<%=order_id%>');
+</script>  
+ 
+<%else%>
+   
+<div  class="inputfont">
+      <form action="upload_the_artwork_to_competition" method="post"  enctype = "multipart/form-data" onsubmit="return  Checkfilescomp('add_the_artwork_to_competition','show_ajax_request<%=i%>','competitions_user_editionnumber','competitions_user_editionname')" id="add_the_artwork_to_competition" target="upload_frame" >  
+              <%=hidden_field_tag "order_id",order_id%>    
+                 <div class="changecolorgray">
+                      Title (<%=title_message_array[i]%>)
+                 </div> 
+                  <input  name="competitions_user[worktitle]" id="field-28b2641aed510f0"  value="" type="text" style="width:375px; height: 14px;"/>
+                   <div class="changecolorgray">
+                            Medium
+                     </div>   
+                                <input  name="competitions_user[workmedium]" id="field-35aefdde6159fe0"  value="" type="text" style="width:375px;height:14px;"/> 
+                     <div class="changecolorgray">
+                            	<span style="font-size: 10px;margin-right:85px;">width (cm)   </span>
+                                <span style="font-size: 10px;margin-right:75px;">height (cm)  </span>  
+                                <span style="font-size: 10px;">depth (cm) - if 3d work  </span>  
+                     </div>  	
+                     <font style="color:#444444">
+                      	<input  name="competitions_user[worksize1]" id="field-c65f89902a9847f" size="10" value="" type="text" style="width: 113px;height:14px;"/>
+                            x
+                        <input  name="competitions_user[worksize2]" id="field-c65f89902a9847g" size="10" value="" type="text" style="width: 113px;height:14px;"/>
+                            x
+                         <input  name="competitions_user[worksize3]" id="field-c65f89902a9847h" size="10" value="" type="text" style="width: 113px;height:14px;"/> 
+                      </font>
+                      <div class="changecolorgray"> 
+                          <span style="padding-right:100px">
+                               Price
+                           </span> 
+                          <span style="padding-right:75px;padding-left:8px;">
+                               Edition From
+                          </span> 
+                        <span>
+                               Edition Number
+                          </span> 
+                        
+                      </div> 
+                           <input  name="competitions_user[workprice]" id="field-a94ac5a259d7675" style="width: 113px;height: 14px;" value="" type="text"/>
+                           <input  name="competitions_user[editionname]" id="competitions_user_editionname" size="40" value="" type="text" style="width: 105px;height: 14px;margin-left:10px;"/>
+   <span style="padding-right:3px;margin-left:3px;color:#444444">of</span><input  name="competitions_user[editionnumber]" id="competitions_user_editionnumber" size="40" value="" type="text" style="width: 113px;height: 14px;"/>
+                        <div class="changecolorgray">    
+                        	 Image 
+                    	 </div>
+                      	 <input  name="competitions_user[workimage]" id="field-7a24db800403e5f" type="file" size="26"/>
+                       <div style="float:right;padding-right:80px;">  
+                         <%= submit_tag 'Upload'%>
+                       </div> 
+                       <div style="display: none;padding-top:2px;" id="show_ajax_request<%=i%>">
+                                   <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+                       </div>  
+                         
+                      </div>
+                      <input type="hidden" name="competitionuserid" id="competitionuserid" value="<%=order_id%>"/>
+        </form>
+        
+      
+                
+                  
+</div>
+<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;display:none"></iframe>
+<%end%>
+
+ 
+  

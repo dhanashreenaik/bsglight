@@ -1,0 +1,238 @@
+
+<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']%>
+<%size_array = ['fworksize','sworksize','tworksize','foworksize','fiworksize','siworksize','seworksize','eworksize','nworksize','teworksize']%>
+<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']%>
+<%medium_array = ['fworkmedium','sworkmedium','tworkmedium','foworkmedium','fiworkmedium','siworkmedium','seworkmedium','eworkmedium','nworkmedium','teworkmedium']%>
+<%price_array = ['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']%>
+<%imgname=[]%>       
+<%sizename=[]%>
+<%titlename=[]%>
+<%mediumname=[]%>
+<%pricename=[]%> 
+<script>
+  ss = new slideshow("ss");
+<% if @current_user.has_system_role('admin') || @current_user.has_system_role('judge') || @current_object.state.include?('publish') || @current_user.login =="superadmin" %>
+      <%if @artworks_competitions.first %>
+        
+	    <% @artworks_competitions.each do |a| %>
+                 <%if  a.competitions_user!=nil%>
+                      <%if  (a.competitions_user.send a.image_name) != nil %>  
+                        
+                           <%if  (a.competitions_user.send a.image_name).blank? == false%>
+                                <%if a.competitions_user.competition.state == "final_published"%>
+                                  <%winnerselectlink = "<a onclick='sendwinnerrequest(#{a.id});return false;'  href='#'>Winner</a>"%>
+                                <%else%>
+                                  <%winnerselectlink = ""%>
+                                <%end%>
+                              
+                                s = new slide();
+                                s.src =  '<%="/uploaded_files/competition/artwork/#{a.id}/medium/#{a.avatar_file_name}"%>';
+                                s.link = '<%="/uploaded_files/competition/artwork/#{a.id}/medium/#{a.avatar_file_name}"%>';
+                                s.slideshowid = '<%=a.id%>';
+                                s.title = "<%=a.competitions_user.send(title_array[image_array.index(a.image_name)])%>";
+                                s.text = "<%=a.competitions_user.user.profile.first_name%>  <%=a.competitions_user.user.profile.last_name%></br>"+
+                                  "<!--Size--> <%=a.competitions_user.send(size_array[image_array.index(a.image_name)])%><br/>" +
+                                  "<%=a.competitions_user.send(medium_array[image_array.index(a.image_name)])%> <br/>" + 
+                                  "<!--price-->  <%=a.competitions_user.send(price_array[image_array.index(a.image_name)]);%><br/>"+
+                                  "<a onclick='sendselectrequest(<%=a.id%>);return false;' href='#'>select</a> | "+
+                                  "<a onclick='maysendselectrequest(<%=a.id%>);return false;' href='#'>Maybe</a> | "+
+                                  "<a onclick='sendunselectrequest(<%=a.id%>);return false;'  href='#'>Unselect</a> |"+
+                                  <%#if a.state=="delete"%>
+                                 "<a onclick='senddeleterequest(<%=a.id%><%#a.destroy%>);return false;'  href='#'>Delete</a>"+
+                                 <%#end%>
+                                   
+                                  "|<%=winnerselectlink%>"
+                                
+                                ss.add_slide(s);
+               
+                          <%end%>       
+		      <%end%> 		
+                 <%end%>
+            <%end%>       
+      <%end%>        
+ <%end%>   
+for (var i=0; i < ss.slides.length; i++) {
+
+  s = ss.slides[i];
+  s.target = "ss_popup";
+  s.attr = "width=600,height=600,resizable=yes,scrollbars=yes";
+
+}
+function sendselectrequest(selectedid){
+  document.getElementById('changemystatebefore'+selectedid).innerHTML='state selected';
+  showhidediv(selectedid)
+  jQuery.ajax({data:'', error:function(request){jQuery('#error').html(request.responseText);}, success:function(request){jQuery('#').html(request);}, type:'get', url:'/admin/artworks_competitions/'+selectedid+'/update_state?state=selected'}); return false;
+  return false;
+}
+function maysendselectrequest(selectedid){
+  document.getElementById('changemystatebefore'+selectedid).innerHTML='state maybe';
+  showhidediv(selectedid)
+  jQuery.ajax({data:'', error:function(request){jQuery('#error').html(request.responseText);}, success:function(request){jQuery('#').html(request);}, type:'get', url:'/admin/artworks_competitions/'+selectedid+'/update_state?state=maybe'}); return false;
+  return false;
+}
+function sendunselectrequest(selectedid){
+  document.getElementById('changemystatebefore'+selectedid).innerHTML='state unselect';
+  showhidediv(selectedid)
+  jQuery.ajax({data:'', error:function(request){jQuery('#error').html(request.responseText);}, success:function(request){jQuery('#').html(request);}, type:'get', url:'/admin/artworks_competitions/'+selectedid+'/update_state?state=unselected'}); return false;
+  return false;
+}
+
+function sendwinnerrequest(selectedid){
+  document.getElementById('changemystatebefore'+selectedid).innerHTML='state winner';
+  showhidediv(selectedid)
+  jQuery.ajax({data:'', error:function(request){jQuery('#error').html(request.responseText);}, success:function(request){jQuery('#').html(request);}, type:'get', url:'/admin/artworks_competitions/'+selectedid+'/update_state?state=winner'}); return false;
+  return false;
+}
+
+function senddeleterequest(selectedid){
+  document.getElementById('changemystatebefore'+selectedid).innerHTML='state delete';
+  showhidediv(selectedid)
+  jQuery.ajax({data:'', error:function(request){jQuery('#error').html(request.responseText);}, success:function(request){jQuery('#').html(request);}, type:'get', url:'/admin/artworks_competitions/'+selectedid+'/update_state?state=delete'}); return false;
+  return false;
+
+
+}
+
+
+
+</script>
+
+
+
+
+ <%if !@artworks_competitions.blank?%>
+
+<DIV ID="slideshow" style="padding:10px;background-color:#E5E5E5;">
+
+<FORM ID="ss_form" NAME="ss_form" ACTION="" METHOD="GET">
+
+<DIV ID="ss_controls">
+
+<!--<A ID="ss_start" HREF="javascript:ss.next();ss.play()"><SPAN>start</SPAN></A>-->
+
+<!--<A ID="ss_stop" HREF="javascript:ss.pause()"><SPAN>stop</SPAN></A>-->
+
+<!--<A ID="ss_view" HREF="javascript:ss.hotlink()"><SPAN>view</SPAN></A>-->
+
+<A ID="ss_prev" HREF="javascript:ss.previous()"><SPAN>Previous</SPAN></A>
+
+<!--<A ID="ss_random" HREF="javascript:ss.goto_random_slide()"><SPAN>random</SPAN></A>-->
+
+<A ID="ss_next" HREF="javascript:ss.next()" style="float:right"><SPAN>Next</SPAN></A>
+
+<!--
+The following select list will be modified with the slide titles.
+-->
+<SELECT ID="ss_select" NAME="ss_select" ONCHANGE="ss.goto_slide(this.selectedIndex)" style="margin-bottom: 2px;margin-left: 6%;width: 484px;display:none;">
+  <OPTION>Welcome to the slideshow!
+  <OPTION>
+  <OPTION>
+  <OPTION>
+  <OPTION>
+</SELECT>
+
+</DIV>
+
+<DIV ID="ss_img_div" style=" width: 657px;">
+
+<A ID="ss_img_link" HREF="javascript:ss.hotlink()" style=""><IMG
+ID="ss_img" NAME="ss_img" 
+src="/images/blank-img.png"
+ALT="Slideshow image" style="display:block"></A>
+
+</DIV>
+
+<DIV ID="ss_text" style="text-align:center">
+  
+<SCRIPT type="text/javascript">
+document.write('<TEXTAREA ID="ss_textarea" NAME="ss_textarea" ROWS="6" COLS="40" WRAP="virtual"><\/TEXTAREA>\n');
+ss.textarea = document.ss_form.ss_textarea;
+</SCRIPT>
+
+</DIV>
+<% if @current_user.has_system_role('admin') || @current_user.has_system_role('judge') || @current_object.state.include?('publish') || @current_user.login =="superadmin" %>
+      <%if @artworks_competitions.first %>
+	    <% @artworks_competitions.each do |a| %>
+                 <%if  a.competitions_user!=nil%>
+                      <%if  (a.competitions_user.send a.image_name) != nil %>  
+                           <%if  (a.competitions_user.send a.image_name).blank? == false%>
+                              <p id='changemystatebefore<%=a.id%>' style="display:none;text-align:center">State  <%= a.state %></p>
+                            <%end%>
+                      <%end%>        
+                 <%end%>             
+            <%end%>                  
+      <%end%>                        
+<%end%>                              
+</FORM>
+
+</DIV>
+<%end%>
+<SCRIPT TYPE="text/javascript">
+
+
+// Finish defining and activating the slideshow
+
+// Set up the select list with the slide titles
+function config_ss_select() {
+  var selectlist = document.ss_form.ss_select;
+  selectlist.options.length = 0;
+  for (var i = 0; i < ss.slides.length; i++) {
+    selectlist.options[i] = new Option();
+    selectlist.options[i].text = (i + 1) + '. ' + ss.slides[i].title;
+  }
+  selectlist.selectedIndex = ss.current;
+}
+
+// If you want some code to be called before or
+// after the slide is updated, define the functions here
+
+ss.pre_update_hook = function() {
+  return;
+}
+
+ss.post_update_hook = function() {
+  // For the select list with the slide titles,
+  // set the selected item to the current slide
+  document.ss_form.ss_select.selectedIndex = this.current;
+  return;
+}
+
+if (document.images) {
+
+  // Tell the slideshow which image object to use
+  ss.image = document.images.ss_img;
+
+  //ss.image.style.width = "50px";
+  //alert(ss.image.offsetWidth);
+  //alert(ss.image.clientWidth);
+
+  
+
+
+
+
+
+  // Tell the slideshow the ID of the element
+  // that will contain the text for the slide
+  ss.textid = "ss_text";
+
+  // Randomize the slideshow?
+  // ss.shuffle();
+
+  // Set up the select list with the slide titles
+  config_ss_select();
+
+  // Update the image and the text for the slideshow
+  ss.update();
+
+  // Auto-play the slideshow
+  //ss.play();
+}
+
+
+//-->
+</SCRIPT>
+<div>
+<!--<a href="javascript:location.reload(true)">Refresh this page To See The Changed status of artworks</a>-->
+</div>
+

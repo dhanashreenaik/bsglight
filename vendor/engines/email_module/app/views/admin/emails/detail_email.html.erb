@@ -1,0 +1,93 @@
+<div style="border: 1px solid greay;margin:10px;">
+	<%= link_to 'Inbox',        inbox_admin_emails_path(:profile_id => current_user.profile.id) ,:style=>"color:#f79646"%>
+</div>
+<div style="border: 1px solid greay;margin:10px;">
+	<%= link_to 'Compose Mail', compose_mail_admin_emails_path  ,:style=>"color:#f79646"%>
+</div>
+<div style="border: 1px solid greay;margin:10px;">
+	<%= link_to  'Sent',        "/admin/emails/sent_mail/#{current_user.profile.id}" , :style=>"color:#f79646"%>  
+</div>   
+<%makereplayid = @detail_email.id%>
+<%makereplay = @detail_email.frommail%>
+<%maksubject = @detail_email.args[1]%>
+<%makbody = @detail_email.args[2]%>
+<%maildate = @detail_email.created_at.strftime("%y-%m-%d")%>
+
+<div style="border: 1px solid greay;padding-top:30px;margin:10px;" >
+	<h3>Detail Mail</h3>
+</div>
+		<div style="">
+			<span style="padding-left:10px;">
+				To:-  <%=@detail_email.tomail%>
+			</span>
+			<span style="padding-left:10px;">
+				From:-  <%=@detail_email.frommail%>
+			</span>
+			<span style="padding-left:10px;">
+				Subject:-  <%= @detail_email.args[1]%>
+			</span>
+		</div>
+		<div style="padding-left:10px;">
+			Body:-
+		</div>	 
+		<div style="padding-left:70px;margin:2px;">			
+				<%= @detail_email.args[2]%>
+		</div>
+		<%if !@replay_email.blank?%>
+	  			<div> Replied Mail
+	  			</div>	
+		<%end%>
+<%if !@replay_email.blank?%>
+     	<%@replay_email.each do |rmd|%>
+			 <%rmd.each do |rm|%>     	
+				<div>
+						<span style="padding-left:10px;">
+							To <%=rm.tomail%>
+						</span>
+						<span style="padding-left:10px;">
+							From <%=rm.frommail%>
+						</span>
+						<span style="padding-left:10px;">
+							Subject	<%= link_to rm.args[1] ,"/admin/emails/detail_mail/#{rm.id}", :style=>"color:#f79646"%>
+						</span>
+						<%if @replay.include? rm.id%>
+							<span style="padding-left:10px;">
+								Replied
+							</span>	
+						<%else%>
+							<span style="padding-left:10px;">
+							</span>												
+						<%end%>
+						<span style="padding-left:10px;">
+							<a href="/admin/emails/delete_email/<%=rm.id%>">Delete Email</a>
+						</span>
+						<%#makereplayid=rm.id%>
+						<%#makereplay = rm.frommail%>
+						<%#maksubject = rm.args[1]%>
+				</div>
+			  <%end%>	
+     	<%end%>	
+<%end%>
+<%if makereplay != current_user.profile.email_address%>
+	<a href="#" onclick="document.getElementById('replytothisemail').style.display='block'"  style="color:#f79646">Reply</a>
+<%end%>
+<div id="replytothisemail" style="display:none;height:600px;width:600px;">
+	<form action="/admin/emails/reply_email/<%=makereplayid%>" method="post">
+         To:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=text_field "email","tomail",:value=>"#{makereplay}"%><br/><br/>
+		   Subject:-<%=text_field "email","subject",:value=>maksubject%><br/>
+			Body:-
+			<div style="padding-left:55px;">			
+				<%#=text_area "email","body",:class => "mceEditor" ,:id=>"mytinamice",:cols=>60,:rows=>20%>
+				<textarea cols="60" rows="20" id="mytinamice" name="email[body]" class="mceEditor">
+						Mail On <%=maildate%>			       
+  					<%=makbody%>
+      		</textarea>
+			</div>
+         <div style="padding-left:60px;">			
+				<%=submit_tag "Submit" ,:style=>"width:100px;padding:10px;margin:10px;"%>
+			</div>
+	</form>
+<a href="#" onclick="document.getElementById('replytothisemail').style.display='none'">Hide</a>
+</div>
+
+

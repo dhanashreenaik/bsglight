@@ -1,0 +1,22 @@
+--- 
+sa_mailer_port: !str 
+  str: "587"
+  "@_rails_html_safe": false
+sa_mailer_authentication: !str 
+  str: plain
+  "@_rails_html_safe": false
+sa_mailer_user_name: !str 
+  str: 
+  "@_rails_html_safe": false
+sa_mailer_address: !str 
+  str: 
+  "@_rails_html_safe": false
+sa_mailer_domain: !str 
+  str: localhost
+  "@_rails_html_safe": false
+sa_mailer_enable_starttls_auto: !str 
+  str: "0"
+  "@_rails_html_safe": false
+sa_mailer_password: !str 
+  str: 
+  "@_rails_html_safe": false

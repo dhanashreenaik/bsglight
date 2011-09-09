@@ -1,0 +1,58 @@
+</div>
+
+<div id="container">
+    <div id="description">
+     <div id="content_mail">
+        <h2><%= 'Studios' %></h2>
+        <p>
+         BSG has 13 studios on the corner of Brunswick and Johnston Sts above the 7-eleven in Fitzroy. There are a variety of sizes from 10 to 25sm from $60pw all inclusive. If you would are interested in a studio please fill in the form on the right.
+        </p>
+      
+      </div>
+    </div>
+    <div id="list" style="float:none;margin-right:0px;">
+      <% form_for @profile, :url => '/adding_profile', :html => { :method => :post, :id => 'new_profile' } do |f| %>
+       <p>First name</p>
+
+      <label><input name="profile[first_name]" type="text" id="first_name" size="50" value="<%=params[:profile][:first_name] if params[:profile]%>"/>
+      </label>
+     <p>Last name</p>
+
+      <label><input name="profile[last_name]" type="text" id="last_name" size="50" value="<%=params[:profile][:last_name] if params[:profile]%>"/>
+      </label>
+      <p>Address</p>
+
+      <label><input name="profile[address]" type="text" id="address" size="50" value="<%=params[:profile][:address] if params[:profile]%>"/>
+      </label>
+      <p>Suburb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post Code</p>
+
+      <label><input name="profile[suburb]" type="text" id="suburb" size="30" value="<%=params[:profile][:suburb] if params[:profile]%>"/>
+      </label>
+      <input name="profile[zip_code]" type="text" id="zip_code" size="15" value="<%=params[:profile][:zip_code] if params[:profile]%>"/>
+      <p>Phone</p>
+
+      <label><input name="profile[phone_number]" type="text" id="phone_number" size="50" value="<%=params[:profile][:phone_number] if params[:profile]%>"/>
+      </label>
+      <p>Email</p>
+      
+      <label><input name="profile[email_address]" type="text" id="email" size="50" value="<%=params[:profile][:email_address] if params[:profile]%>"/>
+      </label>
+        <input name="profile[studio]" type="hidden" id="studio" size="50"  value="true"/>
+        <div><button name="submit" id="next">>>submit</button></div>
+  </div>
+
+  <% end %>
+    <%if @studiosndmailinglist%>
+    <% if @studiosndmailinglist.errors.first %>
+       <div id="description" style="background-color:#B3B3B3;float:left" >
+          <div id="content">
+               <%= "ERRORS DURING USER CREATION :<br /><br />" %>
+               <%@studiosndmailinglist.errors.each do |attr,msg|%>
+                 <%=msg%><br/>
+               <%end%>
+        </div> 
+        </div>
+    <%end%>
+  <%end%>
+    </div>
+

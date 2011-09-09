@@ -1,0 +1,11 @@
+After Your Payment Is Done Admin  Will Validate You. After That Your Artwork Will Be Selected.  Please Make The Payment Before <%=order.competition.submission_deadline%>
+
+<%if total_entry == 0%>
+
+<%=link_to_remote "Add Artwork", :update => "",:url => {:action => "add_the_artwork",:competition_id =>competition_id,:artwork_count=>artwork_count,:order_id=>order.id } %>
+<%else%>
+Pease Scroll Above And Click On Edit Artworks Link
+<%end%>
+
+
+

@@ -1,0 +1,47 @@
+<% blank_main_div(:title => "Exhibitions tabler", :hsize => "nineH") do %>
+
+<table id="profiles" border="1">
+  <thead>
+  <tr>
+    <th width="100" height="50">Period</th>
+    <% @galleries.each do |g| %>
+      <th width="100" height="50"><%= g.title %></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+<% Period.all.each do |period| %>
+  <tr>
+    <td width="100" height="50"<%= " style='background-color:yellow;'" if period.is_current_period? %>><%=h period.short_name %></td>
+    <% timings = period.timings.all(:include => [:objectable], :conditions => { :objectable_type => 'Exhibition' }) %>
+    <%# raise timings.inspect %>
+    <% @galleries_ids.each do |gid| %>
+      <td width="100" height="50">
+        <% timings.each do |t| %>
+          <div style="font-size:10px;">
+          <%= (t.places_id && t.places_id.split(',').include?(gid.to_s)) ? exhibition_in_array_gallery(t.objectable) : '' %>
+           <%= (t.places_id && t.places_id.split(',').include?(gid.to_s)) ?  exhibition_user_in_array_gallery(t.objectable) : ''%>
+          </div>
+         
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+  </tbody>
+  <tfoot>
+    <tr style="display:none;">
+      <td colspan="100">
+	            No rows match the filter...
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+
+<br/><br />
+Exhibition name (Total artists, Total invited, Total refused, Total accepted, Total validated(paid), Total published)
+
+
+<% end %>

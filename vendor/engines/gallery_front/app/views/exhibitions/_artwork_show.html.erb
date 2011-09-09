@@ -1,0 +1,50 @@
+<%if object.is_purchasable == true%>
+<div id="iteam" class="iteam">
+    <div id ="details" style="display:none;line-height:8px;">
+      <p style="margin-bottom: 0.2em; white-space: normal;">
+					<font size=2px><%= object.title.split.each{|m|m.capitalize!}.join(" ") %></font>
+			</p>
+      <p style="white-space: normal;">                  
+      <%= object.medium.capitalize   %>
+      </p>  
+      <p style="white-space: normal;">                  
+      <%= object.size.split('x').each{|m|m.capitalize!}.join(' x ')  %> cm
+      </p>
+      
+      <% if object.edition_name %>
+      <p style="white-space: normal;">                  
+        <%= 'Edition '+object.edition  %>
+      </p>  
+      <% end %>
+      
+      <% if object.price %>
+      <p style="white-space: normal;">                  
+        <%= '$'+object.price.to_s %>
+      </p>  
+      <% end %>
+      <div id="shoppingcartlink<%=object.id%><%=object.class.to_s%>">
+        
+      <% if @current_user && (!session[:cart].blank? && !session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s) ||    object.user_id != @current_user.id) && (object.class.to_s=='Artwork' ) %>
+        <%#= link_to '<font color="white">add to the cart</font>', add_to_cart_admin_orders_path(:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1) %>
+        <%#=link_to "<font color='white'>add to cart</font>" ,{:controller=>"shoppingcart",:action=>"add_to_cart",:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1}%>
+        
+        <%if ((object.sold == nil) or (object.sold == false))%>  
+            <%=link_to_remote '<img src="/images/buy.jpeg"/>', :update => "",
+              :url => {:controller=>"shoppingcart",:action=>"add_to_cart",:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1}%>
+        <%else%>      
+           Already Sold
+        <%end%>
+      <% end %>
+        
+        
+      </div>
+      
+      
+      <%= "already in the cart !!" if ( !session[:cart].blank? && session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s)) %>
+      <%if current_user.blank?%>
+         <a href="/login/?msg=buyartwork-<%=params[:action]%>" method='post' ><img src="/images/buy.jpeg"/> </a>
+      <%end%>
+    </div>
+  <img src='<%= object.image.url(:medium) %>' height="400px"/>
+</div>
+<%end%>

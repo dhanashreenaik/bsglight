@@ -1,0 +1,15 @@
+ <%@competition.each do |x|%>
+<%=x.id%>&nbsp;&nbsp;<%=x.title%><br/>
+<%end%>
+<br/>comp<br/>
+ <%@comp_users.each do |x|%>
+<%=x.id%>&nbsp;&nbsp;<%=x.competition_id%><br/>
+<%end%>
+<br/>compuser<br/>
+ <%@artcomp.each do |x|%>
+<%=x.id%>&nbsp;&nbsp;<%=x.competition_id%><br/>
+<%end%>
+<br/>artcomp<br/>
+ <%@invoice.each do |x|%>
+<%=x.id%>&nbsp;&nbsp;<%=x.purchasable_id%><br/>
+<%end%>

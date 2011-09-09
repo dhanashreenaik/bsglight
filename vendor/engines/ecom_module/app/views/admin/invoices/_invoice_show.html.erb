@@ -1,0 +1,35 @@
+
+<% blank_main_div(:title => current_object.title, :size => 'sixH', :modal => is_modal) do %>
+
+    <b>Client name :</b>
+    <%=h current_object.client.profile.full_name %><br />
+    <b>Deadline :</b>
+    <%=h current_object.deadline %><br />
+    <b>Medium :</b>
+    <%=h current_object.payment_medium %><br />
+    <b>Amount :</b>
+    <%=h current_object.final_amount %><br />
+    <b>State :</b>
+    <%=h current_object.state %><br />
+    <b>Sent at :</b>
+    <%=h current_object.sent_at %><br />
+    <b>Validated at :</b>
+    <%=h current_object.validated_at %><br />
+
+    <br /><br />
+
+    <% if is_modal %>
+      <% if !current_object.validated_at && current_object.payment_medium=='online' %>
+        <%= blank_action_button(:name => 'Proceed the online payment', :remote => true, :url => new_admin_payment_url(:iid => current_object.id), :update => 'modal_space') %>
+      <% else %>
+        <% if current_object.purchasable_type == 'CompetitionsUser' %>
+          <%= blank_action_button(:name => 'Submit your artworks', :remote => true, :url => artworks_wizard_admin_competitions_user_path(current_object.purchasable.id), :update => 'modal_space') %>
+        <% elsif current_object.purchasable_type == 'ExhibitionsUser' %>
+          <%#= blank_action_button(:name => 'Back to the exhibition', :url => item_path(current_object.purchasable.exhibition, Workspace.find(:first, :conditions => { :state => 'public' }))) %>
+          <%= blank_action_button(:name => 'Back to the exhibition', :url => item_path(current_object.purchasable.exhibition)) %>
+      
+        <% end %>
+      <% end %>
+    <% end %>
+ 
+<% end %>

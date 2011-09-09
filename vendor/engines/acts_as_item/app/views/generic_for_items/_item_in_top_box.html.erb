@@ -1,0 +1,7 @@
+<li class="clear">
+	<div>
+		<%= image_tag(object.icon, :align => 'left', :width => '20') %>
+		<a href="<%=item_path(object)%>" id="<%= type_of_list%>_<%=object.class.to_s %>_<%=object.id%>"><%=object.title%></a>
+	</div>
+</li>
+

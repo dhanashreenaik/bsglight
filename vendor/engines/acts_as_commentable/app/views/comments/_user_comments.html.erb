@@ -1,0 +1,73 @@
+<% for object in @objects %>
+	<li class="object">
+		<div class="objectDate forComments"><%= I18n.l object.created_at, :format =>:verb %></div>
+		<div class="objectBody">
+			<div class="commentbox">
+			  	<%= object.text %>
+			</div>
+			<div class="commentfooter">
+			  	<%= link_to_user User.find(object.user_id) %> - <%= I18n.l object.created_at, :format => :verb %> - 
+				<%= link_to "go to item", "/admin/#{object.commentable_type.underscore.pluralize}/#{object.commentable_id}"%> |
+				<% if @current_user.has_system_role('superadmin') %>
+					<%= link_to (I18n.t('comment.state.validate'), 
+								"/admin/comments/#{object.id}/change_state?new_state=validated") unless (object.state == 'validated') %>
+
+					<%= link_to (I18n.t('comment.state.reject'), 
+								"/admin/comments/#{object.id}/change_state?new_state=rejected") unless (object.state == 'rejected')%> 
+						 |
+			        <%= link_to "edit", edit_admin_comment_path(object.id) %> |
+					<%= link_to I18n.t('general.link.delete'), "javascript:;",
+								:class => "deleteLink", 
+								:modal_id => "#modalDelete_#{object.id.to_s}"%>
+
+					<div style="display:none">
+						<div id="modalDelete_<%=object.id.to_s%>" class="modalDelete">
+							<p><%= I18n.t('item.destroy.delete_conform')%></p>
+							<%= link_to I18n.t('general.common_word.yes1'), admin_comment_path(object), :method => :delete%> | 
+							<%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+						</div>
+					</div>			
+					<!-- TODO translate			 -->	
+				<% end %>
+			</div>
+			<% if object.replies.size > 0 %>
+			<ul id="reply_for_comment_<%= object.id %>" class="commentReply">
+				<% object.replies.each do |reply| %>
+					<li>
+					<div class="commentbox">
+					  	<%= reply.text %>
+					</div>
+					<div class="commentfooter">
+					  	<%= link_to_user User.find(reply.user_id) %> - <%= I18n.l reply.created_at, :format => :verb %> - 
+						<%= link_to "go to item", "/admin/#{object.commentable_type.underscore.pluralize}/#{object.commentable_id}"%> |
+						<% if @current_user.has_system_role('superadmin') %>
+							<%= link_to (I18n.t('comment.state.validate'), 
+										"/admin/comments/#{object.id}/change_state?new_state=validated") unless (object.state == 'validated') %>
+
+							<%= link_to (I18n.t('comment.state.reject'), 
+										"/admin/comments/#{object.id}/change_state?new_state=rejected") unless (object.state == 'rejected')%> 
+								 |
+					        <%= link_to "edit", edit_admin_comment_path(object.id) %> |
+					        <%= link_to I18n.t('general.link.delete'), "javascript:;",
+										:class => "deleteLink", 
+										:modal_id => "#modalDelete_#{reply.id.to_s}"%>
+
+							<div style="display:none">
+								<div id="modalDelete_<%=reply.id.to_s%>" class="modalDelete">
+									<p><%= I18n.t('item.destroy.delete_conform')%></p>
+									<%= link_to I18n.t('general.common_word.yes1'), 
+												admin_comment_path(reply), 
+												:method => :delete%> | 
+									<%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+								</div>
+							</div>
+							<!-- TODO translate			 -->	
+						<% end %>
+					</div>
+					</li>
+				<% end %>
+			</ul>
+			<% end %>
+		</div>
+	</li>
+<% end%>

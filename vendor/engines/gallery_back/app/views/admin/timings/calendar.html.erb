@@ -1,0 +1,21 @@
+<link rel='stylesheet' type='text/css' href='/stylesheets/fullcalendar.css' />
+<script type='text/javascript' src='/javascripts/fullcalendar.min.js'></script>
+
+<h2><%= params[:event] ? params[:event].pluralize : 'Events'%> calendar</h2>
+
+<br /><br />
+
+<div id='calendar'></div>
+
+<script>
+  //alert("http://arshaw.com/fullcalendar/");
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    //editable: true,
+    events: '<%= @daurl %>'
+  });
+</script>

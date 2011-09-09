@@ -1,0 +1,94 @@
+	<div class="itemShowRightBlockinvoice">
+	    <div class="blockCornerLeft"></div><div class="blockElementHeader twoHinv">
+			Actions
+		</div><div class="blockCornerRight"></div>
+	    <div class="blockElementBodyinv">
+              <% if @current_user.has_system_role('admin') %>
+	        <%= link_to 'Add a new invoice', new_admin_invoice_path %><br /><br />
+              <% end %>
+			Filter the list with text <br />
+			<input id="filter2"/><br /><br />
+	    </div>
+	</div>
+
+<% blank_main_div(:title =>"Invoices list", :hsize => 'sevenH') do %>
+          
+<table  id="invoices"  >
+  <thead >
+  <tr>
+    <th>Inv No</th>
+    <th>Client</th>
+    <th>Title</th>
+    <th>Date Due</th>
+    <th>Total</th>
+    <th>Paid</th>
+    <th>Sent on</th>
+    <th>Paid on</th>
+    <th>Email Address</th>
+  </tr>
+  </thead>
+
+  <tbody style="color:#666666;">
+<% @current_objects.each do |invoice| %>
+  <tr>
+    <td width="50px"><%=h invoice.number %></td>
+    <td width="90px"><%=h invoice.client.profile.full_name %></td>
+    <td width="120px"><%=h invoice.title %></td>
+    <td width="50px"><%=h invoice.deadline.strftime("%d %b %Y") if  invoice.deadline%>
+    </td>
+    <td width="50px"><%=h '$' + invoice.final_amount.to_i.to_s  %></td>
+    
+    <td width="50px">
+    <%if invoice.state == "validated"%>
+      paid
+    <%else%>
+      Unpaid
+    <%end%>
+      
+    </td>
+    
+    <td width="50px"><%=h invoice.sent_at.strftime("%d %b %Y") if invoice.sent_at%></td>
+    <td width="50px"><%=h invoice.validated_at.strftime("%d %b %Y") if  invoice.validated_at%></td>
+    <td width="100px"><%=h invoice.client.email %>
+    </td>
+    <td width="50px"><%= link_to 'Show', admin_invoice_path(invoice.id) %></td>
+    <% if @current_user.has_system_role('admin') %>
+      <td width="50px"><%= link_to 'Edit', edit_admin_invoice_path(invoice.id) %></td>
+      <% if true || invoice.state != 'validated' %>
+        <td width="50px">
+         <%=link_to 'Send', open_update_state_admin_invoice_url(invoice.id, :state => 'sent'), :popup => ['dialog name','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes'] %>
+        </td>
+           <%if invoice.state == "validated"%>
+            <td></td>
+           <%else%>
+              <td width="50px"><%= link_to 'Pay', update_state_admin_invoice_path(invoice.id, :state => 'validated') %></td>
+           <%end%>   
+      <% end %>
+    <% end %>
+  </tr>
+<% end %>
+  </tbody>
+  <tfoot>
+    <tr style="display:none;">
+      <td colspan="5">
+	            No rows match the filter...
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+
+<% end %>
+
+
+
+
+
+
+<script>
+  $(document).ready(function()
+    {
+      $("#invoices").tablesorter();
+    }
+);
+</script>

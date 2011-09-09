@@ -1,0 +1,91 @@
+<% form_for current_object,
+  :builder => BlankFormBuilder,
+  :url => (current_object.new_record? ? items_path(current_object.class.to_s) : item_path(current_object)),
+  :html => {:method => (current_object.new_record? ? :post : :put),
+  :multipart => true } do |f| -%>
+  
+<% blank_main_div(:title => title) do %>
+
+      <% is_copyright = (current_object.state == 'copyright') ? true : false %>
+      
+      <% if is_copyright %>
+        <%= f.hidden_field :state, :value => 'copyright' %>
+        <%=I18n.t('general.copyright.copyright_restriction')%>
+      <% end %>
+
+      <%= f.text_field    :title,
+        :label => I18n.t('item.field.title_label') + " *:",
+        :hint => I18n.t('item.field.title_hint'),
+        :readonly => is_copyright %>
+
+      <%= f.text_field    :description,
+        :label => I18n.t('item.field.description_label') + ':',
+        :hint => I18n.t('item.field.description_hint') if @current_object.class.to_s != 'Artwork' %>
+
+      <% if current_container_type == 'website' -%>
+        <%# TODO nothing to do here ... %>
+        <%= f.select 	:published,
+          {'Yes' => true, 'No' => false},
+          {:include_blank => true },
+          {:label => 'Published:', :hint => 'Required for the resource to be published to the website'} %>
+      <% end -%>
+
+      <%#= capture(f, &block) %>
+
+      <%= blank_form_submit_button(:object => current_object) %>
+        
+<% end %>
+
+  <div class="rightBlocks">
+    <div class="itemShowRightBlock">
+      <% if current_object.new_record? %>
+        <%= I18n.t('general.field.created_at')+' '+I18n.l(Time.now, :format => :verb) %>
+      <% else %>
+        <%= I18n.t('general.field.created_at')+' '+I18n.l(current_object.created_at, :format => :verb) %><br />
+        <%= I18n.t('general.field.updated_at')+' '+I18n.l(current_object.updated_at, :format => :verb) %>
+      <% end %>
+    </div>
+    <div class="itemShowRightBlock">
+      <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+        <%= "Creator" %>
+      </div><div class="blockCornerRight"></div>
+      <div class="blockElementBody">
+        <% if @current_user.has_system_role('admin') %>
+         <%= @current_user.profile.full_name %>
+          <%#= f.select(:user_id, User.all(:include => [:profile]).map{ |e| [e.profile.full_name, e.id] }, :label => "User selection", :width => 180) %>
+        <% else %>
+          <%= @current_user.profile.full_name %>
+        <% end %>
+      </div>
+    </div>
+    <% if is_activated_keyword_part %>
+    <div class="itemShowRightBlock">
+      <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+        <%= I18n.t('item.field.keyword_label').pluralize %>
+      </div><div class="blockCornerRight"></div>
+      <div class="blockElementBody">
+        <%= item_keywords_fields(f, @current_object) %>
+      </div>
+    </div>
+    <% end %>
+		<% available_containers.each do |container| %>
+		<% if container.classify.constantize.count > 0 %>
+			<!--<div class="itemShowRightBlock">
+			<div class="blockCornerLeft"></div>
+					<div class="blockElementHeader twoH">
+						<%#= I18n.t("item.show.associated_#{container}") %>
+					</div>
+					<div class="blockCornerRight"></div>
+						<div class="blockElementBody">
+								<%# if ['Group', 'Page'].include?(@current_object.class.to_s) %>
+								<%#= item_containers_select(f, @current_object, container) %>
+								<%# else %>
+									<%#= item_containers_checkboxes(f, @current_object, container) %>
+								<%# end %>
+								<%#= error_message_on :current_object, "items_#{container.pluralize}".to_sym %>
+						</div>
+			</div>-->
+		<% end -%>
+		<% end %>
+  </div>
+<% end -%>

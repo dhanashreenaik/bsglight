@@ -1,0 +1,8 @@
+  <label></label><div class="formElement">Subscription</div>
+  
+  <%= f.text_field :maximum_works_number, :label => 'Maximum number of work' %>
+  <%= f.text_field :description, :label => 'Description' %>
+  <%= f.text_field :price, :label => 'Price', :hint => 'Please enter the price in AUD as an integer' %>
+
+  <label></label><div class="formElement"><%= link_to_remove_fields "Remove the above subscription", f %></div>
+  <label></label><div class="formElement">----------------------------------</div>

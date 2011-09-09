@@ -1,0 +1,260 @@
+<%if object.class == Competition%>
+  <%dynamictitle = "#{object.title}"%>
+<%else%>
+  <%dynamictitle = "#{object.class.to_s}  #{object.title}"%>
+<%end%>
+<% blank_main_div(:title => truncate(dynamictitle,80) ) do %>
+    <%= keywords_links_list_for(@current_object) %>
+    <%= capture(&block) %>
+    <% if is_activated_comment_part && @current_object.has_permission_for?('comment', @current_user, @current_container) %>
+      <%= print_comments_part(object) %>
+    <% end %>
+<% end %>
+<div class="rightBlocks">
+  <div class="itemShowRightBlock">
+    <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+    <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+  </div>
+  <div class="itemShowRightBlock">
+      <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+        <%= "Creator" %>
+      </div><div class="blockCornerRight"></div>
+      <div class="blockElementBody">
+        <%= @current_object.user.profile.full_name %>
+      </div>
+    </div>
+  <div class="itemShowRightBlock">
+     <div class="blockCornerLeft"></div>
+     <div class="blockElementHeader twoH">What can I do?</div>
+     <div class="blockCornerRight"></div>
+     <div class="blockElementBody">
+          <!-- TODO TRANSLATE -->
+         <%#= link_to I18n.t('general.link.back_to_list'), content_path(object.class.to_s) %>
+         
+      <%# if @current_object.class.to_s=='Competition' %>   
+               <%#if  @current_object.state == "final_published"%>
+                     <%#=link_to "Finalist" ,"/admin/competitions/finalist/#{@current_object.id}"%>     
+               <%#end%>
+               <%#if  @current_object.state == "results_publishe"%>
+                    <%#=link_to "Winner" ,"/admin/competitions/winner/#{@current_object.id}"%>     
+             <%#end%>
+               <%#if  @current_object.state == "open"%>             
+                       <%#=link_to "Shortlist" ,"/admin/competitions/open/#{@current_object.id}"%>     
+               <%#end%>
+<%#end%>    
+	 <%=link_to "Go Back" ,"/admin/profiles/#{current_user.id}"%>
+          
+         <%if current_user.system_role_id == 8  and params[:controller] == "admin/exhibitions"%>
+             <p> 
+              <%=link_to  "Add Artwork" ,"/admin/artworks/new?exhibition_id=#{params[:id]}"%> 
+             </p> 
+         <%end%>
+         <% if object.has_permission_for?('new', @current_user, @current_container) %>
+             <p>
+                <%= link_to I18n.t('general.link.add'), new_item_path(object.class.to_s) %>
+             </p>  
+         <% end %>
+         <% if @current_object.has_permission_for?('edit', @current_user, @current_container) %>
+           <p>  
+            <%= link_to I18n.t('general.link.edit'), edit_item_path(object)%>
+           </p>  
+         <% end %>
+	<%if params[:controller] == "admin/artworks" and params[:action] == "show"%>
+           <p>
+		<%= link_to I18n.t('general.link.edit'), edit_item_path(object)%>
+           </p>
+	<%end%>
+           <p>
+        <% if @current_object.has_permission_for?('destroy', @current_user, @current_container) %>
+              <%= link_to I18n.t('general.link.delete'), "javascript:;",
+                   :class => "deleteLink",
+                   :modal_id => "#modalDelete_#{object.id.to_s}"
+               %>
+                <div style="display:none">
+                  <div id="modalDelete_<%=object.id.to_s%>" class="modalDelete">
+                    <p><%= I18n.t('item.destroy.delete_conform')%></p>
+                       <%= link_to I18n.t('general.common_word.yes1'), item_path(object), :method => :delete%> |
+                       <%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+                  </div>
+                </div>
+        <% end %>
+     </p>
+     <%if object.class == ArtworksCompetition%>
+        <%dynamictitle = "#{object.title}"%>
+     <%else%>
+        <%dynamictitle = "#{object.class.to_s}  #{object.title}"%>
+     <%end%>
+     <p>
+     <% if @current_object.has_permission_for?('destroy', @current_user, @current_container) %>
+              <%= link_to I18n.t('general.link.delete'), "javascript:;",
+                   :class => "deleteLink",
+                   :modal_id => "#modalDelete_#{object.id.to_s}"
+               %>
+                <div style="display:none">
+                  <div id="modalDelete_<%=object.id.to_s%>" class="modalDelete">
+                    <p><%= I18n.t('item.destroy.delete_conform')%></p>
+                       <%= link_to I18n.t('general.common_word.yes1'), item_path(object), :method => :delete%> |
+                       <%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+                  </div>
+                </div>
+        <% end %>
+     </p>
+    
+             
+        <%if params[:controller] == "admin/exhibitions" and params[:action] == "show"%>
+              <p>
+                <%=link_to "Selected", "/admin/exhibitions/send_email_to_selected_user/#{@current_object.id}", :popup => ['dialog name','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,height=600,width=1000']%>
+              </p>   
+        <%end%>
+              
+        <%if params[:controller] == "admin/exhibitions" and params[:action] == "show"%>
+              <p>
+                <%=link_to "Published", "/admin/exhibitions/send_email_to_publish_user/#{@current_object.id}", :popup => ['dialog name','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,height=600,width=1000']%>
+              </p>   
+        <%end%>
+              
+              
+              
+         <%if params[:controller] == "admin/competitions" and params[:action] == "show"%>
+              <p>
+                  <%=link_to "Selected", "/admin/competitions/send_mail_to_artist/#{@current_object.id}?msg=selected", :popup => ['dialog name','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,height=600,width=1000'] %>
+              </p>
+              <p>
+                  <%=link_to "UnSelected", "/admin/competitions/send_mail_to_artist/#{@current_object.id}?msg=unselected", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+              </p>
+              <p>
+                  <%=link_to "Maybe", "/admin/competitions/send_mail_to_artist/#{@current_object.id}?msg=maybe", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+              </p>
+             
+              <%if @current_object.state == "results_publish"%>
+                <p>
+                  <%=link_to "winner", "/admin/competitions/send_mail_to_artist/#{@current_object.id}?msg=winner", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+                </p>
+             <%end%>
+                
+                  <p>
+                <b>Current State</b> <br/>
+                
+                
+                  <%if (object.state == "open") %>
+                    open
+                  <%elsif(object.state == "final_published")%>
+                    publish the final artworks list
+                  <%else%>
+                    publish the results of the competition
+                  <%end%>
+                
+              </p>
+              
+              <p>
+                 
+                  <% form_for(object, :url => "/admin/competitions/change_state/#{object.id} ") do |f| %>
+                    <select name="new_state" id="new_state_change" onChange="document.getElementById('competition_submit').click();" style="width:120px">
+                      <option value="0"> Change State</option>
+                      <option value="open">open</option>
+                      <option value="final_published">publish the final artworks list</option>
+                      <option value="results_publish">publish the results of the competition</option>
+                    </select>
+                   <%=f.submit 'submit', :style=>"visibility:hidden"%>
+                   <% end%>
+               
+              </p>
+
+
+                <p>
+              
+                   <select onchange="window.open(this.options[this.selectedIndex].value,'_top')">
+                     <option value="0">Group Selection</option>
+                     <option value="/admin/competitions/group_selection">Selected</option>
+                     <option value="unselected">Unselected</option>
+                     <option value="maybe">Maybe</option>
+                     <option value="notpaid">Not Paid</option>
+                  </select>
+                 
+                </p>
+
+              
+
+                  <script type="text/javascript">
+
+  function changetheline(){
+     cmbv = document.getElementById("new_state_change1").value;
+     alert(cmbv);
+  }
+                    </script>
+               
+
+                            
+                
+                
+                
+                
+                
+                
+                
+          <%end%>  
+          
+      <% if is_activated_rating_part && @current_object.has_permission_for?('rate', @current_user, @current_container) %>
+        <%= item_rate(@current_object) %>
+      <% end %>
+	<%if !session.blank? && !session[:cart].blank?%>
+      <% if (tt=!session[:cart].has_key?(@current_object.class.to_s+'_'+@current_object.id.to_s) || @current_object.user_id != @current_user.id) && (@current_object.class.to_s=='Artwork' && @current_object.is_purchasable) %>
+      <%end%>
+        <%#comented by kedar%>
+        <%#= link_to 'Add to the cart', add_to_cart_admin_orders_path(:orderable_type => @current_object.class.to_s, :orderable_id => @current_object.id, :number => 1) %>
+      <% end %>
+      <%= "Already in the cart !!" if !tt %>
+      <% if @current_object.class.to_s=='Competition' %>
+        <% if cu=CompetitionsUser.find(:first, :conditions => {:competition_id => @current_object.id, :user_id => @current_user.id}) %>
+		  <% if inv=Invoice.find(:last, :conditions => { :purchasable_type => 'CompetitionsUser', :purchasable_id => cu.id, :client_id => @current_user.id }) %>
+					<% if inv.state != 'validated' %>
+						<!--<%= link_to_remote 'Pay your invoice related to that competition', :url => new_admin_payment_url(:iid => inv.id), :update => 'modal_space', :method => :get %>-->
+					<% end %>
+					<%#= link_to_remote 'Artworks submission wizard', :url => artworks_wizard_admin_competitions_user_path(cu), :update => 'modal_space', :method => :get %>
+		    		<!--<a href="/admin/competitions/create_subscribe_competition/?competion_id=<%=@current_object.id%>">Show My Entry</a>-->
+		  <% else %>
+   		<%#= link_to_remote 'Generate invoice', :url => invoicing_admin_invoices_url(:purchasable_type => cu.class.to_s, :purchasable_id => cu.id), :update => 'modal_space', :method => :get %>
+		  <!-- <a href="/admin/competitions/create_subscribe_competition/?competion_id=<%=@current_object.id%>">Show My Entry</a>   -->
+		  <% end %>
+        <% else %>
+          <%#= link_to_remote 'Select a subscription to that competition', :url => select_admin_competitions_subscriptions_url(:competition_id => @current_object.id), :update => 'modal_space', :method => :get %>
+        <% end %>
+      <% end %>
+      <% if @current_object.class.to_s=='Competition' %>
+        <% if eu=ExhibitionsUser.find(:first, :conditions => {:exhibition_id => @current_object.id, :user_id => @current_user.id}) %>
+          <% if invs=Invoice.find(:all, :conditions => { :purchasable_type => 'ExhibitionsUser', :purchasable_id => eu.id, :client_id => @current_user.id }) %>
+            <%if  invs[0] != nil%>
+	    <% if invs[0].state != 'validated' %>
+              <%= link_to_remote 'Pay your first invoice related to that exhibition', :url => new_admin_payment_url(:iid => invs[0].id), :update => 'modal_space', :method => :get %>
+            <% elsif invs[1].state != 'validated' %>
+              <%= link_to_remote 'Pay your second invoice related to that exhibition', :url => new_admin_payment_url(:iid => invs[1].id), :update => 'modal_space', :method => :get %>
+            <% end %>
+          <%end%>
+	  <% end %>
+        <% end %>
+      <% end %>
+      
+    </div>
+  </div>
+
+  <%#*<div class="itemShowRightBlock">%>
+    <%#*<div class="blockCornerLeft"></div><div class="blockElementHeader twoH">User</div><div class="blockCornerRight"></div>%>
+    <%#*<div class="blockElementBody">%>
+      <%#= link_to_user object.user %>
+    <%#*</div>%>
+  <%#*</div>%>
+
+  <% available_containers.each do |container| %>
+  <%# TODO think about containers list on Item show ?? %>
+    <% if false && (conts = object.send(container.pluralize)).size > 0 %>
+      <div class="itemShowRightBlock">
+        <div class="blockCornerLeft"></div><div class="blockElementHeader twoH"><%= I18n.t("item.show.associated_#{container}") %></div><div class="blockCornerRight"></div>
+        <div class="blockElementBody">
+          <% for cn in conts -%>
+            <%= link_to cn.title, container_path(cn) %>
+          <% end -%>
+        </div>
+      </div>
+    <% end-%>
+  <% end -%>
+</div>

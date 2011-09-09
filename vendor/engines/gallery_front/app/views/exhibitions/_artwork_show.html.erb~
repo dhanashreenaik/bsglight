@@ -1,0 +1,24 @@
+<div id="iteam" class="iteam">
+    <div id ="details" style="display:none;">
+      <%= object.title.capitalize %><br /><br />
+      <%= object.medium.capitalize  %><br />
+      <%= object.size  %> cm<br />
+      <% if object.edition_name %>
+        <%= 'Edition '+object.edition  %><br />
+      <% end %>
+      <% if object.price %>
+        <%= '$'+object.price.to_s %><br />
+      <% end %>
+      <br />
+<%=object.is_purchasable%>
+      	
+      <% if @current_user && (session[:cart] && !session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s) ||    object.user_id != @current_user.id) && (object.class.to_s=='Artwork' ) %>
+      
+        <%= link_to 'add to the cart', add_to_cart_admin_orders_path(:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1) %>
+      <% end %>
+      
+      <%= "already in the cart !!" if  @current_object &&  session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s) %>
+      
+    </div>
+  <img src='<%= object.image.url(:medium) %>'>
+</div>

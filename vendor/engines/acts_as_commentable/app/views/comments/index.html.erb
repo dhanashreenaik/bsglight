@@ -1,0 +1,34 @@
+<div class="objectList small">
+	<div class="blockCornerLeft"></div><div class="blockElementHeader sixH">
+		<span id="item_count">Users Comments</span>
+	</div><div class="blockCornerRight"></div>
+	<div class="contentList filtered">
+		<ul id="pure_user_list">
+			<% if @objects.first -%>
+
+				<%= render :partial => 'comments/user_comments' %>
+
+			<% else -%>
+
+		    	<%= I18n.t('item.common_word.list_empty') %>
+
+			<% end -%>
+			
+			<%#= will_paginate @paginated_objects %>
+		</ul>
+	</div>
+</div>
+<div class="rightBlocks">
+	<div class="itemShowRightBlock">
+	    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+			Filters
+		</div><div class="blockCornerRight"></div>	
+	    <div class="blockElementBody">
+			Display : 
+	        <%= ['all', 'posted', 'validated', 'rejected'].map{ 
+					|s| link_to(I18n.t('comment.state.'+s), admin_comments_path(:on_state => s))} %>
+			Filter : 
+			<input id="comments_filter"/>
+	    </div>
+	</div>
+</div>

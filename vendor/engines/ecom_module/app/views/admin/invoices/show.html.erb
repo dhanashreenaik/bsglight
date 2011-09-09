@@ -1,0 +1,163 @@
+
+<% #render :partial => 'invoice_show', :locals => { :current_object =>@current_object, :is_modal => false } %>
+
+
+<% blank_main_div(:title => truncate(@current_object.title,80), :size => 'sixH', :modal => false) do %>
+    
+   <table>
+<tr><td><b>Client name </b></td>
+	<td> <%=h @current_object.client.profile.full_name %></td>
+</tr>
+<tr><td> <b>Title </b></td>
+	<td> <%=h@current_object.title%></td>
+</tr>
+<tr><td><b>Description </b></td>
+	<td> <%=h@current_object.description%></td>
+</tr>
+<tr><td> <b>Deadline </b></td>
+	<td> <%=h @current_object.deadline %></td>
+</tr>
+<tr><td> <b>Medium </b></td>
+	<td><%=h @current_object.payment_medium %></td>
+</tr>
+<tr><td><b>Amount </b></td>
+	<td>  <%=h @current_object.final_amount %></td>
+</tr>
+<tr><td> <b>State </b></td>
+	<%if @current_object.state == "validated"%>
+            <td><%="paid" %></td>
+        <%else%>    
+            <td><%="unpaid" %></td>
+        <%end%>
+    </tr>
+<tr><td>
+    <b>Sent at </b></td>
+<td>    <%=h @current_object.sent_at %></td>
+</tr>
+
+<%if @current_object.purchasable_type == "ExhibitionsUser"%>
+    <tr><td>
+        <b>Exhibition </b></td>
+      
+      <td>
+    <%=@current_object.purchasable.exhibition.title%>
+    </td>
+    </tr>
+    <tr><td>
+        <b>Payments </b></td>
+    <td>   
+     
+      $<%= link_to @firstinv.final_amount ,"/admin/invoices/"+@firstinv.id.to_s%> &nbsp;&nbsp;&nbsp;&nbsp;
+      <%if @firstinv.state == "validated"%>
+          Paid at &nbsp;<%=h @current_object.validated_at.strftime("%d/%m/%Y") if @current_object.validated_at%> 
+      <%else%>
+           Unpaid
+      <%end%>
+           <br/>
+       $<%=link_to  @secinv.final_amount,"/admin/invoices/"+@secinv.id.to_s %> &nbsp;&nbsp;&nbsp;&nbsp;
+      <%if @secinv.state == "validated"%>
+          Paid at &nbsp;<%=h @current_object.validated_at.strftime("%d/%m/%Y") if @current_object.validated_at%> 
+      <%else%>
+           Unpaid
+      <%end%>    
+           
+    </td>
+    </tr>
+<%else%>
+    <tr><td>
+        <b>Payments </b></td>
+    <td>   
+     $<%= @current_object.final_amount %> &nbsp;&nbsp;&nbsp;&nbsp;<%=h @current_object.validated_at.strftime("%d/%m/%Y") if @current_object.validated_at%></td>
+    </tr>
+<%end%>
+
+</table>
+
+
+
+    <br /><br />
+    
+
+    <% if false %>
+      <% if !current_object.validated_at && current_object.payment_medium=='online' %>
+        <%= blank_action_button(:name => 'Proceed the online payment', :remote => true, :url => new_admin_payment_url(:iid => current_object.id), :update => 'modal_space') %>
+      <% else %>
+        <% if current_object.purchasable_type == 'CompetitionsUser' %>
+          <%= blank_action_button(:name => 'Submit your artworks', :remote => true, :url => artworks_wizard_admin_competitions_user_path(current_object.purchasable.id), :update => 'modal_space') %>
+        <% elsif current_object.purchasable_type == 'ExhibitionsUser' %>
+          <%= blank_action_button(:name => 'Back to the exhibition', :url => item_path(current_object.purchasable.exhibition, Workspace.find(:first, :conditions => { :state => 'public' }))) %>
+        <% end %>
+      <% end %>
+    <% end %>
+ 
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="rightBlocks">
+  <div class="itemShowRightBlock">
+        <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+        <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+  </div>
+
+  <div class="itemShowRightBlock">
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">What can I do?</div>
+    <div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <!-- TODO TRANSLATE -->
+      <%= link_to I18n.t('general.link.back_to_list'), admin_invoices_path %>
+      <br/>
+      <% if @current_user.has_system_role('admin') %>
+        <%= link_to I18n.t('general.link.add'), new_admin_invoice_path %>
+          <br/>
+        <%= link_to I18n.t('general.link.edit'), edit_admin_invoice_path(@current_object)%>
+          <br/>
+        <%= link_to I18n.t('general.link.delete'), "javascript:;",
+          :class => "deleteLink",
+          :modal_id => "#modalDelete_#{@current_object.id.to_s}"
+      %>
+          <br/>
+      <div style="display:none">
+          <div id="modalDelete_<%=@current_object.id.to_s%>" class="modalDelete">
+            <p><%= I18n.t('item.destroy.delete_conform')%></p>
+            <%= link_to I18n.t('general.common_word.yes1'), admin_invoice_path(@current_object), :method => :delete%> |
+            <%= link_to I18n.t('general.common_word.no1'), "javascript:;", :class => "deleteClose" %>
+          </div>
+        </div>
+      <% end %>
+          <%=link_to "ContactPage","/admin/profiles/"+@current_object.client.profile.id.to_s%>
+          <br/>
+          <%= link_to 'Get a PDF version of that invoice', admin_invoice_url(@current_object, :format => 'pdf') %>
+          <br/>
+          <%= link_to 'Send an email with the invoice attached as PDF', update_state_admin_invoice_url(@current_object.id, :state => 'sent') %>
+          <br/>
+      <% if @current_object.state != 'validated' %>
+          <%#= link_to_remote 'Pay online', :url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get %>
+          <%#= link_to 'Pay online', "/admin/invoices/pay_for_invoice/#{@current_object.id}",:popup => ['dialog name','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width=500,height=500'] %>
+          <%#= link_to @current_object.email_address, "/admin/profiles/compose_user_mail/#{@current_object.id}", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+
+         
+          <%= link_to 'pay the payment', update_state_admin_invoice_path(@current_object.id, :state => 'validated') if @current_user.has_system_role('admin') %>
+       <br/>   
+      <% end %>
+    </div>
+  </div>
+
+</div>

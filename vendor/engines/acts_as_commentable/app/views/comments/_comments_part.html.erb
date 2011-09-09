@@ -1,0 +1,42 @@
+<div id="ajax_info" style="color:green"></div>
+
+<div class="blockElement" id="comment_list">
+	<div class="blockCornerLeft"></div>
+	<div class="blockElementHeader sixH">
+		<%= total_number_of_reply(object) %> <%=I18n.t('general.object.comment').pluralize.camelize %>
+	</div><div class="blockCornerRight"></div>
+	<div class="blockElementBody">
+		<div id="comments_list">
+		  <% @i = 1%>
+		  <% if object.comments.length > 0 %>
+			  <%= render :partial => "comments/comment_in_list", :collection => object.comments, :locals => { }%>
+		  <% end-%>
+		</div>		
+		
+		<% if permission || object.has_permission_for?('comment', @current_user, current_container_type) %>
+		<div id="newCommentForm">
+			<h1>New Comment</h1> 
+	        <% remote_form_for :comments, :url => add_comment_item_path(object),  :html => {:class => "newComment"} do |f|  %>
+	            <textarea id="comment_box" class="comment_box" rows="8" name="comment[text]"></textarea>
+	            <button type="submit" class="submitButton"><span>
+					<%=I18n.t('comment.add_comment.button_publish')%>
+				</span></button>
+	        <% end %>
+	    </div>
+	
+		<div style="display:none">
+			<div id="commentReply">
+				<h1><%= I18n.t('general.common_word.your').camelize+ ' Reply'%> : </h1>
+				<% remote_form_for  :comments, 
+									:url => add_reply_admin_comment_path(object, :item_type => object.class),  
+									:html => {:class => "newComment"} do |f|  %>
+									
+		          	<textarea id="reply_box" class="comment_box" rows="8" name="comment[text]"></textarea>
+		          	<input type="hidden" id="comment_parent_id" name="comment[parent_id]">
+		          	<button type="submit" class="submitButton"><span>Reply</span></button>
+	        	<% end-%>
+	      	</div>
+		</div>
+		<%end-%>
+	</div> 
+</div>

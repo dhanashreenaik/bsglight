@@ -1,0 +1,8 @@
+--- 
+sa_mailer_port: "587"
+sa_mailer_authentication: plain
+sa_mailer_domain: pragtech.co.in
+sa_mailer_address: smtp.gmail.com
+sa_mailer_user_name: test@pragtech.co.in
+sa_mailer_enable_starttls_auto: "1"
+sa_mailer_password: test123

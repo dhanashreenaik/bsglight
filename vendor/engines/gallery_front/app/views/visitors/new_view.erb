@@ -1,0 +1,35 @@
+        <div style="margin:5px"> 
+               <font  color="white">
+                     <%if !@exhibitionuserlist.blank?%>
+                            <%for eu in @exhibitionuserlist%>
+                                  <div style="margin-left:5px;float:left">
+                                    <%if eu.state != "created"%>
+                                     <%=eu.exhibition.title%> 
+                                     <%end%>
+                                   </div>   
+                                   <div style="float:right;margin-right:50px;"> 
+                                       <%#creating a variable to define the margin of the edit image and upload image div%>
+                                       <%margin=nil%>
+                                            <% if    !eu.user.invoices.blank?  and(  (eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated") or (eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]) != nil and   eu.user.invoices.find(:last ,:conditions=>["purchasable_id = ? ",eu.id]).state != "validated")) %>
+                                                    <%#= link_to_remote('Pay online',:url => new_admin_payment_url(:iid => @current_object.id), :update => 'modal_space', :method => :get)  %>
+                                                    <%=link_to_remote "Pay Online", :url=>"/admin/profiles/exhibition_payment_front/#{eu.id}",:update => 'modal_space', :method => :get%>
+                                                    <%margin=true%>
+                                            <%end%> 
+                                    </div>
+                                    <%if margin%>
+                                        <div style="float:right;margin-right:10px;">        
+                                    <%else%>
+                                        <div style="float:right;margin-right:110px;">        
+                                    <%end%>
+                                         <%#if @edit_ex_img.fetch(eu.exhibition.id,false)%> 
+                                         <% if  !eu.user.invoices.blank?  and(eu.user.invoices.find(:first ,:conditions=>["purchasable_id = ? ",eu.id]) != nil )%>
+                                              <%=link_to_remote "Edit Image", :url=>"/competitions/edit_exhibition_image/#{eu.exhibition.id}",:update => ''%>
+                                                &nbsp;&nbsp;<%=link_to_remote "Upload Image",:url=>"/competitions/upload_exhibition_image/#{eu.exhibition.id}",:update => ''%>
+                                          <%end%>             
+                                   </div>
+                                  <div style="clear:both">  
+                                  </div>
+                            <%end%>
+                      <%end%>
+               </font>
+              </div>

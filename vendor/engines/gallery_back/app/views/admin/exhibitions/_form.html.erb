@@ -1,0 +1,48 @@
+  
+<% form_for_item @current_object, "Exhibition Creation" do |f| -%>
+
+  <label>Artists </label>
+      
+    <div class="formElement">
+    
+    <%selecteduser = @current_object.user_ids%>
+
+    <%if  @workspace%>
+
+    <%selecteduser<<@workspace.creator_id%>
+    <%=hidden_field "exhibition","workspace_ids",:value=>@workspace.id%>
+   
+    <%end%>
+    <%= select_tag "exhibition[user_ids][]", options_from_collection_for_select(@artists, 'user_id', 'full_name', :selected =>selecteduser, :disabled => @current_object.user_ids), :multiple => true, :size => 9 %>
+       <%#=link_to "Make Required User As Artist","/admin/profiles"%> 
+    <%#= @current_object.users.map{ |e| "<input type='hidden' value='#{e.id}' name='exhibition[user_ids][]' id='exhibition_user_ids'>" }.join(' ') %>
+    
+
+<!--    <input id="filter3" style="size:20px;">	 -->
+    </div>  
+        <div class="formElement" style="clear:both;padding-top:0px;">
+ 
+    <%if params[:controller] == "admin/exhibitions" and params[:action] == "edit"%>      
+    <%else%>
+        <label >Group Show </label>  <%=check_box_tag "group_show",0,false,:style=>"width:20px;margin-top:15px;"%>
+    <%end%>    
+    
+    </div>
+<!--
+<br /><br />
+
+  <label>TIMING PART</label> <br />  -->  
+
+
+  <% f.fields_for :timing do |ff| %>
+    <%= add_timing_fields(:form => ff, :places_list => @places, :period_used => true, :one_day => false,
+        :time_used => false,:period_id=>@oldtimingperiodid) %>
+
+  <% end %>
+ <!-- <label>Publish</label><br />
+  <div class="formElement">
+      
+            Yes  <%#=radio_button("exhibitions", "publish", "1")%><br/>
+            No   <%#=radio_button("exhibitions", "publish", "0")%>
+  </div>-->
+<% end -%>

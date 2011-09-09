@@ -1,0 +1,15 @@
+
+<% if @artists.first %>
+    <% for i in 0..(@artists.size-1) %>
+      <% if [0,5,10,15,20].include?(i) %>
+        <div id='nav_3'><ul>
+          
+          <% end %>
+          <li><a href='<%= "/#{params[:which]}/#{@artists[i].id}"%>' ><%= @artists[i].full_name %></a></li>
+          <% if [4,9,14,19,24].include?(i) || i == (@artists.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="specific_menu"><div id='nav_3'><ul><li>No artists for that letter</li></ul></div></div>
+  <% end %>

@@ -1,0 +1,54 @@
+</div>
+
+<div id="container">
+
+    <div id="list" style="float:none;margin-right:0px;">
+      <% form_for @profile, :url => '/adding_profile', :html => { :method => :post, :class => 'new_profile' } do |f| %>
+       <p style="margin-bottom: 0.4em;padding-top:0px;margin-top:0px;">First name</p>
+      <label><input name="profile[first_name]" type="text" id="first_name" size="50" value="<%=params[:profile][:first_name] if params[:profile]%>"/>
+      </label>
+      
+      <div style="line-height: 34px"><p style="margin-bottom: 0.2em;">Last name</p>
+      <label><input name="profile[last_name]" type="text" id="last_name" size="50" value="<%=params[:profile][:last_name] if params[:profile]%>"/>
+      </label>
+      
+<p style="margin-bottom: 0.2em;margin-top:4px;">Address</p>
+      <label><input name="profile[address]" type="text" id="address" size="50" value="<%=params[:profile][:address] if params[:profile]%>"/>
+      </label></div>
+      
+<p style="margin-bottom: 0.4em;" style="width:94%"> Suburb <span style="padding-left:60%">Post Code</span></p>
+
+      <div style="width:94%;">
+        <input name="profile[suburb]" type="text" id="suburb" size="30" value="<%=params[:profile][:suburb] if params[:profile]%>" style="width:70%"/>
+     
+      <input name="profile[zip_code]" type="text" id="zip_code" size="16"  style="width:30%"/> </div>
+      
+      
+      <p style="margin-bottom: 0.4em;">Phone</p>
+
+      <label><input name="profile[phone_number]" type="text" id="phone_number" size="50" value="<%=params[:profile][:phone_number] if params[:profile]%>"/>
+      </label>
+      <p style="margin-bottom: 0.4em;">Email</p>
+
+      <label><input name="profile[email_address]" type="text" id="email" size="50" value="<%=params[:profile][:email_address] if params[:profile]%>"/>
+      </label>
+      
+    <p><button name="submit" id="next">>>submit</button></p>
+  </div>
+
+  <% end %>
+  <%if @studiosndmailinglist%>
+    <% if @studiosndmailinglist.errors.first %>
+       <div id="description" style="background-color:#B3B3B3;float:left" >
+          <div id="content">
+               <%= "ERRORS DURING USER CREATION :<br /><br />" %>
+               <%@studiosndmailinglist.errors.each do |attr,msg|%>
+                 <%=msg%><br/>
+               <%end%>
+        </div> 
+        </div>
+    <%end%>
+  <%end%>
+    
+  </div>
+

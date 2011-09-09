@@ -1,0 +1,41 @@
+<div class="profile_part">
+
+<% fields_for @profile, :builder => BlankFormBuilder do |f| %>
+
+<label><%= I18n.t('people.field.salutation_label') %> : </label>
+
+  		    <div class="formElement">
+		      <% %w(Mr Ms Miss).each do |s|  %>
+		        <input id="user_salutation_<%= s.downcase %>" type="radio"
+				<%= "checked=true" if @profile.salutation == s %> value="<%= s %>"
+				name="user[salutation]" class = "checkboxes" /><%= I18n.t("general.common_word.#{s}") %>
+		      <% end %>
+		    </div>
+
+			<%= f.text_field :firstname, :label => I18n.t('user.field.first_name_label')+" * : ", :hint => "TODO hint" %>
+    <%= f.text_field :lastname, :label => I18n.t('user.field.last_name_label')+" * : ", :hint => "TODO hint" %>
+									
+			<%= f.text_area :address, 
+							:size => "40x6", 
+							:label => I18n.t('user.field.address_label')+" : ", 
+							:hint => I18n.t('user.field.address_hint')%>
+					
+			<%= f.text_field 	:phone, 
+								:label => I18n.t('user.field.phone_label')+" : ", 
+								:hint => I18n.t('user.field.phone_hint') %>
+								
+			<%= f.text_field 	:mobile, 
+								:label => I18n.t('user.field.mobile_label')+" : ", 
+								:hint => I18n.t('user.field.mobile_hint') %>
+							
+			<%= f.text_area :edito, 
+							:label => I18n.t('user.field.edito_label')+" : ",
+							:hint => "TODO hint" %>
+			
+			<%# f.field  :avatar, :label => I18n.t('user.field.photo_label')+" : " do %>
+			<%#= file_field 'user', 'avatar', :class => 'file' %>
+
+
+<% end %>
+
+</div>

@@ -1,0 +1,46 @@
+<% form_for @current_object, :url => admin_users_path, :html => { :method => :post, :id => 'form' ,:class=>"form_subscribe"} do |f| %>
+
+  <% f.fields_for :profile do |p| %>
+      
+      <p>First name</p>
+      <label><%= p.text_field :first_name, :size => '50' %>
+      </label>
+      
+      <p>Last name</p>
+      <label><%= p.text_field :last_name, :size => '50' %>
+      </label>
+
+      <p>Password</p>
+      <label><%= f.password_field :password, :size => '50' %>
+      </label>
+      
+      <p>Confirm Password</p>
+      <label><%= f.password_field :password_confirmation, :size => '50' %>
+      </label>
+      
+
+
+       <p>Address</p> 
+      <label><%= p.text_field :address, :size => '50' %>
+      </label>
+      
+       <p>Suburb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post Code</p>
+   
+      <label><%= p.text_field :suburb, :size => '28',:style=>"float:left" %>
+      </label>
+      <%= p.text_field :zip_code, :size => '17',:style=>"margin-left:2px;" %>
+      
+       <p>Phone</p>
+      <label><%= p.text_field :phone_number, :size => '50' %>
+      </label>
+     
+   <% end %>
+
+      <p>User Name (This Should Be Email)</p>
+      <label><%= f.text_field :email, :size => '50' %>
+      </label>
+      
+
+    <p><button name="submit" id="next">>>submit</button></p>
+
+  <% end %>

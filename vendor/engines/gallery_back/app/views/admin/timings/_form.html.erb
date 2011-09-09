@@ -1,0 +1,26 @@
+<% if @timing %>
+<label>Give a timing request</label>
+<% form_for @timing, :url => admin_timings_path, :builder => BlankFormBuilder, :hmtl => { :method => :post } do |f| %>
+
+  <%= f.hidden_field :objectable_type, :value => @current_object.class.to_s %>
+  <%= f.hidden_field :objectable_id, :value => @current_object.id %>
+
+  <%= render :partial => 'admin/timings/timings_fields', :locals => { :f => f } %>
+
+  <%#= f.text_field :state, :label => 'State', :disabled => true %>
+  <%#= f.hidden_field :state %>
+
+  <%#= f.check_box :_destroy, :label => 'Remove this timing' %>
+  <%#= link_to_remove_fields "remove", f %>
+
+    <button type="submit" class="submitButton">
+      <span>Submit that timing request</span>
+    </button>
+
+<% end %>
+
+<% else %>
+ already a request
+<% end %>
+
+

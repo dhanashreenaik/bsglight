@@ -1,0 +1,18 @@
+<% item_show( :title => 'Image',  :object => @current_object ) do %>
+
+  <%= link_to(image_tag(@current_object.image.url(:medium).split("?")[0], :class => "image_peview"), @current_object.image.url.split("?")[0])%>
+  <br />
+  Medium: <%= @current_object.medium %>
+  <br />
+  Size: <%= @current_object.size %> cm
+  <br />
+  <% if @current_object.edition_number %>
+    Edition: <%= @current_object.edition %>
+    <br />
+  <% end %>
+  Price: <%= @current_object.price %> $
+  <br />
+  Is purchasable ?: <%= @current_object.is_purchasable.to_s %>
+  <br />
+
+<% end %>

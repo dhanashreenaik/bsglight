@@ -1,0 +1,19 @@
+<div  style="padding-left:200px;">
+<%=link_to  "Back",:back%>
+</div>
+<div  style="padding-left:200px;">
+<h3>This Are  Shortlisted Artworks</h3>
+</div>
+<div  style="padding-left:200px;">
+<table border="1px">
+    <tr>
+								      <th >Thumbs</th>
+								      <th>Title</th>
+								      <th>Artist</th>
+
+								    </tr>
+<%for  cu in @competitionuser %>
+<%=render :partial=>"artwork_show" ,:object=>cu%>
+<%end%>
+</table>
+</div>

@@ -1,0 +1,49 @@
+</div><%#bsg-top-navigationclosed%>
+  <div id="container">
+    <div id="description_login">
+      <div id="content">
+        <h2><%= 'Log in' %></h2>
+          <p>
+          Click <%= link_to 'HERE', '/subscribe' %> to register or log in at right if you are already registered.
+          </p>
+      </div>
+    </div>
+    <div id="list">
+      <% if @current_user.nil? %>
+        <% form_for 'session', :url => admin_session_path, :html => { :method => :post,:class=>"login_form" } do |f| %>
+         <%if params[:msg] == "buy artwork"%>
+              <%="Need To Login To Buy An Artwork"%>
+         <%end%>
+      <%= flash_messages_manager(['notice', 'error'], 'modal', false) %><br/><br />
+        <p style="margin:5px 0px">Email Address </p>
+      <label><input name="email" type="text" id="email" size="50" />
+      </label>
+            <p style="margin:5px 0px">Password</p>
+      <label><input name="password" type="password" id="password" size="50" />
+      </label>
+        <div id="rememberMe" style="margin-top:20px;">
+          <%=I18n.t('user.session.remember_me')%>:
+          <%= check_box_tag 'remember_me', '1', @remember_me, :class => "checkboxes" %>
+        </div>
+        <div id="forgotPasswordLink" style="margin-top:20px;">
+          <%= link_to I18n.t('user.forgot_password.title'), admin_forgot_password_path %>
+        <% if is_allowed_free_user_creation? %>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to I18n.t('user.session.inscription'), '/subscribe' %>
+        <% end %>
+      </div>
+      
+    <p><button name="submit" id="next">>>submit</button></p>
+
+  <% end %>
+
+    <% else %>
+    <p>
+    <label><%= "You are already loggued as #{@current_user.login}."  %></label>
+    </p>
+    <br /><br />
+    <%= link_to 'Logout', admin_logout_url %>
+    <% end %>
+
+     </div>
+</div>

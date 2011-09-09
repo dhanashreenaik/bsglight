@@ -1,0 +1,707 @@
+
+<% item_show_competition( :title => 'Competition User',  :object => @current_object ) do %>
+	<div style="overflow:auto;height:500px;margin:60px 60px 60px 60px; ">
+				<table>
+				<tbody><tr>
+							<td valign="top">
+								<strong>Name:</strong>
+							</td>
+						</tr>
+						<tr>	
+							<td valign="top">
+								<%=@current_object.name%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Email Address:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.email%>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Address:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.address%>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>Suburb:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.suburb%>
+								
+							</td>
+						</tr>
+            
+                        <tr>
+							<td valign="top">
+								<strong>Varification Code:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.varification_code%>
+								
+							</td>
+						</tr>
+                
+
+						<tr>
+							<td valign="top">
+								<strong>Post Code:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=current_user.profile.zip_code%>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>How did you here about the Prize:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+							       <%=@current_object.here_prize%>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>If other where?</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.others%>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top">
+								<strong>How Many Entries?</strong>
+							</td>
+							</tr>
+						<tr>		
+							<td valign="top">
+							<%=@current_object.total_entry%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Payment:</strong>
+							 </td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.payment_type%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>If Credit Card Name on Card:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.card_name%>		
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Card Number:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.card_number%>
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>Expiry Date:(mm/yy)</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.exp_date.to_s[0..1]%>/<%=@current_object.exp_date.to_s[2..3]%>
+							</td>
+						</tr>
+
+                        <tr>
+							<td valign="top">
+								<strong>Varification Code</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.varification_code%>
+							</td>
+						</tr>                            
+                            
+                						
+						
+						<tr>
+							<td valign="top">
+								<strong>1st Work Title:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.fworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Medium:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.fworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Size (cm):</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.fworksize.to_s[0..1].to_s+"*"+@current_object.fworksize.to_s[2..3].to_s+"*"+@current_object.fworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Price:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<%=@current_object.fworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Image:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+							        <img src="/system/gallery/<%=@current_object.fworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Title:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<%=@current_object.sworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Medium:</strong>
+							</td>
+
+						</tr><tr>					
+							<td valign="top">
+								<%=@current_object.sworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Size (cm):</strong>
+							</td>
+
+							</tr><tr>					
+							<td valign="top">
+							
+								<%=@current_object.sworksize.to_s[0..1].to_s+"*"+@current_object.sworksize.to_s[2..3].to_s+"*"+@current_object.sworksize.to_s[4..5].to_s%>		
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Price:</strong>
+							</td>
+
+	</tr><tr>				<td valign="top">
+								<%=@current_object.sworkprice%>		
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.sworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>
+						
+						
+						
+						
+							<tr>
+							<td valign="top">
+								<strong>3rd Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.tworktitle%>		
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.tworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.tworksize.to_s[0..1].to_s+"*"+@current_object.tworksize.to_s[2..3].to_s+"*"+@current_object.tworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.tworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.tworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>4th Work Title:</strong>
+							</td>
+	</tr><tr>						<td valign="top">
+								<%=@current_object.foworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.foworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.foworksize.to_s[0..1].to_s+"*"+@current_object.foworksize.to_s[2..3].to_s+"*"+@current_object.foworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.foworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.foworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>5th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+									<%=@current_object.fiworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+									<%=@current_object.fiworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+									<%=@current_object.fiworksize.to_s[0..1].to_s+"*"+@current_object.fiworksize.to_s[2..3].to_s+"*"+@current_object.fiworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.fiworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.fiworkimage%>"  width="100" height="100" alt="no image">	
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>6th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.siworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.siworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.siworksize.to_s[0..1].to_s+"*"+@current_object.siworksize.to_s[2..3].to_s+"*"+@current_object.siworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.siworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.siworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>7th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.seworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.seworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.seworksize.to_s[0..1].to_s+"*"+@current_object.seworksize.to_s[2..3].to_s+"*"+@current_object.seworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.seworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.seworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>8th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+							<%=@current_object.eworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.eworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.eworksize.to_s[0..1].to_s+"*"+@current_object.eworksize.to_s[2..3].to_s+"*"+@current_object.eworksize.to_s[4..5].to_s%>
+					
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Price:</strong>
+							</td>
+
+	    </tr><tr>						<td valign="top">
+								
+								<%=@current_object.eworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.eworkimage%>"  width="100" height="100" alt="no image">	
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>9th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.nworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.nworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<%=@current_object.nworksize.to_s[0..1].to_s+"*"+@current_object.nworksize.to_s[2..3].to_s+"*"+@current_object.nworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.nworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.nworkimage%>"  width="100" height="100" alt="no image">	
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>10th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.teworktitle%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.teworkmedium%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.teworksize.to_s[0..1].to_s+"*"+@current_object.teworksize.to_s[2..3].to_s+"*"+@current_object.teworksize.to_s[4..5].to_s%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								
+								<%=@current_object.teworkprice%>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<img src="/system/gallery/<%=@current_object.teworkimage%>"  width="100" height="100" alt="no image"/>	
+							</td>
+						</tr>	
+						
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>Return of Artwork:</strong>
+							</td>
+
+							</tr><tr>
+								<td valign="top">
+								<%=@current_object.return_of_artwork%>
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>Bank Account (For payment if work sold - include BSB):</strong>
+							</td>
+							</tr>
+							<tr>
+							<td valign="top">
+								Bank Account:-
+								<br/>
+								<%=@current_object.bank_account%>
+								
+							</td>
+							</tr>
+							<tr>
+							<td>	
+								BSB No:-
+								<br/>
+								<%=@current_object.bsb_no%>
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>Biography (500 words or less):</strong>
+							</td>
+							</tr>
+							<tr>
+							<td valign="top">
+								<%=@current_object.biography%>
+							</td>
+						</tr>
+						<tr>
+						</tr>
+						</tbody>
+					</table>
+					<%=hidden_field_tag "competionid",@current_object.competition_id%>
+                                 <div class="confirm_button_link">                        					
+                                 <b>
+                                 <div id="update_payment">
+                                 </div>
+                                 <%
+                                  total_amount = 0;
+                    	     @current_object.invoices.each {|x| total_amount = total_amount + x.final_amount};
+                    	     %>
+                        		<% 	if  total_amount  < @current_object.find_price(@current_object.competition.id) %>
+                                                   		 	    <%if  @current_object.total_entry.to_i == 0%>
+                                                					        <%= link_to_remote "confirm_details" ,:url=>"/admin/competitions/confirm_competition_subscription_details/#{@current_object.id}",:confirm=>"Thank you for entering the Competition You Need To Submit Your Artwork Before   #{@current_object.competition.submission_deadline}.And Your Artwork Will Be Valid Only If You Pay The Invoice Amount. Please Proceed with payment of invoice amount.",:update=>""%>
+            	                                   				<%else%>
+                                                           					<%= link_to_remote "confirm_details" ,:url=>"/admin/competitions/confirm_competition_subscription_details/#{@current_object.id}",:confirm=>"Thank you for entering the Competition You Need To Submit Your Artwork Before   #{@current_object.competition.submission_deadline}.And Your Artwork Will Be Valid Only If You Pay The Invoice Amount. Please Proceed with payment of invoice amount.",:update=>"update_payment"%>
+            	                                   				<%end%>
+                        		 <%else%>
+                                      					        <%= link_to_remote "confirm_details" ,:url=>"/admin/competitions/confirm_competition_subscription_details/#{@current_object.id}",:confirm=>"Thank you for entering the Competition You Need To Submit Your Artwork Before   #{@current_object.competition.submission_deadline}.And Your Artwork Will Be Valid Only If You Pay The Invoice Amount. Please Proceed with payment of invoice amount.",:update=>""%>
+            	        	   <%end%>	
+            	        				<%= link_to "edit_details" ,"/admin/competitions/edit_competition_subscription_details/#{@current_object.id}"%>
+                              </b>
+                              </div>
+	</div>	
+<%end%>
+	

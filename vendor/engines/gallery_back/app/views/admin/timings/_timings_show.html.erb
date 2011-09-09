@@ -1,0 +1,11 @@
+TIMINGS : <br />
+
+<% @current_object.timings.order('starting_time DESC').each do |e| %>
+
+  <%= "From #{ I18n.l(e.starting_date, :format => :long) } to #{ I18n.l(e.ending_date,:format =>  :long) }<br />"if e.starting_date && e.ending_date %>
+  <%= "#{ I18n.l(e.starting_time, :format => :time) } -- #{ I18n.l(e.ending_time, :format => :time) }<br />" if e.starting_time && e.ending_time %>
+  <%= "<bold>Status : <bold> #{e.state}<br />" %>
+  <%= "Note : #{e.note}<br />" %>
+  <br />
+
+<% end %>

@@ -1,0 +1,61 @@
+
+<div>
+<% if @current_user.has_system_role('admin') %>
+<b>People Subscribed</b><br />
+<% if @current_object.competitions_users.first %>
+  <table cellpadding="5" id="artists"  class="compuser"  >
+  <thead>
+  <tr>
+    <th width = "30%" >Full name</th>
+    <th width = "30%">Email</th>
+    <th width = "20%">State</th>
+  </tr>
+  </thead>
+
+  <tbody>
+<% @current_object.competitions_users.all(:include => [:user]).each do |cu| %>
+  <tr>
+    <td><%=h cu.user.profile.full_name %></td>
+    
+    <td><%=h cu.user.email %></td>
+    <%if cu.state == "accepted"%>
+    <td ><%=h "unpaid" %></td>
+    <%elsif cu.state == "validated"%>
+    
+    <td><%=h "paid" %></td>
+    <%else%>
+    <td><%=h cu.state %></td>
+    <%end%>
+    
+    <td><%= link_to 'Show', admin_profile_path(cu.user.profile.id) %></td>
+    <% if cu.state == 'accepted' %>
+      <!--<td><%#= link_to 'Refuse', update_state_admin_competitions_user_path(cu.id, :state => 'refused') %></td>-->
+      <td><%= link_to 'Validate', update_state_admin_competitions_user_path(cu.id, :state => 'validated') %></td>
+    <% elsif cu.state == 'refused' %>
+      <td><%= link_to 'Force Accept', update_state_admin_competitions_user_path(cu.id, :state => 'accepted') %></td>
+    <% end %>
+  </tr>
+<% end %>
+  </tbody>
+  <tfoot>
+    <tr style="display:none;">
+      <td colspan="5">
+	            No rows match the filter...
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+<br /><br />
+<% else %>
+  No users already added.
+<% end %>
+<% else %>
+  <%#= @current_object.users.all(:include => [:profile]).map{ |e| e.profile.full_name }.join(', ') %>
+<% end %>
+
+  
+</div>
+<div>
+  
+</div>

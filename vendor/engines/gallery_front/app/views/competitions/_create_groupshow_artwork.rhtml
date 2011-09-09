@@ -1,0 +1,65 @@
+<style>
+    .changecolorgray{
+        color: #444444;
+        line-height: 15px;
+  }
+</style>
+<div id="messageforimageuploaded">
+<%if !messageforimageuploaded.blank?%>
+  <%=messageforimageuploaded%>
+<%end%>
+</div>
+<div  class="inputfont">
+<form action="upload_the_artwork_to_groupshow" method="post"  enctype = "multipart/form-data" onsubmit="return  Checkfiles_simple('<%=groupshow_id%>',false)" id="add_the_artwork_to_groupshow<%=groupshow_id%>" target="upload_frame" >  
+                <%=hidden_field_tag 'groupshow_id',groupshow_id%>
+                <div class="changecolorgray">
+                     Title 
+                </div> 
+                  <input  name="groupshow_user[title]" id="artwork_title<%=groupshow_id%>"  value="" type="text" style="width:375px;">
+                   <div class="changecolorgray">
+                            Medium
+                     </div>   
+                                <input  name="groupshow_user[medium]" id="artwork_medium<%=groupshow_id%>"  value="" type="text" style="width:375px;"> 
+                     <div class="changecolorgray">
+                               <span style="font-size: 10px;margin-right:85px;">width (cm)  </span>
+                               <span style="font-size: 10px;margin-right:75px;">height (cm)</span>
+                               <span style="font-size: 10px;"> depth (cm) - if 3d work</span>
+                                                
+                     <font style="color:#444444">
+                      	<input  name="groupshow_user[size1]" id="artwork_width<%=groupshow_id%>" value="" type="text" style="width: 113px;height:14px;">
+                            x
+                        <input  name="groupshow_user[size2]" id="artwork_height<%=groupshow_id%>" value="" type="text" style="width: 113px;height:14px;">
+                            x
+                         <input  name="groupshow_user[size3]" id="artwork_depth<%=groupshow_id%>" value="" type="text" style="width: 113px;height:14px;"> 
+                      </font>
+                      <div class="changecolorgray"> 
+                          <span style="padding-right:100px">
+                               Price
+                           </span> 
+                          <span style="padding-right:75px;padding-left:8px;">
+                               Edition From
+                          </span> 
+                        <span>
+                               Edition Number
+                          </span> 
+                        
+                      </div>  
+                      <input  name="groupshow_user[price]" id="artwork_price<%=groupshow_id%>" style="width: 113px;height: 14px;" value="" type="text">
+                      <input  name="groupshow_user[editionname]" id="groupshow_user_editionname<%=groupshow_id%>" value="" type="text" style="width: 113px;height: 14px;">
+                      <span style="padding-right:3px;margin-left:3px;color:#444444">of</span><input  name="groupshow_user[editionumber]" id="groupshow_user_editionnumber<%=groupshow_id%>" value="" type="text" style="width: 113px;height: 14px;">
+  
+                           
+                           <div class="changecolorgray">    
+                        	 Image 
+                    	 </div>
+                      	 <input  name="groupshow_user[image]" id="artwork_image<%=groupshow_id%>" type="file" size="26" style="float:left"/>
+                          <div style="float:left;margin-left:2px;">
+                          <%= submit_tag 'Upload'%>
+                         </div>  
+                         
+                         <div style="display: none;padding-left:2px;" id="show_ajax_request<%=groupshow_id%>">
+                                <img height="20" src="/images/ajax-spinner.gif" alt="loading">
+                        </div>
+        </form>
+ </div> 
+<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;display:none"></iframe>

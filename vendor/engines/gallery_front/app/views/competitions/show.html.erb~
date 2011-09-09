@@ -1,0 +1,70 @@
+<div id="specific_menu">
+  <% if @competitions.first %>
+    <% for i in 0..(@competitions.size-1) %>
+      <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+        <div id='nav_3'><ul>
+          <% end %>
+          <li><a href='<%= "/competitions/#{@competitions[i].id}"%>' class="liselected"><%= @competitions[i].title %></a></li>
+          <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@competitions.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="specific_menu">No competitions available ...</div>
+  <% end %>
+</div>
+
+
+
+<div id="container">
+  <% if @competition %>
+    <div id="description_competition">
+      <div id="content">
+        <h2><%= @competition.title %></h2>
+	<h4>$<%=@competition.prizes_total_amount%> in PRIZES</h4>
+	 <%if  @competition.prizes_detail%>
+					  <% @competition.prizes_detail.each do |st| %>
+						<%=st%><br/>
+					  <%end%>
+	<%end%>	
+	<h4>Location</h4>
+	<%=@competition.location%>
+	<h4>EXHIBITION DATES</h4>
+	
+	 Runs <%=@competition.timing.starting_date if @competition.timing%>  to <%=@competition.timing.ending_date%>. <%=@competition.timing.note%>
+	<h4>DEADLINE FOR ENTRIES</h4>
+	<%=@competition.submission_deadline%>
+	<h4>NUMBER OF ENTRIES</h4>
+	Each artist may submit up to <%=@competition.no_of_entry%> works in any medium inc sculpture and video.
+	<h4>Judges</h4>
+		<%=@competition.cjudges%>
+	<h4>ENTRY FEE</h4>
+	 <%if  @competition.entry_fees%>
+					  <% @competition.entry_fees.each do |st| %>
+						<%=st%><br/>
+					  <%end%>
+				  <%end%>	
+		<%#=@competition.entry_fees%>
+	<h4>FORMAT</h4>
+		<%=@competition.format%>
+	<h4>DELIVERY</h4>
+		<%=@competition.delivery%>
+	<h4>COLLECTION</h4>
+		<%=@competition.collection%>
+	<h4>COMMISSION ON SOLD WORKS</h4>
+		<%=@competition.commission%>
+	<h4>INSURANCE</h4>
+		<%=@competition.insurance%><br/>
+          Click <%= link_to 'here', item_path(@competition) %> to enter competition. Scroll down the competition view and select the subscription fitting your need.
+	  <%#= link_to 'Click here', enter_admin_competitions_subscriptions_path %>
+      </div>
+    </div>
+        <div id="list">
+      <% @competitionuser.each do |a| %>
+        <%= render :partial => 'competitions/artwork_show', :object => a %>
+      <% end %>
+    </div>
+  <% else %>
+  No competition available.
+  <% end %>
+</div>

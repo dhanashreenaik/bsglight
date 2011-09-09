@@ -1,0 +1,28 @@
+</div>
+
+<div id="containersubscribe_reg">
+    <div id="description_subscription_reg">
+      <div id="content">
+        <h2><%= 'Register' %></h2>
+         <p>
+         Please fill in the form at right
+         </p>
+        <p>
+          <%= flash_messages_manager(['front_notice', 'front_error'], false) %>
+        </p>
+      </div>
+    </div>
+    <div id="list">
+      <%= render :partial => 'visitors/form' %>
+      <% if @current_object.errors.first %>
+      <div id="form">
+        <%= "ERRORS DURING USER CREATION :<br /><br />" %>
+        <%@current_object.errors.each do |attr,msg|%>
+        <%=msg%>
+        <%end%>
+        <%#= @current_object.errors.full_messages.join('<br />') %>
+      </div>
+      <% end %>
+    </div>
+    
+</div>

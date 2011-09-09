@@ -1,0 +1,140 @@
+
+
+
+<% item_show( :title => 'Image',  :object => @current_object ) do %>
+  <%=render :partial=> "admin/exhibitions/exhibitions_slide_show"%>
+
+
+<br /><br />
+
+<% if (ExhibitionsUser.exists?(["exhibition_id = ? and user_id =  ? ",@current_object.id,@current_user.id])|| @current_user.has_system_role('admin')) && @current_object.timing.ending_date > Time.now.to_date %>
+<!-- here the slide show images will get displayed
+  <% form_for @current_object, :url => submit_artworks_admin_exhibition_path(@current_object), :html => { :method => :post } do |f| %>
+  <b>Artworks Selection  </b>
+  <%if  @selected_artworks%>
+    <%= old_school_switching_lists(
+        :ajax_url => filtering_artworks_admin_exhibitions_url,
+        :object_id => @current_object.id,
+        :filters_options => '',
+        :remaining_objects => @remaining_artworks,
+        :selected_objects => @selected_artworks,
+        :field => 'title'
+      )
+      %>
+    <%= f.submit %>
+  <%end%>   
+  -->
+  <% end %>
+  <%else%>
+  
+<% end %>
+
+  <br />
+  <table>
+    <tr>
+      <td>
+        <b>Start Date </b>
+      </td>  
+      <td>
+        <%=@current_object.timing.starting_date.strftime("%d %b %y")%>        
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <b>End Date </b>
+      </td>  
+      <td>
+        <%=@current_object.timing.ending_date.strftime("%d %b %y")%>        
+      </td>  
+    </tr>
+    <tr>
+      <td>
+        <b>Galleries </b>
+      </td>  
+      <td>
+        <%=  "#{@current_object.timing.galleries.map{ |e| e.id}.join(', ')}" if @current_object.timing.galleries.first%>        
+      </td>  
+    </tr>
+  </table>
+
+
+
+<br/>
+<%#= render :partial => 'admin/timings/timing_show' %>
+
+<br />
+<b>Artists </b>
+<%= render :partial => 'admin/exhibitions/exhibitions_users_show' %>
+<!--
+<div style="float:left">
+    <b>Artworks List </b><br />
+    <%if (artworks=@current_object.artworks.all(:include => [:user => [:profile]])).first %>
+    <table>
+      <thead>
+      <tr>
+        <th>Thumbs</th>
+        <th>Title</th>
+        <th>Artist</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% artworks.each do |a| %>
+        <tr>
+          <td><%= link_to(image_tag(a.image.url(:thumb).split("?")[0], :class => "image_peview"), a.image.url.split("?")[0])%></td>
+          <td><%= a.title%></td>
+            
+          <td><%= a.user.profile.full_name %></td>
+          
+          <td></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <% else %>
+        No artworks added already ...
+    <% end %>
+
+</div>
+-->
+<!--
+
+<%if current_user.login == "admin" or  current_user.login == "superadmin"%>
+<div style="padding-left:300px;">
+
+    <b>Remaining Artworks List </b><br />
+    <%if !(artworks=@remaining_artworks).blank?%>
+    <table>
+      <thead>
+      <tr>
+        <th>Thumbs</th>
+        <th>Title</th>
+        <th>Artist</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% artworks.each do |a| %>
+        <tr>
+          <td><%= link_to(image_tag(a.image.url(:thumb).split("?")[0], :class => "image_peview"), a.image.url.split("?")[0])%></td>
+          <td><%= a.title%></td>
+          <td><%= a.user.profile.full_name %></td>
+          <td></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <% else %>
+        No Remaining artworks Available  At This Moment
+    <% end %>
+</div>
+<%end%>
+-->
+    <% end %>
+
+
+
+
+
+
+

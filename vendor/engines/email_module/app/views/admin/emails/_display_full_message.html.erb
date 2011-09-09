@@ -1,0 +1,9 @@
+<% blank_main_div(:title => 'Email display', :hsize => 'sixH', :modal => true) do %>
+
+  Date : <%= object[:date] %><br />
+  From : <%= object[:from] %><br />
+  To   : <%= object[:to] %><br />
+  <br />
+  <%= object[:body] %>
+
+<% end %>

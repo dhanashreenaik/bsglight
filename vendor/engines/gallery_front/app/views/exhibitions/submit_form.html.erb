@@ -1,0 +1,71 @@
+</div>
+
+<div id="container">
+    <div id="description">
+      <div id="content">
+        <h2><%= 'To exhibit' %></h2>
+        <p>
+          You can submit a request that we will analyze ....
+        </p>
+        <p>
+          After the admin can upgrade your account to allow you to access more functionalities ...
+        </p>
+        <p>
+          
+        </p>
+        <p>
+          <% if @current_user %>
+          <div id="next">>>next</div>
+          <% else %>
+          You need to be logged to submit your works.
+          <% end %>
+        </p>
+      </div>
+    </div>
+    <div id="list">
+
+<div id="form">
+    <form id="form1" name="form1" method="post" action="">
+      <label><input name="textfield" type="text" id="textfield" size="50" />
+      </label>
+      <p>Your name</p>
+    </form>
+
+
+    <form id="form2" name="form2" method="post" action="">
+      <label><input name="textfield2" type="text" id="textfield2" size="50" />
+      </label>
+      <p>Last name</p>
+    </form>
+
+
+    <form id="form3" name="form1" method="post" action="">
+      <label><input name="textfield3" type="text" id="textfield3" size="50" />
+      </label>
+      <p>Address</p>
+    </form>
+
+    <form id="form4" name="form2" method="post" action="">
+      <label><input name="textfield3" type="text" id="textfield4" size="30" />
+      </label>
+      <input name="textfield4" type="text" id="textfield5" size="15" />
+      <p>Suburb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post Code</p>
+    </form>
+
+    <form id="form4" name="form2" method="post" action="">
+      <label><input name="textfield5" type="text" id="textfield6" size="50" />
+      </label>
+      <p>Phone</p>
+    </form>
+
+    <form id="form4" name="form2" method="post" action="">
+      <label><input name="textfield5" type="text" id="textfield6" size="50" />
+      </label>
+      <p>Website</p>
+    </form>
+
+    <p><div id="next">>>next</div></p>
+  </div>
+      
+    </div>
+</div>

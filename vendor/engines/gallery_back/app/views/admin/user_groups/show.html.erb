@@ -1,0 +1,9 @@
+<% item_show( :title => 'Image',  :object => @current_object ) do %>
+
+  <%= @current_object.users.all(:include => [:profile]).map{ |e| e.profile.full_name }.join(', ') %>
+
+<br /><br />
+
+  <%= link_to "Set an exhibition for that Group Show", set_an_exhibition_admin_user_group_url(@current_object.id) if @current_user.has_system_role('admin') %>
+  
+<% end %>

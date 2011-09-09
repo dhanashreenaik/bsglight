@@ -1,0 +1,33 @@
+<div style="border: 1px solid greay;padding:10px;margin:10px;">
+<%= link_to 'Inbox',        inbox_admin_emails_path(:profile_id => current_user.profile.id),:style=>"color:#f79646" %>
+<%= link_to  'Sent',        "/admin/emails/sent_mail/#{current_user.profile.id}",:style=>"color:#f79646"  %>
+</div>    
+
+<div style="border: 1px solid greay;padding:10px;margin:10px;" >
+<h3>Compose Email</h3>
+
+
+<form action="/admin/emails/compose_email" method="post">
+
+		
+      To:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=text_field "email","tomail"%><br/><br/>
+		Subject:-<%=text_field "email","subject"%><br/>
+		Body:-
+		<div id="mytinamicem" style="padding-left:55px;">
+			<%=text_area "email","body",:class => "mceEditor" ,:id=>"mytinamice",:cols=>60,:rows=>5%>
+		</div>
+		<div  style="padding-left:60px;">
+			<%=submit_tag "Submit",:style=>"width:100px;padding:10px;margin:10px;"%>
+		</div>
+</form>
+</div>
+
+
+
+
+
+
+
+<script>
+//$("#mytinamicem textarea").each(function(elem) {tinyMCE.execCommand('mceAddControl',false,"mytinamice");});
+</script>

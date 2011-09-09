@@ -1,0 +1,45 @@
+<% if period_used %>
+
+  <%= form.select :period_id, options_for_select(Period.all.map{ |e| [e.name, e.id] }, period_id), :label => 'Period' %>
+
+
+<% elsif one_day %>
+
+  <%= form.text_field :starting_date, :label => 'Date', :id => 'datepicker_start', :ajax => false %>
+  <%#= f.date_select :starting_date %>
+  <%#= f.hidden_field :ending_date, :value =>  %>
+
+<% else %>
+
+  <%= form.text_field :starting_date, :label => 'Starting date', :id => 'datepicker_start', :ajax => false %>
+  <%#= f.date_select :starting_date %>
+  <%= form.text_field :ending_date, :label => 'Ending date', :id => 'datepicker_end', :ajax => false %>
+  <%#= f.date_select :ending_date %>
+
+<% end %>
+
+<% if time_used %>
+
+  <%= form.time_select :starting_time, {:minute_step => 15}, :label => 'Starting time' %>
+  <%= form.time_select :ending_time, {:minute_step => 15}, :label => 'Ending time' %>
+
+<% end %>
+
+<% if places_list %>
+  <label>Galleries</label>
+  <%#= f.select :place_id, @places.collect{ |e| [e.title, e.id] }, :label => 'Place :' %>
+  <%#= @places.map{ |e| f.checkbox :gallery } %>
+  <div class="formElement">
+
+  <% places_list.each do |p| %>
+    <%#= check_box_tag @current_object.class.to_s.downcase+'[timing_attributes][gallery_ids][]', p.id, @current_object.timing.galleries.include?(p) %> <%#= p.title %>
+<%=check_box_tag @current_object.class.to_s.downcase+'[timing_attributes][gallery_ids][]', p.id, @current_object.timing.galleries.include?(p),:style=>"width:30px;" %> <%= p.id %> 
+
+       
+  <% end %>
+  </div>
+<% end %>
+
+<%#= form.text_field :note, :label => 'Note' %>
+<%= form.text_area :note, :label => 'Note',:style=>"width:435px;height:65px;" %>
+

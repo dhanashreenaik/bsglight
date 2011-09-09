@@ -1,0 +1,58 @@
+
+  <% blank_main_div(:title => 'Payment settings', :hsize => 'sixH', :modal => true) do %>
+
+<% form_for @current_object,
+  :url => admin_payments_path,
+  
+  :html => { :method => :post } do |f| %>
+
+<label>
+  Object :
+</label>
+  <div class="formElement" style="font-size:10px;margin-top:10px;">
+  This payment is related to the invoice <%= @invoice.title %>, the total amount to pay is : <b><%= @invoice.final_amount.to_s %></b> $.
+</div>
+
+    <% fields_for @credit_card do |ff| %>
+
+      <%= ff.hidden_field :user_id, :value => @current_user.id %>
+	<label>	Type of card
+	</label>
+     <div class="formElement" style="font-size:10px;margin-top:10px;">	
+       <%= ff.select :type_of_card, [['VISA', 'visa'], ['Master Card', 'master_card']] %>
+     </div>
+      <label>	First Name
+	</label>
+	<div class="formElement" style="font-size:10px;margin-top:10px;">	
+		<%= ff.text_field :first_name, :label => 'First name' ,:style=>"width:200px;"%>
+	 </div>
+	<label>	Last Name
+	</label> 
+	<div class="formElement" style="font-size:10px;margin-top:10px;">	
+		<%= ff.text_field :last_name, :label => 'Last name' ,:style=>"width:200px;"%>
+	 </div>
+	 <label>	Number
+	</label> 
+	<div class="formElement" style="font-size:10px;margin-top:10px;">	
+      <%= ff.text_field :number, :label => 'Number',:value=>"4987654321098769",:style=>"width:200px;" %>
+      </div>
+       <label>	Exp Date
+	</label> 
+	<div class="formElement" style="font-size:10px;margin-top:10px;">	
+		<%= ff.date_select :expiring_date, :order => [:year, :month], :label => 'Expiring date' ,:default => { :year => 2013,:month=>05 }%>
+         </div>
+	 <label>	Varification Value
+	</label> 
+	<div class="formElement" style="font-size:10px;margin-top:10px;">	
+		<%= ff.text_field :verification_value, :label => 'Verification value' ,:value=>"123",:style=>"width:200px;"%>
+        </div>
+    <% end %>
+ <div class="formElement" style="font-size:10px;margin-top:10px;">
+	<%= blank_form_submit_button(:name => 'Proceed', :remote => true, :url => admin_payments_url, :update => 'modal_space', :method => :post) %>
+ </div>
+  <% end %>
+
+<% end %>
+
+
+

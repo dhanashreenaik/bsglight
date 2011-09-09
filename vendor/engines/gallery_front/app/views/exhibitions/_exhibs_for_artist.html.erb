@@ -1,0 +1,121 @@
+<script language="javascript" type="text/javascript">
+<!--
+function popitup(url) {
+	newwindow=window.open(url,'name','height=200,width=150');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}
+
+// -->
+</script>
+<div id="container" >
+    <div id="description" style="overflow:auto">
+      <div id="content">
+        
+        <!--%#= render :partial => 'artists/artists_name_left' %>-->
+         <% if @groups %>
+            <%if @groups[0]%>
+                   <%for group in @groups%>
+                     <div style="padding:2px;">
+                        <p>
+                          <font size="5" color="white"><b><%= group.title %></b></font>
+                        </p>
+                        <p style="padding:0px;margin:0px;">
+                          <%= group.description %>
+                        </p> 
+                        <p style="padding:0px;margin:0px;">
+                            <%= group.note %>
+                        </p>  
+                     </div>           
+                   <%end%>               
+            <%end%>           
+             <%if @groups.first %>
+               <%else%>                 
+              <div id='nav_3'>
+                    <ul><li>No artists for that group</li></ul>
+              </div>            
+             <%end%>                   
+         <%end%>      
+                                
+       <%if @profile%>                           
+          <font size="5" color="white"><b><%= @profile.full_name %></b></font>
+          <%if @exhibitions%>
+           <%for exhi in @exhibitions%>   
+              <p>
+                <b style="color:white"><%= exhi.title %></b><br/>
+                  <%= exhi.description %>
+              </p>
+           <%end%> 
+            <%if @profile.website.blank?%>
+            <%else%>
+            <p>
+               <%= link_to @profile.website, @profile.website, :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+            </p>  
+            <%end%>
+            <p>
+        <%end%>    
+            <div id="exhibs_list">
+                <%gtitle=[]%>
+                <%gdescription=[]%>
+              <%@profile.user.groupshowartworks.each do |gsa|%>
+                  <%gtitle << gsa.groupshow.title%>
+                  <%gdescription << gsa.groupshow.description%>
+              <%end%>
+              <%gtitle.uniq!%>
+                <%gdescription.uniq!%>
+              <%for gst in gtitle%>
+                  <p>
+                      <font color="white"><%=gst%> </font>
+                  </p>
+                  <p>
+                      <%=gdescription[gtitle.index(gst)]%> 
+                  </p>
+              <%end%>    
+            </div>  
+            <div id="exhibs_list">
+              
+              <%@profile.user.competitions.each do |cp|%>
+                  <p>
+                    <font color="white"><%=cp.title%> </font>
+                  </p>
+                  <p>
+                    <%=cp.description%> 
+                  </p>
+              <%end%>
+            </div>  
+       <%end%>                         
+      </div>
+</div>
+      <div id="list">
+         <div id="list">
+        <%if @exhibition%>
+        
+            <% (@exhibition.artworks & @profile.user.private_workspace.artworks).each do |a| %>
+
+            <%= render :partial => 'exhibitions/artwork_show', :object => a %>
+     <%end%>  
+           <%else%> 
+      <% end %>
+      <%if !@groupshowartworks.blank?%>
+              <%@groupshowartworks.each do |a|%>
+              <%= render :partial => 'exhibitions/groupshow_artwork_show', :object => a %>
+              <%end%>
+     <% end %>  
+        <%if !@groups.blank?%>
+             <%for group in @groups%>
+                  <%for groupart in group.groupshowartworks%>
+                      
+                         <%= render :partial => 'exhibitions/groupshow_artwork_show', :object => groupart %>
+                      
+                  <%end%>
+             <%end%> 
+        <%end%>
+      <% if  !@competitionuser.blank?%>
+            <%@competitionuser.each do |a|%>
+                  <%#= render :partial => 'exhibitions/compuser_artwork_show', :object => a %>
+            <%end%>  
+      <%end%>  
+    </div>
+        </div>
+    </div>
+</div>

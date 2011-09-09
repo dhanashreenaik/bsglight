@@ -1,0 +1,23 @@
+<div id="specific_menu">
+<% if @artists.first %>
+    <% for i in 0..(@artists.size-1) %>
+      <% if [0,5,10,15,20].include?(i) %>
+        <div id='nav_3'><ul>
+          
+          <% end %>
+          <li><b><a href='<%= "/#{params[:which]}/#{@artists[i].id}"%>' class="liselected">
+						<% if (params[:id] && params[:id]== @artists[i].id.to_s)%>
+							<font color=white ><%= @artists[i].full_name %></font>				
+						<%else%>
+							<font color=grey ><%= @artists[i].full_name %></font>
+						<%end%></a></b></li>
+
+          <% if [4,9,14,19,24].include?(i) || i == (@artists.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id='nav_3'><ul><li class="liselected"> No artists for that letter</li></ul></div>
+  <% end %>
+</div>
+

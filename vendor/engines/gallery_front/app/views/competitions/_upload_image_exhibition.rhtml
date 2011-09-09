@@ -1,0 +1,80 @@
+
+<style>
+.changecolorgray{
+  color: #444444;
+  line-height: 15px;
+}
+   
+</style>
+
+<div id="messageforimageuploaded">
+
+<%if !messageforimageuploaded.blank?%>
+  <%=messageforimageuploaded%>
+<%end%>
+</div>
+
+<div  class="inputfont">
+<form target="upload_frame" method="post" enctype="multipart/form-data" action="/competitions/upload_exhibition_artwork/<%=exhibition_id%>" onsubmit="return  Checkfiles_simple(<%=exhibition_id%>)" id="add_the_artwork_to_competition">
+
+          <%=hidden_field_tag "exhibition_id",exhibition_id%>
+          <div class="changecolorgray">
+					<label>Title </label>
+					</div>
+							<input type="text"  id="artwork_title<%=exhibition_id%>"  name="artwork[title]" style="width:375px;" >
+			<div class="changecolorgray">
+                   
+					<label>Medium </label>
+				</div>
+						<input type="text" ajax="true" id="artwork_medium<%=exhibition_id%>" itemclass="Artwork" name="artwork[medium]" style="width:375px;" >
+				<div class="changecolorgray">		
+					<label>
+                                          	<span style="font-size: 10px;margin-right:85px;">width (cm)  </span>
+                                                <span style="font-size: 10px;margin-right:75px;">height (cm)</span>
+                                                <span style="font-size: 10px;"> depth (cm) - if 3d work</span>
+                                                
+                                        </label>
+				</div>
+                         
+                     
+					<font style="color:#444444">
+					<input type="text" id="artwork_width<%=exhibition_id%>" name="artwork[width]" style="width: 113px;height:14px;"> x <input type="text" id="artwork_height<%=exhibition_id%>" name="artwork[height]" style="width: 113px;height:14px;"> x <input type="text" id="artwork_depth<%=exhibition_id%>" name="artwork[depth]" style="width: 113px;height:14px;"> 
+
+                                        
+                                        
+                                     <div class="changecolorgray"> 
+                          <span style="padding-right:100px">
+                               Price
+                           </span> 
+                          <span style="padding-right:75px;padding-left:8px;">
+                               Edition From
+                          </span> 
+                        <span>
+                               Edition Number
+                          </span> 
+                        
+                      </div> 
+                                         <input type="text"  id="artwork_price<%=exhibition_id%>"  name="artwork[price]"   style="width: 113px;height: 14px;">
+                
+                                     
+					<input type="text" id="artwork_edition_name<%=exhibition_id%>" name="artwork[edition_name]" style="width: 105px;height: 14px;margin-left:10px;"> of <input type="text" id="artwork_edition_number<%=exhibition_id%>" name="artwork[edition_number]" style="width: 113px;height: 14px;">
+			    </font>
+                                  
+                                  
+				<input type="radio"  name="artwork[is_purchasable]" value=1 checked="checked"  style="display:none">
+				<div class="changecolorgray">
+							<label>Image</label>
+</div>
+  <input type="file" class="file" id="artwork_image<%=exhibition_id%>" name="artwork[image]" size="22" style="float:left"/>
+    <div class="changecolorgray" style="float:left;margin-left:2px;">
+				 <%#= submit_to_remote 'update_btn', 'Upload', :url => { :action => 'upload_exhibition_artwork' },
+    :update => { :success => "" },:multipart=>true%>
+      <%=submit_tag "Upload"%>
+    </div>
+    <div style="display: none;padding-left:2px;" id="show_ajax_request<%=exhibition_id%>">
+                          <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+    </div>
+</form>
+</div>
+<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;display:none"></iframe>
+

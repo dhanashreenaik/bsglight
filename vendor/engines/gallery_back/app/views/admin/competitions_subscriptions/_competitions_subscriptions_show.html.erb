@@ -1,0 +1,43 @@
+<% if @my_subscription %>
+  <b> MY SUBSCRIPTION :</b><br />
+  <%= @my_subscription.competitions_subscription.to_s %>
+  State : <% @my_subscription.state %><br />
+  <b> My submited artworks : </b><br />
+  <%#*As your subscription is allowing to submit <%= @my_subscription.competitions_subscription.maximum_works_number.to_s  artworks, just the first <%= @my_subscription.competitions_subscription.maximum_works_number.to_s  of the selection list will be submitted.%>
+  <%# if @my_subscription.state == 'validated' %>
+  <%# form_for @current_object, :url => submit_artworks_admin_competition_path(@current_object), :html => { :method => :post } do |f| %>
+      <%#= old_school_switching_lists(
+          :ajax_url => '',
+          :object_id => @current_object.id,
+          :filters_options => '',
+          :remaining_objects => @remaining_artworks,
+          :selected_objects => @selected_artworks,
+          :field => 'title'
+        )
+        %>
+      <%#= f.submit %>
+    <%# end %>
+  <%# else %>
+  <%#*Your payment has to be validated to be able to submit your works.%>
+  <%# end %>
+  <% @selected_artworks.each do |a| %>
+    <%= link_to(image_tag(a.image.url(:thumb).split("?")[0], :class => "image_preview"), item_path(a)) %>
+    <%= a.title %><br />
+  <% end %>
+
+<% elsif @current_object.competitions_subscriptions %>
+  <b> SUBSCRIPTIONS AVAILABLE :</b><br />
+  <% if @current_object.state.nil? %>
+      Subscriptions not open already
+      <% elsif @current_object.state.include?('publish') %>
+      Results or final published.
+      <% else %>
+    <% @current_object.competitions_subscriptions.each do |s| %>
+      <%= s.to_s %>
+      <br/>-------------------------<br />
+    <% end %>
+      <% end %>
+<% else %>
+      <b> SUBSCRIPTIONS AVAILABLE :</b><br />
+    No subscriptions available, please contact the administrator.
+<% end %>

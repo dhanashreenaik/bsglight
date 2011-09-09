@@ -1,0 +1,139 @@
+
+
+ 
+
+
+<style>
+    .changecolorgray{
+        color: #444444;
+        line-height: 15px;
+  }
+</style>
+<script>
+  function checkthebiographyfield(i){
+   /*  alert('m not get called here');
+    if(document.getElementById("biography").value.length == 0 )
+      {
+        alert("please enter biography");
+        return false;
+      }
+      else{
+       
+        return true;
+      }
+     */ 
+     document.getElementById("show_ajax_request"+i).style.display='block'
+  }
+  
+  
+</script>  
+<%title_message_array = ['First Work','Second Work',' Third Work','Fourth Work','Fifth Work','Sixth Work','Seventh Work','Eight Work','Ninth Work','Tenth Work']%>
+<!--
+  <div class="changecolorgray">
+    <%#=link_to_remote "Add Artwork", :update => "",
+           :url => {:action => "add_the_artwork",:competition_id => competition_id,:artwork_count=>artwork_count ,:order_id=>order_id}
+    %>
+ </div>-->
+ 
+ <div id="messageforimageuploaded" style="padding-top:0px;margin-top:-8px">
+<h3>
+<%if !messageforimageuploaded.blank?%>
+  <%=messageforimageuploaded%>
+<%end%>
+</h3>   
+ </div>
+ 
+
+<%if i == total_entry%>
+<h2> Biography
+ </h2>
+<br/>
+    <form action="upload_the_biography" method="post"    id="add_the_artwork_to_competition_biography"  >  
+     <textarea rows="11" cols="46" name="biography" id="biography">
+        
+     </textarea>
+      <br/>
+      <%=hidden_field_tag "total_entry",total_entry%>    
+      <%=hidden_field_tag "order_id",order_id%>  
+       <%= submit_to_remote 'create_btn', 'Proceed', {:url => { :action => 'upload_the_biography' },:before=>"checkthebiographyfield(#{i})",:html=>{:style=>"float: left;margin-right:5px"} }%>
+   </form>  
+ <div style="padding-top: 2px; display: none;" id="show_ajax_request<%=i%>">
+                                   <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+                       </div>
+<script>
+  calleditbrowseimage('<%=com_id%>','<%=order_id%>');
+</script>  
+ 
+<%else%>
+   
+<div  class="inputfont">
+      <form action="upload_the_artwork_to_competition" method="post"  enctype = "multipart/form-data" onsubmit="return  Checkfiles_simple('<%=i%>',false)" id="add_the_artwork_to_competition<%=title_message_array[i]%>" target="upload_frame" >  
+              <%=hidden_field_tag "order_id",order_id%>    
+                 <div class="changecolorgray">
+                      Title (<%=title_message_array[i]%>)
+                 </div> 
+                  <input  name="competitions_user[worktitle]" id="artwork_title<%=i%>"  value="" type="text" style="width:375px; height: 14px;"/>
+                   <div class="changecolorgray">
+                            Medium
+                     </div>   
+                                <input  name="competitions_user[workmedium]" id="artwork_medium<%=i%>"  value="" type="text" style="width:375px;height:14px;"/> 
+                     <div class="changecolorgray">
+                            	<span style="font-size: 10px;margin-right:85px;">width (cm)   </span>
+                                <span style="font-size: 10px;margin-right:75px;">height (cm)  </span>  
+                                <span style="font-size: 10px;">depth (cm) - if 3d work  </span>  
+                     </div>  	
+                     <font style="color:#444444">
+                      	<input  name="competitions_user[worksize1]" id="artwork_width<%=i%>" size="10" value="" type="text" style="width: 113px;height:14px;"/>
+                            x
+                        <input  name="competitions_user[worksize2]" id="artwork_height<%=i%>" size="10" value="" type="text" style="width: 113px;height:14px;"/>
+                            x
+                         <input  name="competitions_user[worksize3]" id="artwork_depth<%=i%>" size="10" value="" type="text" style="width: 113px;height:14px;"/> 
+                      </font>
+                      <div class="changecolorgray"> 
+                          <span style="padding-right:100px">
+                               Price
+                           </span> 
+                          <span style="padding-right:75px;padding-left:8px;">
+                               <!--Edition From-->Edition- if applicable
+                          </span> 
+                        <!--<span>
+                               Edition Number
+                          </span>-->
+                        
+                      </div> 
+                           <input  name="competitions_user[workprice]" id="artwork_price<%=i%>" style="width: 113px;height: 14px;" value="" type="text"/>
+                           <input  name="competitions_user[editionname]" id="artwork_edition_name<%=i%>" size="40" value="" type="text" style="width: 105px;height: 14px;margin-left:10px;"/>
+   <!--<span style="padding-right:3px;margin-left:3px;color:#444444">of</span><input  name="competitions_user[editionnumber]" id="artwork_edition_number<%=i%>" size="40" value="" type="text" style="width: 113px;height: 14px;"/>-->
+                        <div class="changecolorgray">    
+                        	 Image 
+                    	 </div>
+                      	 <input  name="competitions_user[workimage]" id="artwork_image<%=i%>" type="file" size="26" style="float:left"/>
+                       <div style="float:left;margin-left:30px;">  
+                         <%= submit_tag 'Upload'%>
+                       </div> 
+                       <div style="display: none;padding-top:2px;float:left;margin-left:11px;" id="show_ajax_request<%=i%>">
+                                   <img height="20" src="/images/ajax-spinner.gif" alt="loading"/>
+                       </div>  
+                         
+                      
+                      <input type="hidden" name="competitionuserid" id="competitionuserid" value="<%=order_id%>"/>
+        </form>
+       </div>
+      
+                
+                  
+
+<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;display:none"></iframe>
+<%end%>
+
+ 
+  
+<script>
+scrollStep=500;
+timerLeft="";
+timerRight="";
+  function scrollDivRight(id){
+  document.getElementById(id).scrollLeft+=scrollStep;
+  }
+ scrollDivRight('container');
+</script>  

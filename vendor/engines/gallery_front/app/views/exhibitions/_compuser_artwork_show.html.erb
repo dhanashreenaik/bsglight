@@ -1,0 +1,52 @@
+<%
+  image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']	
+  title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle'] 
+  medium_array = ['fworkmedium','sworkmedium','tworkmedium','foworkmedium','fiworkmedium','siworkmedium','seworkmedium','eworkmedium','nworkmedium','teworkmedium']
+  size_array = ['fworksize','sworksize','tworksize','foworksize','fiworksize','siworksize','seworksize','eworksize','nworksize','teworksize']
+  price_array = ['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']
+%>
+<%i=0%>
+<%for eachimage in image_array%>
+  <%if  !object.send(eachimage.to_sym).blank? %>
+          <div id="iteam" class="iteam">
+              <div id ="details" style="display:none;line-height:8px;">
+                
+                <p style="white-space: normal;">
+                   <font size=2px><%=(object.send title_array[i]).split.each{|m|m.capitalize!}.join(" ") %></font>
+                </p>
+                <p style="white-space: normal;">
+                <%= object.send(medium_array[i].to_sym).capitalize  %>
+                </p>
+                <p style="white-space: normal;">
+                <%= object.send(size_array[i].to_sym).split('x').each{|m|m.capitalize!}.join(' x ')  %> cm
+                </p>
+
+                  <%# if object.edition_name %>
+                  <%#= 'Edition '+object.edition  %>
+                <% #end %>
+                
+                <% if object.send(price_array[i].to_sym) %>
+                <p style="white-space: normal;">
+                  <%= '$' + object.send(price_array[i].to_sym).to_s %>
+                </p>
+                <% end %>
+
+          <%#=object.is_purchasable%> 
+                 <div id="shoppingcartlink<%=object.id%><%=object.class.to_s%><%=eachimage.to_s%>">
+                <% if @current_user &&  (!session[:cart].blank? && !session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s) ||    object.user_id != @current_user.id)  %>
+                  <%#= link_to '<font color="white">add to the cart</font>', add_to_cart_admin_orders_path(:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1) %>
+                <%#=link_to "<font color='white'>add to cart</font>" ,{:controller=>"shoppingcart",:action=>"add_to_cart",:orderable_type => object.class.to_s, :orderable_id => object.id, :number => 1}%>
+                 <%=link_to_remote '<img src="/images/buy.jpeg"/>', :update => "",
+    :url => {:controller=>"shoppingcart",:action=>"add_to_cart",:orderable_type => object.class.to_s , :orderable_id => object.id, :number => 1,:eachimage=>eachimage.to_s}%>
+                <% end %>
+                  </div>
+                <%= "already in the cart !!" if  @current_object && !session[:cart].blank? &&  session[:cart].has_key?(object.class.to_s+'_'+object.id.to_s) %>
+                    <%if current_user.blank?%>
+                           <a href="/login/?msg=buyartwork-<%=params[:action]%>" method='post' ><img src="/images/buy.jpeg"/> </a>
+                    <%end%>
+              </div>
+            <img src="/system/gallery/<%=object.send(eachimage.to_sym)%>" height="400" />
+          </div>
+ <%end%>         
+<%i=i+1%>
+<%end%>          

@@ -1,0 +1,145 @@
+<div id="container" >
+<%# form_for :competitions_subscriptions, :url => submit_admin_competitions_subscriptions_path, :html => { :method => :post, :id => 'form' } do |f| %>
+<form method="post" id="form" enctype="multipart/form-data" class="new_competition" action="http://localhost:3000/admin/competitions">  
+<div class="objectList small">
+
+					<div class="blockCornerLeft"></div>
+				<div class="blockElementHeader sixH" style="width:920px;">
+					<span id="item_count">Enter Competition</span>
+				</div>
+				<div class="blockCornerRight"></div>
+				<div class="contentList filtered sixH" style="width:920px;">
+<p>				
+Please fill out the form below and make your payment via the options indicated. We will email you a receipt once we receive payment and notify you by Wed 1 Sept whether you are a finalist.				
+</p>
+  <%#= f.text_field :submission_deadline, :label => 'Deadline for submission', :id => 'datepicker', :ajax => false  %>
+
+ <label>Name:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Enail Address:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Street:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Suburb:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Post Code:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Mobile:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>No of Works?</label> 
+<div class="formElement">
+  <select name="">
+    <option value="1">1</option>
+    <option value= "2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+
+</div>
+
+<label>Method of Payment:</label> 
+<div class="formElement">
+  <select name="">
+	<option value="Paypal (mark@bsgart.com.au)">Paypal (mark@bsgart.com.au)</option>
+	<option value="Direct Debit (BSB 063212  AC 1017 2051)">Direct Debit (BSB 063212  AC 1017 2051)</option>
+	<option value="Credit Card">Credit Card</option>
+	<option value="Cheque">Cheque</option>
+	<option value="Cash">Cash</option>
+
+  </select>
+
+</div>
+
+
+<label>If Credit card No. on card:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Card No.:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Expiry Date.:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>Where did you hear about the BSG Prize?</label> 
+<div class="formElement">
+  <select name="">
+    <option value="Flier">Flier</option>
+    <option value= "Age">Age</option>
+    <option value="Art Almanac">Art Almanac</option>
+    <option value="Art Guide Australia">Art Guide Australia</option>
+    <option value="Australian Art Collector">Australian Art Collector</option>
+    <option value="BSG Website">BSG Website</option>
+    <option value="Other Website">Other Website</option>
+    <option value="NAVA Website">NAVA Website</option>
+    <option value="Artshub">Artshub</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
+<label>If other, where?</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>First Work Title:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>First Work Medium:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>First Work Size (cm):</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+<label>First Work Price:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+
+<label>First Work Price:</label> 
+<div class="formElement">
+ <%= text_field :prizes_total_amount, :label => 'Prizes total amount:', :hint => 'Should be an integer representing AUD'  %>
+</div>
+
+
+      <button class='submitButton' type='submit'>
+          <span>Enter Competition</span>
+        </button>
+
+  
+</div>
+</div>
+</div>
+<%# end %>
+</form>
+</div>

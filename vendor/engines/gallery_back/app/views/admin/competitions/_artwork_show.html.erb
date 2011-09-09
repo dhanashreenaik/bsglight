@@ -1,0 +1,27 @@
+
+<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']	%>
+<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']	%>
+<%price_array=['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']%>
+<%j=0%>
+<%for image in  image_array%>
+   <%if (object.send title_array[j]) != nil  && !(object.send image_array[j]).blank? %>
+                   
+                        
+                                            <tr>
+                                               <td>
+                                                  <img src="/system/gallery/<%=object.send image_array[j]%>" alt="" height="152"  width="200" style="border: 1px solid red;padding-top:5px;">
+                                                </td>
+                                                <td>
+                                                          <%=  object.send title_array[j] %>                            
+                                                </td>
+                                                <td>
+                                                 <%=  object.user.profile.full_name %>                            
+                                                </td>
+                                                
+                                            </tr>
+                                
+                                
+      <%end%>
+<%j=j+1%>
+<%end%>
+

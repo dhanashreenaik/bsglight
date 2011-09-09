@@ -1,0 +1,24 @@
+<%= f.hidden_field :id %>
+
+<%= f.text_field :title, :label => 'Title: ' %>
+
+<% f.field :image, :label => I18n.t('image.field.image_label') + ":" do %>
+  <%= File.basename(f.object.image.url) + '<br />' if f.object.image_file_name %>
+  <%= file_field "#{num}[artwork]", 'image', :class => 'file', :value=> (f.object.image.url ? f.object.image.url : ""),
+    :onChange=>"LimitAttach(this.form, this.form.image_image.value,
+  ['.gif', '.jpg', '.jpeg', '.png', '.bmp','tiff'],
+  \"#{I18n.t('item.common_word.invalid_type_alert', :types => ['.gif', '.jpg', '.jpeg', 'png', '.bmp'].join(', '))}\")" %>
+  <%= ajax_error_message_on(f.object, "image") %>
+<% end %>
+
+<%= f.text_field :medium, :label => 'Medium: ' %>
+
+<label>
+  Size:
+</label>
+<div class="formElement">
+  <%= text_field_tag "#{num}[artwork][width]", f.object.width, :style => "width:80px;" %> x <%=  text_field_tag "#{num}[artwork[height]]", f.object.height, :style => "width:80px;" %> x <%=  text_field_tag "#{num}[artwork][depth]", f.object.depth, :style => "width:80px;" %> cm
+  <%= ajax_error_message_on(f.object, "width") %>
+  <%= ajax_error_message_on(f.object, "height") %>
+  <%= ajax_error_message_on(f.object, "depth") %>
+</div>

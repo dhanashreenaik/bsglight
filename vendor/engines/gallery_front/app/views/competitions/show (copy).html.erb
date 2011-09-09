@@ -1,0 +1,108 @@
+<div id="specific_menu">
+  <% if @competitions.first %>
+    <% for i in 0..(@competitions.size-1) %>
+      <% if [0,5,10,15,20,25,30,35,40,45].include?(i) %>
+        <div id='nav_3'><ul>
+          <% end %>
+          <li><a href='<%= "/competitions/#{@competitions[i].id}"%>'><%= @competitions[i].title %></a></li>
+          <% if [4,9,14,19,24,29,34,39,44,49].include?(i) || i == (@competitions.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="specific_menu">No competitions available ...</div>
+  <% end %>
+</div>
+
+</div>
+
+<div id="container">
+  <% if @competition %>
+    <div id="description">
+      <div id="content">
+
+        <h2><%= @competition.title %></h2>
+	<p>
+	<h4>$<%=@competition.prizes_total_amount%> in PRIZES</h4>
+	<%=@competition.prizes_detail%>
+	</p>
+	
+	<p>
+	<h4>Location</h4>
+	<%=@competition.location%>
+	</p>
+	
+	<p>
+	<h4>EXHIBITION DATES</h4>
+	 <%=@competition.exhibition_date%> 
+	
+	</p>
+	
+
+	
+	<p>
+	<h4>DEADLINE FOR ENTRIES</h4>
+	<%=@competition.submission_deadline%>
+	</p>
+	
+	
+	
+	
+	
+	
+	<p>
+	<h4>NUMBER OF ENTRIES</h4>
+	Each artist may submit up to <%=@competition.no_of_entry%> works in any medium inc sculpture and video.
+	</p>
+	
+	<p>
+	<h4>FRAMING</h4>
+		<%=@competition.framing%>
+	</p>
+	
+	
+	
+	<p>
+	<h4>ENTRY FEES</h4>
+		<%=@competition.entry_fees%>
+	</p>
+	
+	<p>
+	<h4>FORMAT</h4>
+		<%=@competition.format%>
+	</p>
+	
+	<p>
+	<h4>DELIVERY</h4>
+		<%=@competition.delivery%>
+	</p>
+	
+	
+	<p>
+	<h4>COLLECTION</h4>
+		<%=@competition.collection%>
+	</p>
+	
+	
+	
+	
+	<p>
+	<h4>COMMISSION ON SOLD WORKS</h4>
+		<%=@competition.commission%>
+	</p>
+	
+	<p>
+	<h4>INSURANCE</h4>
+		<%=@competition.insurance%>
+	</p>
+        <p>
+	
+          <!--Click <%#= link_to 'here', item_path(@competition) %> to enter competition. Scroll down the competition view and select the subscription fitting your need.-->
+	  <%= link_to 'Click here', enter_admin_competitions_subscriptions_path %>
+        </p>
+      </div>
+    </div>
+  <% else %>
+  No competition available.
+  <% end %>
+</div>

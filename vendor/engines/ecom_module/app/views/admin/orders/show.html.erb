@@ -1,0 +1,89 @@
+<% blank_main_div(:title => @current_object.new_record? ? 'My cart' : @current_object.title, :size => 'sixH') do %>
+<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']	%>
+<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']	%>
+<%price_array=['fworkprice','sworkprice','tworkprice','foworkprice','fiworkprice','siworkprice','seworkprice','eworkprice','nworkprice','teworkprice']%>
+
+<%size_array = ['fworksize','sworksize','tworksize','foworksize','fiworksize','siworksize','seworksize','eworksize','nworksize','teworksize']%>
+    <b>Client name :</b>
+    <%=h @current_object.client.profile.full_name %><br />
+    <b>Order details :</b>
+    <table id="order_lines">
+  <thead>
+  <tr>
+    <th>Product</th>
+    <th>Unit price</th>
+    <th>Quantity</th>
+    <th>Final price</th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @current_object.order_lines.each do |ol| %>
+  <%if   ol.orderable_type.to_s.include?("CompetitionsUser")%>  
+  <tr>
+    <th><%= ol.orderable.send title_array.fetch(image_array.index(ol.imagename)) %></th>
+    <th><%= ol.orderable.send price_array.fetch(image_array.index(ol.imagename)) %></th>
+    <th><%= ol.number %></th>
+    <th><%= ol.number * (ol.orderable.send price_array.fetch(image_array.index(ol.imagename))).to_i %></th>
+    <th>
+      <%#= link_to 'Show', item_path(ol.orderable) %>
+      <%= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id.to_s+"_"+ol.imagename) if @current_object.new_record? %>
+    </th>
+  </tr>
+  <%else%>
+  <tr>
+    <th><%= ol.orderable.title %></th>
+    <th><%= ol.orderable.price %></th>
+    <th><%= ol.number %></th>
+    <th><%= ol.number * ol.orderable.price %></th>
+    <th>
+      <%#= link_to 'Show', item_path(ol.orderable) %>
+      <%= link_to 'Remove', remove_from_cart_admin_orders_url(:orderable_type => ol.orderable_type, :orderable_id => ol.orderable_id) if @current_object.new_record? %>
+    </th>
+  </tr>
+  <%end%>
+  
+  <% end %>
+  </tbody>
+    </table>
+    <br />
+    <b>Total amount :</b>
+    <%=h @current_object.total_amount %> AUD<br />
+    <% if !@current_object.new_record? %>
+    <b>Completed at :</b>
+    <%=h @current_object.completed_at %><br />
+    <% end %>
+
+<% end %>
+<div id="modal_space">
+</div>
+<div class="rightBlocks">
+  <div class="itemShowRightBlock">
+    <% if !@current_object.new_record? %>
+        <%= I18n.t('general.field.created_at')+' '+I18n.l(@current_object.created_at, :format => :verb) %><br />
+        <%= I18n.t('general.field.updated_at')+' '+I18n.l(@current_object.updated_at, :format => :verb) %>
+        <% else %>
+        <%= I18n.t('general.field.created_at')+' '+I18n.l(Time.now, :format => :verb) %>
+        <% end %>
+  </div>
+
+  <div class="itemShowRightBlock">
+  
+    <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">What can I do?</div><div class="blockCornerRight"></div>
+    <div class="blockElementBody">
+      <!-- TODO TRANSLATE -->
+    
+      <% if !@current_object.new_record? %>
+        <%= link_to I18n.t('general.link.back_to_list'), admin_orders_path %>
+      <% else %>
+           <%    if !@current_object.order_lines.empty?%>
+                         <%= link_to_remote 'Complete the order',:url=>complete_order_admin_orders_path ,:update => 'update_payment', :method => :get%>
+            <%end%>             
+      <% end %>
+    </div>
+  </div>
+
+</div>
+  <div id="update_payment">
+      </div>
+

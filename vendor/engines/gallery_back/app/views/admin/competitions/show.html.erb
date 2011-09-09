@@ -1,0 +1,1145 @@
+
+<link rel="stylesheet" href="/stylesheets/validationEngine.jquery.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+<link rel="stylesheet" href="/stylesheets/template.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+
+<%if  @my_subscription.blank?  and current_user.login != "admin"  and  current_user.login != "superadmin"%>
+  <% item_show( :title => 'Competition',  :object => @current_object ) do %>
+    	<div id="competitionformscroll" style="overflow:auto;height:500px;margin:60px 60px 60px 60px; "   onscroll="$.validationEngine.closePrompt('.formError',true)">
+      	<div class="mandatory_fields">
+        	<%=flash[:notice]%>
+      	</div>
+      	<form method="post"   id="competition_form"  action="/admin/competitions/create_subscribe_competition" enctype="multipart/form-data" onsubmit="return check_term(); ">
+    				<table>
+      				<tbody><tr>
+    							<td valign="top">
+    								<strong>Name</strong>
+    							</td>
+        						</tr>
+        						<tr>	
+      							<td valign="top">
+    								<input   name="competitions_user[name]" id="competitions_user_name" size="40" value="<%=current_user.profile.first_name + ' ' +current_user.profile.last_name%>" type="text" >
+      							</td>
+        						</tr>
+        						<tr>
+      							<td valign="top">
+        								<strong>Email Address</strong>
+      							</td>
+        						</tr>
+        						<tr>		
+      							<td valign="top">
+    								<input name="competitions_user[email]" id="competitions_user_email" size="40" value="<%=current_user.profile.email_address%>" type="text">
+      							</td>
+        						</tr>
+          						<tr>
+	      						<td valign="top">
+	    							<strong>Address</strong>
+	      						</td>
+	        					</tr>
+	        					<tr>			
+	      						<td valign="top">
+	      							<input name="competitions_user[address]" id="competitions_user_address" size="40" value="<%=current_user.profile.address%>" type="text">
+	    							</td>
+	      					</tr>
+      						<tr>
+	    						<td valign="top">
+	    							<strong>Suburb</strong>
+	    						</td>
+	    					</tr>
+	    					<tr>			
+	    						<td valign="top">
+	    							<input name="competitions_user[suburb]" id="competitions_user_suburb" size="40" value="<%=current_user.profile.suburb%>" type="text">
+	    						</td>
+	    					</tr>
+    						<tr>
+	    						<td valign="top">
+	    							<strong>Post Code</strong>
+	    						</td>
+	    					</tr>
+	    					<tr>			
+	    						<td valign="top">
+	  							<input name="competitions_user[post_code]" id="competitions_user_post_code" size="40" value="<%=current_user.profile.zip_code%>" type="text">
+	  							</td>
+	    					</tr>
+    						<tr>
+  							<td valign="top">
+  								<strong>How did you here about the Prize</strong>
+  							</td>
+  						</tr>
+					  	<tr>			
+						  	<td valign="top">
+						  	   <%if  @current_object.how_did_you_here.blank?%>
+						      		<%option = ["BSG Website"]%>
+						    		<%else%>
+						      		<%option = @current_object.how_did_you_here.split(",")%>
+						    		<%end%>
+						      		<select name="competitions_user[here_prize]" id="competitions_user_here_prize">
+						      	  <%option.each do |opt|%>
+								        <option value="<%=opt%>"><%=opt%></option>
+								      <%end%>
+								    </select>
+								</td>
+					  	</tr>
+            	<tr>
+							<td valign="top">
+								<strong>If other where?</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<input name="competitions_user[others]" id="field-073dae70373b224" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+                        <script type="text/javascript">
+						function change_entry_fee_value()
+						{
+						changed_value = 0
+						for (myvalue=0;myvalue<=document.getElementById('field-5da43579005846d').selectedIndex;myvalue++)
+						{
+
+						changed_value = changed_value + parseInt(document.getElementById('mychangevalue'+myvalue).value)
+					    }
+					    
+						   document.getElementById("change_entry_fee").value=changed_value;
+						}
+						
+						
+						</script>
+						<tr>
+							<td valign="top">
+								<strong>How Many Entries?</strong>
+							</td>
+							</tr>
+						<tr>		
+							<td valign="top">
+								<select name="competitions_user[total_entry]" id="field-5da43579005846d" onChange="change_entry_fee_value();">
+								<option value="0">0</option>
+								     <%i=1%>
+									<%@current_object.entry_fees.each do |x|%>
+									<option value="<%=i%>"><%=i%></option>
+									<%i=i+1%>
+									<%end%>
+								</select>
+								<%#first_value=0%>
+								<%#@current_object.entry_fees.each do |first|%>
+								<%#first_value=first.split('$')[1]%>
+								<%#break%>
+								<%#end%>
+								<!--$<input type="text" id="change_entry_fee" style="width:40px;padding:0px;height:22px;"  value="<%#=first_value%>" />-->
+								$<input type="text" id="change_entry_fee" style="width:40px;padding:0px;height:22px;"  value="0" />
+							</td>
+						</tr>
+						
+							     <input type="hidden" id="mychangevalue0" value="0">
+							      <%i=1%>
+							   	  <%@current_object.entry_fees.each  do |x|%>
+								  <input type="hidden" id="mychangevalue<%=i%>" value="<%=x.split('$')[1]%>">
+								  <%i=i+1%>
+								  <%end%>			
+						
+						<tr>
+							<td valign="top">
+								<strong>Payment</strong>
+
+							</td>
+						</tr>
+						<tr>			
+						<script type="text/javascript">
+						function show_popup_for_cc(datesend)
+						{
+                    
+						 if (parseInt(document.getElementById('field-ca58a8718fa4e8f').selectedIndex) == 1  )
+						 {
+						//document.getElementById('clickbutton').click();
+						$.validationEngine.buildPrompt("#field-ca58a8718fa4e8f","You will need to bring cheque into the gallery at 322 brunswick st,fitzroy tue-thu 10-6 pm before"+datesend
+						,'error')
+						}
+
+                        if (parseInt(document.getElementById('field-ca58a8718fa4e8f').selectedIndex) == 2)
+						 {
+						//document.getElementById('clickbutton').click();
+						$.validationEngine.buildPrompt("#field-ca58a8718fa4e8f","You will need to bring cash into the gallery at 322 brunswick st,fitzroy tue-thu 10-6 pm before"+datesend
+						,'error')
+						}
+						
+						if (parseInt(document.getElementById('field-ca58a8718fa4e8f').selectedIndex) == 0 || parseInt(document.getElementById('field-ca58a8718fa4e8f').selectedIndex) == 3  )
+						    $.validationEngine.closePrompt("#field-ca58a8718fa4e8f",false)
+						}
+						
+						
+						</script>
+							<td valign="top">
+							
+								<select name="competitions_user[payment_type]" id="field-ca58a8718fa4e8f"  onChange="show_popup_for_cc('<%=@current_object.submission_deadline.strftime('%Y/%m/%d')%>');">
+									<option value="Paypal (mark@bsgart.com.au)">Paypal (mark@bsgart.com.au)</option>
+									<!--<option value="Debit Card (BSB 062 312 AC NO 1017 2051)">Debit Card (BSB 062 312 AC NO 1017 2051)</option>-->
+									<option value="Cheque">Cheque</option>
+									<option value="Cash">Cash</option>
+
+									<option value="Credit Card">Credit Card</option>
+								</select>
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>If Credit Card Name on Card</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								
+								<input   name="competitions_user[card_name]" id="field-6c20a07dddae414" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Card Number</strong>
+							</td>
+						</tr>
+
+						<tr>		
+							<td valign="top">
+								
+								<input  name="competitions_user[card_number1]" id="field-f8ce18fd9a4fd41c" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:40px;height:22px;" onkeyup="check_four_digit_and_change_focus('field-f8ce18fd9a4fd42c','field-f8ce18fd9a4fd41c',4);">
+								<input  name="competitions_user[card_number2]" id="field-f8ce18fd9a4fd42c" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:40px;height:22px;" onkeyup="check_four_digit_and_change_focus('field-f8ce18fd9a4fd43c','field-f8ce18fd9a4fd42c',4);">
+								<input  name="competitions_user[card_number3]" id="field-f8ce18fd9a4fd43c" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:40px;height:22px;" onkeyup="check_four_digit_and_change_focus('field-f8ce18fd9a4fd44c','field-f8ce18fd9a4fd43c',4);">
+								<input  name="competitions_user[card_number4]" id="field-f8ce18fd9a4fd44c" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:40px;height:22px;" onkeyup="check_four_digit_and_change_focus('field-ab390d1ac553a01','field-f8ce18fd9a4fd44c',4);">
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Expiry Date(mm/yy)</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								
+								<input   name="competitions_user[exp_date1]" id="field-ab390d1ac553a01" size="10" value="" type="text"  style="padding:0px 2px 0px 0px;width:20px;height:22px;"  onkeyup="check_four_digit_and_change_focus('field-ab390d1ac553b01','field-ab390d1ac553a01',2);"/>
+								/ &nbsp;<input   name="competitions_user[exp_date2]" id="field-ab390d1ac553b01" size="10" value="" type="text"  style="padding:0px 2px 0px 0px;width:20px;height:22px;"  onkeyup="check_four_digit_and_change_focus('field-ab390d1ac553d81','field-ab390d1ac553b01',2);"/>
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>Verification Code</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<input    name="competitions_user[varification_code]" id="field-ab390d1ac553d81" size="40" value="" type="text" style="width:40px;height:15px;"   >
+								
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>1st Work Title:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<input  name="competitions_user[fworktitle]" id="field-28b2641aed510f0" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Medium:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<input  name="competitions_user[fworkmedium]" id="field-35aefdde6159fe0" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Size (cm):</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								
+ 								<input  name="competitions_user[fworksize1]" id="field-c65f89902a9847f" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+                                x
+                       			<input  name="competitions_user[fworksize2]" id="field-c65f89902a9847g" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+                                x
+                       			<input  name="competitions_user[fworksize3]" id="field-c65f89902a9847h" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+                                                							
+ 							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Price:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+							<input  name="competitions_user[fworkprice]" id="field-a94ac5a259d7675" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>1st Work Image:</strong>
+							</td>
+						</tr>
+						<tr>		
+							<td valign="top">
+								<input  name="competitions_user[fworkimage]" id="field-7a24db800403e5f" type="file">
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Title:</strong>
+							</td>
+						</tr>
+						<tr>			
+							<td valign="top">
+								<input name="competitions_user[sworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[sworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[sworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[sworksize2]" id="field-b8077a68b677219" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[sworksize3]" id="field-b8077a68b677229" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+								
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[sworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>2nd Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[sworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>
+						
+						
+						
+						
+							<tr>
+							<td valign="top">
+								<strong>3rd Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[tworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[tworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[tworksize1]" id="field-b8077a68b677209" size="10" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[tworksize2]" id="field-b8077a68b677209" size="10" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[tworksize3]" id="field-b8077a68b677209" size="10" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[tworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>3rd Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[tworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>4th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[foworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[foworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[foworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;" >
+								X<input name="competitions_user[foworksize2]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;" >
+								X<input name="competitions_user[foworksize3]" id="field-b8077a68b677219" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;" >
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[foworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>4th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[foworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>5th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[fiworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[fiworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[fiworksize1]" id="field-b8077a68b677209" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[fiworksize2]" id="field-b8077a68b677209" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[fiworksize3]" id="field-b8077a68b677209" size="10" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[fiworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>5th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[fiworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>6th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[siworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[siworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[siworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[siworksize2]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[siworksize3]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[siworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>6th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[siworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>7th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[seworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[seworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[seworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[seworksize2]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[seworksize3]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[seworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>7th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[seworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>8th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[eworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[eworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[eworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" 	style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[eworksize2]" id="field-b8077a68b677209" size="40" value="" type="text" 	style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[eworksize3]" id="field-b8077a68b677209" size="40" value="" type="text" 	style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[eworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>8th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[eworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>9th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[nworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text" >
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[nworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[nworksize1]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[nworksize2]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[nworksize3]" id="field-b8077a68b677209" size="40" value="" type="text" style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[nworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>9th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[nworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	<tr>
+							<td valign="top">
+								<strong>10th Work Title:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[teworktitle]" id="field-8ef76d662221b2a" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Medium:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[teworkmedium]" id="field-07a39cbb03cfd62" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Size (cm):</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[teworksize1]" id="field-b8077a68b677209" size="40" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[teworksize2]" id="field-b8077a68b677209" size="40" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								x<input name="competitions_user[teworksize3]" id="field-b8077a68b677209" size="40" value="" type="text"  style="padding:0px 2px 0px 0px;width:25px;height:22px;">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Price:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[teworkprice]" id="field-21af3e82aabe344" size="40" value="" type="text">
+								
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<strong>10th Work Image:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+								<input name="competitions_user[teworkimage]" id="field-c26d1e8a3222e06" type="file">
+								
+							</td>
+						</tr>	
+						
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>Return of Artwork:</strong>
+							</td>
+
+	</tr><tr>						<td valign="top">
+	                    
+	                                 <%if  @current_object.return_of_artwork.blank?%>
+								            <%option = ["I Will Pick Up On Last Day Of  The Competition"]%>
+								    <%else%>
+								            <%option = @current_object.return_of_artwork.split(",")%>
+								    <%end%>
+	                            
+								<select name="competitions_user[return_of_artwork]" id="field-6360fe4d6ac1957">
+								 <%option.each do |opt|%>
+								  <option value="<%=opt%>"><%=opt%></option>
+								  <%end%>
+								
+								</select>
+
+								
+							</td>
+						</tr>
+						
+						<tr>
+							<td valign="top">
+								<strong>Bank Account (For payment if work sold - include BSB):</strong>
+							</td>
+							</tr>
+							<tr>
+							<td valign="top">
+								Bank Account:-
+								<br/>
+								
+								<%=text_field "competitions_user","bank_account"%>
+							</td>
+							</tr>
+							<tr>
+							<td>	
+								BSB No:-
+								<br/>
+								
+								<%=text_field "competitions_user","bsb_no"%>
+								
+							</td>
+						</tr>
+						
+						
+						<!--<tr>
+							<td valign="top">
+								<strong>At The End Of Show:</strong>
+							</td>
+							</tr>
+							<tr>
+							<td valign="top">
+									<select name="competitions_user[at_end_work]" >
+									<option value="I will pick up unsold work">I will pick up unsold work</option>
+									<option value="I will organise a courier">I will organise a courier</option>
+									<option value="Please send back COD">Please send back COD</option>
+								</select>
+
+								
+							</td>
+						</tr>-->
+						
+						
+						<tr>
+							<td valign="top">
+								<strong>Biography (500 words or less):</strong>
+							</td>
+							</tr>
+							<tr>
+							<td valign="top">
+								<textarea name="competitions_user[biography]" id="field-9bf7ef24509d728" rows="6" cols="40"></textarea>
+
+								
+							</td>
+						</tr>
+						
+						<tr>
+							<table >
+								<tr>
+									<td >
+										<strong><input name="agree" id="term_and_condition" value="Agree" type="radio" style="width:15px;">I agree to the terms and conditions</strong>
+									</td>
+								</tr>	
+								
+							</table>	
+						</tr>
+											</tbody>
+					</table>
+					
+					<%=hidden_field_tag "competion_id",@competition.id%>
+					<%#=submit_tag "Submit"%>
+					<button class="submitButton" type="submit" onclick="close_error">
+						<span>Submit</span>
+					</button>
+					
+					
+		</form>
+		<div id="popupContact" style="background-color:lightblue;width:300px;height:100px;display:none;top:350px;margin-top:150px;">
+		<a id="popupContactClose" style="padding-left:280px">x</a>
+	   <br/>
+	   Send cheque to BSG 322 Brunswick St, Fitzroy, 3065 with your name on it or drop into the gallery 10-6pm Tue-Fri before (<%=@current_object.submission_deadline%>)
+
+	</div>
+	</div>	
+<%end%>
+	
+<%else%>
+<%#else of @my_subscription.blank? %>
+	<% item_show( :title => 'Competition',  :object => @current_object ) do %>
+       <%=render :partial=>"show_slide_show",:locals=>{:firstslide=>@firstslide}%>
+          <table>
+            <tr>
+              <td>
+                <b> Start Date </b> 
+              </td>
+              <td>  
+                <%if !@current_object.timing.blank?%>
+                      <%= @current_object.timing.starting_date.strftime("%d %b %y") %>
+                <%end%>
+              </td>
+            </tr> 
+
+
+          <tr>
+              <td>
+                <b> End Date </b> 
+              </td>
+              <td>
+                <%if !@current_object.timing.blank?%>
+                      <%= @current_object.timing.ending_date.strftime("%d %b %y") %>
+                <%end%>
+              </td>
+          </tr>
+         <tr>
+           <td>
+                      <b> Deadline for submission </b> 
+           </td>
+           <td>
+             <%if !@current_object.submission_deadline.blank?%>
+                        <%= @current_object.submission_deadline %>
+                    <%end%>
+           </td>
+        </tr>
+        
+           <%prize_array = []%>
+              <%if  @current_object.prizes_detail%>
+		  <% @current_object.prizes_detail.each do |st| %>
+			<%prize_array << st%>
+		  <%end%>
+	      <%end%>		
+	   
+	   <%if  @current_object.prizes_detail%>
+                    <tr>					  
+                      <td valign="top">   <b>Prize Details </b> </td>
+                    <td>  
+	         <% prize_array.each do |st| %>
+                        <%=st%>
+                        </br>
+                   <%end%>
+                    </td> 
+                  </tr>  
+	          <%end%>		
+	  <tr>					  
+                      <td>  <b>Judges </b>
+                      </td>
+                       <td> 
+	                   <%=@current_object.cjudges %></td>
+           </tr>
+           <tr>
+             <td>
+             <b>Commission </b> </td>
+             <td>
+                <%= @current_object.commission  %>
+             </td>
+           </tr>
+            <tr>					  
+               <td>
+				  <b>Artists </b> </td>
+               <td>       
+				  <%=@total_artist%></td>
+               
+	 </tr>
+         <tr>
+           <td>
+             <b>Entries </b> </td>
+           <td>
+			<%=@total_entry%>
+           </td> 
+         </tr>
+         <tr>					  
+                      <td>		  <b>Selected </b></td>
+                      <td>
+				 <%=@total_selected%></td>
+         </tr>
+         <tr>					  
+                      <td>	  <b>May be </b> </td>
+          <td>            
+		<%=@total_maybe%></td>
+	 </tr>
+         <tr>					  
+                      <td>	  <b>Unselected </b> </td>
+
+         <td><%=@total_unselected%></td>
+          </tr>
+          <tr>					  
+                      <td>	  <b>Winner </b> </td>
+          <td>            
+		<%=@winner_selected%></td>
+	 </tr>
+          
+          
+          <tr>					  
+                <td>
+	 	  <b>Payment  </b> 
+                </td>
+                 <td>     
+				 <%=@total_price%>
+                 </td>
+	 </tr>
+         <tr>					  
+                <td>
+	 	  <b>Gallery  </b> 
+                </td>
+                 <td>     
+				 <%=@current_object.timing.places_id%>
+                 </td>
+	 </tr>
+          </table> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <% if @current_user.has_system_role('admin') || @current_user.has_system_role('judge') || @current_object.state.include?('results_publish') || @current_user.login =="superadmin" ||@current_object.state.include?('final_published') %>
+                    <%if !@current_object.state.include?('open')%>
+					<b>Artworks List</b><br />
+						  <%if @artworks_competitions.first %>
+							      <div class="artworkcomp">
+								  <table class="compuser">
+								    <thead>
+								    <tr>
+								      <th>Thumbs</th>
+								      <th>Title</th>
+								      <th>Artist</th>
+								      <th>State</th>
+								        <% if @current_object.state == 'results_publish'  and (current_user.login == "admin" or   current_user.login == "superadmin")%>
+								        <th>Send Winner Email</th>
+								        <%end%>
+								        <% if @current_object.state == 'results_publish' %>
+								         <th>Marks</th>
+								        <%end%>
+								        
+								      <th></th>
+								    </tr>
+								    </thead>
+
+								    <% form_for 'marks_list', :url => set_marks_admin_artworks_competitions_url, :html => { :method => :post } do %>
+										    <tbody>
+											<%image_array = ['fworkimage','sworkimage','tworkimage','foworkimage','fiworkimage','siworkimage','seworkimage','eworkimage','nworkimage','teworkimage']	%>
+											<%title_array = ['fworktitle','sworktitle','tworktitle','foworktitle','fiworktitle','siworktitle','seworktitle','eworktitle','nworktitle','teworktitle']	%>
+												    <% @artworks_competitions.each do |a| %>
+												            <%#j=0%>
+												 	                     <%#for image in image_array%>
+												                                         <%if  a.competitions_user!=nil%>
+													                                         <%if  (a.competitions_user.send a.image_name) != nil %>  
+														                                          <%if  (a.competitions_user.send a.image_name).blank? == false%>
+														                                        <tr>
+																	                                <td>
+															                                      	<%= link_to(image_tag("/system/gallery/#{a.competitions_user.send a.image_name}", :class => "image_preview",:width=>50,:height=>50)	, "#")%>
+																	                                </td>
+																	                                <td><%= a.competitions_user.send title_array[image_array.index(a.image_name)]%></td>
+																	                                <td><%= a.competitions_user.user.profile.full_name if a.competitions_user.user %></td>
+																	                                <td><%= a.state %></td>
+																	                                                    <% if @current_user.has_system_role('judge') || @current_user.has_system_role('admin')  || @current_user.login =="superadmin"%>
+																		                                                    <% if @current_object.state == 'open' %>
+																			                                                    <td>
+																				                                                    <%= link_to 'Select', update_state_admin_artworks_competition_path(a.id, :state => 'selected') %> |
+																				                                                    <%= link_to 'Maybe', update_state_admin_artworks_competition_path(a.id, :state => 'maybe') %> |
+																				                                                    <%= link_to 'Unselect', update_state_admin_artworks_competition_path(a.id, :state => 'unselected') %>
+																			                                                    </td>
+																		                                                    <% elsif @current_object.state == 'final_published' %>
+																			                                                    <!--<td>Marks : <%= text_field_tag "marks_list[#{a.id}]", a.mark, :size => 5 %></td>-->
+																		                                                    <% elsif @current_object.state == 'results_publish' %>
+																			                                                     <td>   <%#=link_to  "Send winner Email","/admin/competitions/send_winner_email/#{a.id}"%>
+                                                                                                                                                                                                             <%=link_to "Send winner Email", "/admin/competitions/send_winner_email/#{a.id}", :popup => ['dialog name','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'] %>
+                                                                                                                                                                                                             
+                                                                                                                                                                                                             </td>
+																		                                                    <% end %>
+																	                                                    <% end %>
+																	                                                    
+																	                                                    <% if @current_object.state == 'results_publish' %>
+																			                                                   <!-- <td style="padding-left:10px"> <%= a.mark %></td>-->
+																			                                             <%end%>       
+															                                 </tr>
+															                                 <%end%>   
+														                                     <%end%>	 
+														                                     <%end%><%#a.competitions_user!=nil%>
+														                     <%#j=j+1%>	 
+													                     <%#end%>	
+												    <% end %><tr><td>
+											<%#= submit_tag if (@current_user.has_system_role('judge') || @current_user.has_system_role('admin')) && @current_object.state != 'results_publish' %>
+											</td></tr>
+										   </tbody>
+								    <% end %><%#form end%>
+								  </table>
+                                                                <%#=render :partial=>"show_slide_show",:locals=>{:firstslide=>@firstslide}%>
+							        </div>	  
+						  <% else %>
+						      No artworks added already ...
+						  <% end %> <%# if artworks competition end%>
+                                           <%end%>           
+				  <% end %><%#if current user admin%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<% end %><%#item.show%>
+<%end%><%#if @my_subscription%>
+
+
+
+<script src="/javascripts/jquery.validationEngine-en.js" type="text/javascript"></script>
+<script src="/javascripts/jquery.validationEngine.js" type="text/javascript"></script>
+<script>
+
+
+		
+//        $(document).ready(function() {
+ //       $("#competition_form").validationEngine()
+  //     })
+</script>
+		
+		
+
+
+
+
+
+		
+
+
+
+
+
+

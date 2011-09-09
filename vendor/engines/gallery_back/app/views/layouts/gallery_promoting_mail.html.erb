@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="<%= @configuration['sa_favicon_url'] %>"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=7" />
+        <%= stylesheet_link_tag "blank_JQ"  %>
+        <%= stylesheet_link_tag "jquery.rating" %>
+        <%#= stylesheet_link_tag "jquery.datepicker" %>
+        <%= stylesheet_link_tag "smoothness/jquery-ui-1.7.2.custom.css" %>
+
+		<!--[if lt IE 7]>
+	       	<link rel="stylesheet" type="text/css" href="/stylesheets/ie6.css" />
+		<![endif]-->
+			
+		<!--[if IE 7]>
+			<link rel="stylesheet" type="text/css" href="/stylesheets/ie.css" />
+		<![endif]-->
+        <title>
+            <%= I18n.t 'layout.application.title' %> -
+            <% if @content_for_title %>
+                <%= h yield(:title) %>
+            <% else %>
+                <%= params[:action].capitalize if params[:action] != 'index' %>
+                <%= params[:controller].capitalize %>
+            <% end %>
+        </title>
+                
+                <script type="text/javascript" src="/javascripts/jquery.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery-1.4.2.min.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery-ui-1.8.1.custom.min.js"></script>
+                <script type="text/javascript" src="/javascripts/application.js"></script>
+                
+                <%#*<script type="text/javascript" src="/javascripts/jquery.autocomplete.js"></script>%>
+                <script type="text/javascript" src="/javascripts/jquery.tipsy.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.rating.js"></script>
+                <script type="text/javascript" src="/javascripts/jrails.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.colorbox.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.quicksearch.js"></script>
+                <script type="text/javascript" src="/javascripts/jquery.tablesorter.min.js"></script>
+
+                <%#*<script type="text/javascript" src="/javascripts/jquery.datepicker.min.js"></script>%>
+
+                <script type="text/javascript" src="/javascripts/blank_1.js"></script>
+                 <script>
+                     jQuery.noConflict();
+                 </script>
+
+                <!--script type="text/javascript" src="/ckeditor/ckeditor.js"></script-->
+                <!-- script type="text/javascript" src="/javascripts/firebug-lite.js"></script-->
+                  <script src="/javascripts/prototype.js" type="text/javascript"></script>
+                  <script src="/javascripts/effects.js" type="text/javascript"></script>
+                  <script src="/javascripts/controls.js" type="text/javascript"></script>
+                  <script src="/javascripts/lowpro.js" type="text/javascript"></script>
+
+        <% if params[:action] != 'new' and params[:action] != 'edit' %>
+            <script type="text/javascript">
+                $(function(){
+                    $("#ajax_spinner").hide();
+                    $("#ajax_spinner").ajaxStart(function(){
+                        $(this).show();
+                    });
+                    $("#ajax_spinner").ajaxStop(function(){
+                        $(this).hide();
+                    });
+                });
+                
+                  Event.addBehavior.reassignAfterAjax = true;
+                     Event.addBehavior({
+                      'div.pagination a' : Remote.Link
+                    })
+            </script>
+        <% end %>
+
+    </head>
+
+    <body>
+    
+		<div id="ajax_spinner">
+            <img src="/images/ajax-spinner.gif" alt="loading" />
+        </div>
+          <%= flash_messages_manager() %>
+	
+        <div id="page_container">
+            <div id="header">
+              <div id="where" style="color:black;">
+                <%#= current_container ? "Dear #{@current_user.profile.full_name}, you are inside '#{@current_container.title}' workspace, click #{ link_to 'here', '/admin' } to leave that workspace." : "Dear #{@current_user.profile.full_name}, you are actually at the root of the back end of the application, click #{ link_to('here', '/')} to come back to the front end" %>
+              </div>
+	      
+	      
+	      
+	      
+              <%#####################################gallery header  promoting%>
+	      <%#= render :partial => "layouts/gallery_header_promoting"%>
+	      <div id="menuAndSearch">
+    <ul id="topMenu">
+      <% if @current_user.has_system_role('admin') %>
+        <li>
+            <div class="menuLabel"><%= link_to 'Contacts', admin_profiles_path %></div>
+        </li>
+      <%end%>
+      <% if @current_user.has_system_role('admin') %>
+        <li>
+            <a href="#" class="menuDropButton"><img src="/images/icons/white_down.png"/></a>
+            <div id="configureSubMenu" class="subMenu">
+                <div class="subMenuContent">
+                    <div class="subMenuLogo">
+                        <img src="/images/icons/settings_128.png"/>
+                        <p><%= I18n.t('layout.menu.configure_help') %></p>
+                        <% if (available_languages.size > 1) -%>
+                            <p><%= I18n.t('layout.application.change_language')%>&nbsp;&nbsp;</p>
+                            <p><%= select_language(  :languages => available_languages,
+                                    :params_name => 'locale') %>
+                            </p>
+                        <%end-%>
+                    </div>
+
+                                <div class="subMenuCol">
+                                  <h3>Users Informations</h3>
+				        <ul>
+                                              
+                                              <li><%= link_to 'All invoices', admin_invoices_path %></li>
+				        </ul>
+				        <br/><br/>
+				        <p><img src="/images/icons/exit.png" width="20px" class="logoutPic"/><%= link_to I18n.t('layout.application.logout'), admin_logout_path, :class => 'bigLink' %></p>
+			    	</div>
+                            <% if @current_user.has_system_role('admin') %>
+			    	<div class="subMenuCol">
+                                        <h3>Administration</h3>
+				        <ul>
+				              <% available_containers.each do |container| %>
+				                <% if @current_user.has_system_permission(container, 'new') -%>
+				                  <li><%= link_to I18n.t("user.administration.#{container}_management"), containers_path(container) %></li>
+				                <% end %>
+				              <% end %>
+                                              <li><%= link_to 'Categories', admin_categories_path %></li>
+                                              <li><%= link_to 'Periods', admin_periods_path %></li>
+                                              <li><%= link_to 'Payments', admin_payments_path %></li>
+				        </ul>
+			    	</div>
+                   <% end %>
+                            <% if @current_user.has_system_role('superadmin') %>
+			      	<div class="subMenuCol">
+						  <h3>Superadmin</h3>
+			              <ul>
+                                          <li><%= link_to "Audits", superadmin_audits_path %></li>
+			                  <li><%= link_to "Action Mailer Settings", superadmin_mailer_settings_path %></li>
+			                  <li><%= link_to "General Settings", superadmin_general_settings_path %></li>
+			                  <li><%= link_to "Google Analytic Settings", superadmin_google_analytics_path %></li>
+			                  <li><%= link_to "Roles & Permissions", superadmin_roles_path %></li>
+			                  <li><%= link_to "Translations", superadmin_translations_path %></li>
+			                  <li><%= link_to "Tasks", superadmin_tasks_path %></li>
+			                  <li><%= link_to "User Interface", superadmin_user_interfaces_path %></li>
+			              </ul>
+					    </div>
+					  <% end %>
+				</div>
+			</div>
+			<div class="menuLabel"><%= I18n.t('layout.menu.configure') %></div>
+		</li>
+                <% end %>
+            	<%if current_user.login == "admin" ||  current_user.login == "superadmin"%>
+        <li>
+            <a href="#" class="menuDropButton"><img src="/images/icons/white_down.png"/></a>
+            <div id="modifySubMenu" class="subMenu">
+                <div class="subMenuContent">
+                    <div class="subMenuLogo">
+                        <img src="/images/icons/documents_128.png"/>
+                        <p><%= I18n.t('layout.menu.content_help') %></p>
+                    </div>
+                      <div class="subMenuCol">
+                    <%if current_user.login == "admin" ||  current_user.login == "superadmin"%> 
+                           <h3><%= I18n.t('layout.application.my_data') %></h3>
+                               <ul>
+                                     <%#*<li><%= link_to I18n.t('layout.application.home_page'), admin_root_path %>
+                                    <%#*</li>%>
+                                    <%# if (a=@current_user.private_workspace) %>
+                                    <%#*<li><%= link_to I18n.t('layout.application.my_private_workspace'), container_path(a) %>
+                                    <%#*</li>%>
+                                   <%# end %>
+                                    <%#*<li><%= link_to I18n.t('layout.application.all_content'), content_path %>
+                                    <%#*</li>%>
+                                      <li><%= link_to 'My homepage', admin_root_path %></li>
+                                      <li><%= link_to 'My personnal info', admin_user_path(@current_user.id) %></li>
+                                      <li><%= link_to 'My artworks', content_path('artwork', @current_user.private_workspace) %></li>
+                                      <li><%= link_to 'My invoices', admin_invoices_path %></li>
+                                      <li><%= link_to 'My orders', admin_orders_path %></li>
+                                      <li><%= link_to 'My cart', show_cart_admin_orders_path %></li>
+                                      <li><%= link_to 'My exhibitions', admin_root_path+'#fragment-2' %></li>
+                                      <li><%= link_to 'My competitions', admin_root_path+'#fragment-3' %></li>
+			                           <li> <a href="/admin/front_end_pics" > Front End Pics</a></li> 
+                                       <li> <a href="/admin/promoting_stuffs" > My Promoting Stuff</a></li>
+                                        <li> <a href="/admin/booksshops" > Book Shop</a></li>
+                                        <li> <a href="/admin/drawings" > Life Drawing</a></li>
+                                        <li> <a href="/admin/app_homes" > Application</a></li>
+			                            <li> <a href="/admin/links" > Link</a></li>
+			            </ul>
+			        </div>
+                    <div class="subMenuCol">
+                            <h3><%= I18n.t('layout.application.public_data') %></h3>
+                              <ul>
+                              <% if a=Workspace.find(:first, :conditions => { :state => 'public'}) %>
+                                       <li><%= link_to 'All competitions', container_path(a, :item_type => 'competitions') %></li>
+                                       <li><%= link_to 'All exhibitions', container_path(a, :item_type => 'exhibitions') %></li>
+                                       <li><%= link_to 'All galleries', container_path(a, :item_type => 'galleries') %></li>
+                                       <li><%= link_to 'Studio ', "/admin/show_studio_mail" %></li>
+                                       <li><%= link_to 'Mailing List', "/admin/show_mailing_mail" %></li>
+                                       <!--<li><%= link_to 'All group show', container_path(a, :item_type => 'groupshow') %></li>-->
+                          <% end %>
+                        </ul>
+                    </div>
+                    <div class="subMenuCol">
+                        <h3><%= 'Calendars' %></h3>
+                        <ul>
+                        <li><%= link_to I18n.t('layout.application.calendar')+ ' for competitions', calendar_admin_timings_path(:event => 'Competition') %></li>
+                          <% if @current_user.has_system_role('artist') || @current_user.has_system_role('admin')%>
+                            <li><%= link_to I18n.t('layout.application.calendar')+ ' for exhibitions', calendar_admin_timings_path(:event => 'Exhibition') %></li>
+                            <li><%= link_to 'Exhibitions by galleries and periods', index_by_galleries_admin_exhibitions_path %></li>
+                          <% end %>
+                        </ul>
+                    </div>
+                    <% if false %>
+                    <% available_containers.each do |container| %>
+                      <% containers = container.classify.constantize.allowed_to_user_with_permission(@current_user, "#{container}_show") %>
+                      <% unless containers.blank? %>
+                        <div class="subMenuCol">
+                            <h3><%= I18n.t("layout.application.#{container.pluralize}") %></h3>
+                            <ul>
+                               <% containers.each do |w| -%>
+                                  <li><%= link_to w.title, container_path(w) %></li>
+                               <% end -%>
+                            </ul>
+                        </div>
+                      <% end %>
+                     <% end %>
+                  <% end %>
+                </div>
+            </div>
+            <div class="menuLabel"><%= I18n.t('layout.menu.display') %></div>
+                <%end%>    
+        </li>
+        
+        <%end%>
+       	<%if current_user.login == "admin" ||  current_user.login == "superadmin"%>
+        <li>
+            <a href="#" class="menuDropButton"><img src="/images/icons/white_down.png"/></a>
+                   <div id="addSubMenu" class="subMenu">
+                         <div class="subMenuContent">
+                                <div class="subMenuLogo">
+                                    <img src="/images/icons/add_128.png"/>
+                                    <p><%= I18n.t('layout.menu.add_help') %></p>
+                                </div>
+                            <div class="subMenuCol">
+                            	<%if current_user.login == "admin" ||  current_user.login == "superadmin"%>
+                                        <h3>Add Items</h3>
+                                                    <ul>
+                                                                <li>
+                                                                        <a href="/admin/artworks/new">Artwork</a>
+                                                                </li>
+				                                                <li>
+                                                                        <a href="/admin/competitions/new">Competition</a>
+                                                                </li>
+                                                				<li>
+                                                                        <a href="/admin/exhibitions/new">Exhibition</a>
+                                                                </li>
+                                                				<li>
+                                                                        <a href="/admin/galleries/new">Gallery</a>
+                                                                </li>
+                                                				<li>
+                                                                        <a href="/admin/newsletters/new">Newsletter</a>
+                                                                </li>
+		                                        			
+		                                		                <li>
+                                                                        <a href="/admin/front_end_pics/new">Front End Pics</a>
+                                                                </li>
+		                                		                <li>
+                                                                        <a href="/admin/promoting_stuffs/new">Promoting Stuff</a>
+                                                                </li>
+                                                                <li>
+                                                                        <a href="/admin/booksshops/new">Book Shop</a>
+                                                                </li>
+                                                                 <li>
+                                                                        <a href="/admin/drawings/new">Life Drawing</a>
+                                                                 </li>
+                                                                 <li>
+                                                                            <a href="/admin/app_homes/new">Application</a>
+                                                                </li>
+			                                            
+                                                            	  <li>
+                                                                              <a href="/admin/links/new">Link</a>
+                                                                </li>
+                                                                <li>
+                                                                              <a href="/admin/signature">Signature</a>
+                                                                </li>
+                                                </ul>
+                                                	<%end%>
+                            </div><%#submenucolumn is ended here%>
+                    <div class="subMenuCol">
+                      <% if false %>
+                        <h3><%= I18n.t('layout.application.add_containers') %></h3>
+                        <ul>
+                            <% available_containers.each do |container| %>
+                                <% if @current_user.has_system_permission(container, 'new') -%>
+                                    <li><%= link_to I18n.t("general.container.#{container}"), new_container_path(container) %></li>
+                                <% end -%>
+                            <% end %>
+                        </ul>
+                        <% end %>
+                        <% if @current_user.has_system_permission('user', 'new') -%>
+                          <h3><%= I18n.t('layout.application.add_people') %></h3>
+                          <ul>
+                            <li><%= link_to I18n.t('general.object.user').capitalize, new_admin_user_path %></li>
+                          </ul>
+                        <% end -%>
+                    </div>
+                </div>
+            </div>
+            <div class="menuLabel"><%= I18n.t('layout.menu.add') %></div>
+        </li>
+    <%end%>
+      
+    <% if @current_user.has_system_role('admin') %>       
+        <li>
+            <div class="menuLabel">
+              <%=link_to "Mail","/admin/mail" %>
+            </div>
+        </li>            
+    <%end%>    
+                
+         <li>
+<div class="menuLabel">
+           <%= link_to 'Invoice', admin_invoices_path ,:class=>"mail-text"%>
+           <%= link_to "<img src='/images/icons/exit.png' width='20px' class='logoutPic'/>", admin_logout_path, :class => 'menuDropButton' %>
+
+          </div>
+		</li>
+
+	</ul>
+  <% if is_activated_search_part %>
+	<div id="powerfullSearch">
+		<% form_for @search, 
+					:url => admin_searches_path, 
+					:builder => BlankFormBuilder, 
+					:html => { :method => :get, :name => 'search' } do -%>
+					
+			<div class="fieldContainer">
+				<%= text_field_tag  "q", 
+									(params[:q] ? params[:q] : @search_hint), 
+									:id =>"commandSearch" %>
+			</div>
+			<div class="launchButton">
+				<button type="submit" class="headerSearchButton" onclick="return do_search('<%= I18n.t('layout.search.date_alert') %>');"></button>
+			</div>
+		<% end -%>
+	</div>
+  <% end %>
+ 
+                
+</div>
+
+	      
+	      <%####################################################3%>
+	      
+	      
+            </div>
+            <div id="container">
+                         <!--<div class="rightBlocks"> 
+                                      <div class="itemShowRightBlock">
+                                          <div class="blockCornerLeft"></div><div class="blockElementHeader twoH">
+                                            <%#= "Workspace" %>
+                                          </div><div class="blockCornerRight"></div>
+                                          <div class="blockElementBody">
+                                              <%#= current_container ? "Dear #{@current_user.profile.full_name}, you are inside '#{current_container.title}' workspace, click #{ link_to 'here', '/admin' } to leave that workspace." : "Dear #{@current_user.profile.full_name}, you are actually at the root of the back end of the application, <br/>What can I do? #{ link_to('Back to BSG website', '/')} " %>
+                                          </div>
+                                        </div>
+                        </div> -->
+                <%= yield %>
+
+            </div>
+        </div>
+		<div id="footer">
+            <%#= render :partial => "layouts/gallery_footer"%>
+        </div>
+      <div id="modal_space"></div>
+                  <script type="text/javascript">
+                $(function(){
+                    $("#notice").hide();
+                    alert('i get hidden');
+                });
+            </script>
+    </body>
+</html>

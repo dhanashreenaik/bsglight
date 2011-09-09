@@ -1,0 +1,19 @@
+<div id="specific_menu">
+  <% if @genres.first %>
+    <% for i in 0..(@genres.size-1) %>
+      <% if [0,5,10,15,20].include?(i) %>
+        <div id='nav_3'><ul>
+          <% end %>
+          <li><a href='<%= "/genres/#{@genres[i].id}"%>' class="liselected"><%= @genres[i].name %></a></li>
+          <% if [4,9,14,19,24].include?(i) || i == (@genres.size-1) %>
+          </ul></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="specific_menu">No artists for that genre</div>
+  <% end %>
+</div>
+
+<%= render :partial => 'artists/artists_name' %>
+
+</div>

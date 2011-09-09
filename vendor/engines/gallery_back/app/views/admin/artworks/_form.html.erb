@@ -1,0 +1,47 @@
+<%if !@exhibition.blank?  or params[:action] == "edit"%>
+        <% form_for_item @current_object, title do |f| -%>
+         <% f.field :image, :label => I18n.t('image.field.image_label') + ":" do %>
+            <%= File.basename(@current_object.image.url) + '<br />' if @current_object.image_file_name %>
+            <%= file_field 'artwork', 'image', :class => 'file', :value=> (@current_object.image.url ? @current_object.image.url : "") %>
+              <%= ajax_error_message_on(@current_object, "image") %>
+          <% end %>
+          
+
+          <%= f.text_field :medium, :label => 'Medium: ' %>
+
+        <label>
+          Size <br/><span style="font-size:10px;">(width x height x depth):</span>
+        </label>
+        <div class="formElement">
+          <%= text_field_tag 'artwork[width]', f.object.width, :style => "width:80px;" %> x <%=  text_field_tag 'artwork[height]', f.object.height, :style => "width:80px;" %> x <%=  text_field_tag 'artwork[depth]', f.object.depth, :style => "width:80px;" %> cm
+          <%= ajax_error_message_on(@current_object, "width") %>
+          <%= ajax_error_message_on(@current_object, "height") %>
+          <%= ajax_error_message_on(@current_object, "depth") %>
+        </div>
+          <%#= f.text_field :size, :label => 'Size : ', :hint => 'Please respect the format width in cm x height in cm (x depth in cm), for example 20x80 or 10x230x92' %>
+
+        <label>
+          Edition <br/><span style="font-size:10px;">(if applicable):</span>
+        </label>
+        <div class="formElement">
+          <%= text_field_tag 'artwork[edition_name]', f.object.edition_number, :style => "width:100px;" %> of <%=  text_field_tag 'artwork[edition_number]', f.object.edition_name, :style => "width:100px;" %>
+          <%= ajax_error_message_on(@current_object, "edition_name") %>
+          <%= ajax_error_message_on(@current_object, "edition_number") %>
+        </div>
+          <%= f.text_field :price, :label => 'Price: ' %>
+          <%= f.check_box :is_purchasable, :label => 'For Sale' %>
+          <%#if !params[:exhibition_id].blank? %>
+          <%#=hidden_field_tag :exhibition_id,:value=>params[:exhibition_id]%>
+          <%#end%>
+        <label>
+        <% if  @exhibition%>
+          Select Exhibition 
+         <%end%> 
+        </label>  
+          <div class="formElement">
+        <%= select_tag :exhibition_id, options_from_collection_for_select(@exhibition, "id", "title")  if  @exhibition%>  
+          </div>
+        <% end -%>
+<%else%>
+The Admin Has Not Added You In Any Exhibition Please Contact Admin To Add Yourself In The Exhibition
+<%end%>

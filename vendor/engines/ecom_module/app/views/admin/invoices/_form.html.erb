@@ -1,0 +1,21 @@
+<%= f.text_field :title, :label => 'Title  ' %>
+
+<%= f.text_area :description, :label => 'Description  ' %>
+
+
+<%if  @profile%>
+
+<%= f.select :client_id,options_for_select(Profile.all(:order => 'first_name ASC').map{ |e| [e.full_name, e.id]},:selected=>@profile.id), :size => 6, :label => "Client"   %>
+
+<%else%>
+<%= f.select :client_id,options_for_select(Profile.all(:order => 'first_name ASC').map{ |e| [e.full_name, e.id]}), :size => 6, :label => "Client"   %>
+
+<%end%>
+
+<%= f.date_select :deadline, :label => 'Deadline  ', :hint => 'Enter the deadline for the payment' %>
+
+<%= f.text_field :original_amount, :label => 'Amount  ', :hint => 'Enter the amount in AUD' %>
+
+<%= f.text_field :note, :label => 'Note  ', :hint => 'Enter max 55 character' %>
+
+<%= blank_form_submit_button(:object => @current_object) %>

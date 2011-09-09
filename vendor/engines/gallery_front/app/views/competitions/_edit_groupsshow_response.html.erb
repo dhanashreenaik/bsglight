@@ -1,0 +1,62 @@
+<style>
+    .changecolorgray{
+        color: #444444;
+        line-height: 15px;
+  }
+</style>
+<div id="messageforimageuploaded">
+<%if !messageforimageuploaded.blank?%>
+  <%=messageforimageuploaded%>
+<%end%>
+</div>
+<div  class="inputfont">
+<form action="edit_upload_the_artwork_to_groupshow" method="post"  enctype = "multipart/form-data" onsubmit="return  Checkfiles_simple('<%=updateimage.id%>',true)" id="add_the_artwork_to_groupshow<%=updateimage.id%>" target="upload_frame<%=updateimage.id%>" >  
+                <%=hidden_field_tag 'artworkgroupshowid',updateimage.id%>
+                <div class="changecolorgray">
+                     Title 
+                </div> 
+                  <input  name="groupshow_user[title]" id="artwork_title<%=updateimage.id%>"  value="<%=updateimage.title%>" type="text" style="width:310px;height:14px;">
+                   <div class="changecolorgray">
+                            Medium
+                     </div>   
+                                <input  name="groupshow_user[medium]" id="artwork_medium<%=updateimage.id%>"  value="<%=updateimage.medium%>" type="text" style="width:310px;height:14px;"> 
+                     <div class="changecolorgray">
+                            	<span style="font-size: 10px;">Size (width (cm) x height (cm)  x depth (cm - 3d work only)</span>   
+                     </div>  	
+                     <font style="color:#444444">
+                      	<input  name="groupshow_user[size1]" id="artwork_width<%=updateimage.id%>" size="10" value="<%=updateimage.size1%>" type="text" style="width: 92px;height:14px;">
+                            x
+                        <input  name="groupshow_user[size2]" id="artwork_height<%=updateimage.id%>" size="10" value="<%=updateimage.size2%>" type="text" style="width: 92px;height:14px;">
+                            x
+                         <input  name="groupshow_user[size3]" id="artwork_depth<%=updateimage.id%>" size="10" value="<%=updateimage.size3%>" type="text" style="width: 92px;height:14px;"> 
+                      </font>
+                      <div class="changecolorgray"> 
+                           <span style="padding-right:100px">
+                              Price
+                        </span> 
+                        <span >
+                            Edition(if applicable)
+                        </span> 
+                      </div> 
+                           <input  name="groupshow_user[price]" id="artwork_price<%=updateimage.id%>" style="width: 92px;height: 14px;" value="<%=updateimage.price%>" type="text">
+                           <input  name="groupshow_user[editionname]" id="artwork_edition_name<%=updateimage.id%>" size="40" value="<%=updateimage.editionname%>" type="text" style="width: 92px;height: 14px;">
+                      <span style="padding-right:3px;margin-left:3px;color:#444444">of</span><input  name="groupshow_user[editionumber]" id="artwork_edition_number<%=updateimage.id%>" size="40" value="<%=updateimage.editionumber%>" type="text" style="width: 92px;height: 14px;">
+  
+                           
+                         <div class="changecolorgray">    
+                        	 Image 
+                    	 </div>
+                      	 <input  name="groupshow_user[image]" id="artwork_image<%=updateimage.id%>" type="file" size="26">
+                         <div style="float:left">
+                          <%= submit_tag 'Upload'%>
+                         </div>  
+                         
+                         <div style="display: none;padding-top:2px;" id="show_ajax_request<%=updateimage.id%>">
+                                <img height="20" src="/images/ajax-spinner.gif" alt="loading">
+                        </div>
+                  
+                       <div style="clear:both;padding-top:2px;margin-top:2px;line-height:8px;">
+                          <img src ="/uploaded_files/groupshow/artwork/<%=updateimage.id%>/thumb/<%=updateimage.artworkurl_file_name%>" width="90px" height="90px"/>
+                      </div>
+        </form>
+</div>

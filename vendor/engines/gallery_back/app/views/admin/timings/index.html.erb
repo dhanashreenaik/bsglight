@@ -1,0 +1,73 @@
+TIMINGS LIST :
+
+<table>
+  <tr>
+    <th>State</th>
+    <th>Starting date</th>
+    <th>Ending date</th>
+    <th>Starting time</th>
+    <th>Ending time</th>
+    <th>Place</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr>
+    <th>REQUEST</th>
+  </tr>
+  <% Timing.find(:all, :conditions => { :objectable_type => 'Exhibition', :state => 'request' }, :order => 'starting_date DESC').each do |t| %>
+  <tr>
+    <th><%= t.state %></th>
+    <th><%= I18n.l(t.starting_date, :format => :short) if t.starting_date %></th>
+    <th><%= I18n.l(t.ending_date, :format => :short) if t.ending_date %></th>
+    <th><%= I18n.l(t.starting_time.time, :format => :short) if t.starting_time %></th>
+    <th><%= I18n.l(t.ending_time.time, :format => :short) if t.ending_time %></th>
+    <th><%= t.gallery.title if t.gallery %>
+    <th>
+      <%= link_to('Accept', update_state_admin_timing_path(t)+"?new_state=accepted") %> |
+      <%= link_to('Refuse', update_state_admin_timing_path(t)+"?new_state=refused")  %>
+    </th>
+  </tr>
+  <% end %>
+  <tr><td></td></tr>
+
+  <tr>
+    <th>ACCEPTED</th>
+  </tr>
+  <% Timing.find(:all, :conditions => { :objectable_type => 'Exhibition', :state => 'accepted' }, :order => 'starting_date DESC').each do |t| %>
+  <tr>
+    <th><%= t.state %></th>
+    <th><%= I18n.l(t.starting_date, :format => :default) if t.starting_date %></th>
+    <th><%= I18n.l(t.ending_date, :format => :default) if t.ending_date %></th>
+    <th><%= I18n.l(t.starting_time, :format => :time) if t.starting_time %></th>
+    <th><%= I18n.l(t.ending_time, :format => :time) if t.ending_time %></th>
+    <th><%= t.gallery.title if t.gallery %>
+    <th>
+      <%= link_to('Go to event', item_path(t.objectable)) %> |
+      (<%= link_to('Refuse', update_state_admin_timing_path(t)+"?new_state=refused") %>)
+    </th>
+  </tr>
+  <% end %>
+  <tr><td></td></tr>
+
+
+  <tr>
+    <th>REFUSED</th>
+  </tr>
+  <% Timing.find(:all, :conditions => { :objectable_type => 'Exhibition', :state => 'refused' }, :order => 'starting_date DESC').each do |t| %>
+  <tr>
+    <th><%= t.state %></th>
+    <th><%= I18n.l(t.starting_date, :format => :short) if t.starting_date %></th>
+    <th><%= I18n.l(t.ending_date, :format => :short) if t.ending_date %></th>
+    <th><%= I18n.l(t.starting_time, :format => :short) if t.starting_time %></th>
+    <th><%= I18n.l(t.ending_time, :format => :short) if t.ending_time %></th>
+    <th><%= t.gallery.title if t.gallery %>
+    <th>
+      <%#= link_to 'Delete', "javascript:;", :class => "deleteLink", :modal_id => "#modalDelete_#{object.id.to_s}" %>
+      (<%= link_to('Accept', update_state_admin_timing_path(t)+"?new_state=accepted") %>) |
+      <%= link_to 'Delete', admin_timing_path(t), :method => :delete, :confirm => 'Sure ?' %>
+    </th>
+  </tr>
+  <% end %>
+  <tr><td></td></tr>
+
+</table>
