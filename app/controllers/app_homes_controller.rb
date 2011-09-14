@@ -1,6 +1,6 @@
 class AppHomesController < ApplicationController
   #testing the things
-#for testing with github
+#for testing with github for test
   layout "gallery_promoting"  
   def index
     @app_home = AppHome.find(:all,:limit=>1,:order=>"created_at desc")
