@@ -1,6 +1,6 @@
 class CompetitionsArtworksController < ApplicationController
 	layout "gallery_promoting"  
-#adding the index me o
+#adding the index me o. added by colaborator
 	 def index
 abc=55
 	 end
